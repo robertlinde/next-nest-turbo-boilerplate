@@ -11,6 +11,8 @@ module.exports = {
     // Does not work with decorators
     'new-cap': 'off',
 
+    'no-warning-comments': 'error',
+
     // Annoying
     '@typescript-eslint/capitalized-comments': 'off',
     'capitalized-comments': 'off',
