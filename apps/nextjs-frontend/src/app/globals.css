@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+
+h1 {
+  @apply text-4xl tracking-widest font-bold text-slate-800 mb-4 md:mb-6 lg:mb-8;
+}
+
+h2 {
+  @apply text-3xl font-bold tracking-wider text-slate-800 mb-4 md:mb-6 lg:mb-8;
+}
+
+h3 {
+  @apply text-2xl font-bold tracking-wide text-slate-800 mb-2 md:mb-4 lg:mb-6;
+}
+
+h4 {
+  @apply text-xl font-bold tracking-wide text-slate-800 mb-2 md:mb-4 lg:mb-6;
+}
+
+h5 {
+  @apply text-lg font-bold text-slate-800 mb-1 md:mb-2 lg:mb-4;
+}
+
+h6 {
+  @apply text-base font-bold text-slate-800 mb-1 md:mb-2 lg:mb-4;
+}

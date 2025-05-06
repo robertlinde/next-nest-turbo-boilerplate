@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "rangav.vscode-thunder-client",
+    "samverschueren.linter-xo",
+    "cweijan.vscode-postgresql-client2"
+  ]
+}

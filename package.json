@@ -1,24 +1,30 @@
 {
-  "name": "next-nest-turbo-auth-boilerplate",
+  "name": "auth-monorepo",
+  "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "prepare": "husky"
   },
   "devDependencies": {
-    "prettier": "^3.5.3",
-    "turbo": "^2.5.2",
-    "typescript": "5.8.2"
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "eslint-plugin-unicorn": "^59.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1",
+    "prettier": "3.5.3",
+    "turbo": "latest"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=18.0.0"
   },
-  "packageManager": "npm@11.2.0",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "packageManager": "npm@10.2.3"
 }

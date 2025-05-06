@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    /* Modules */
+    "module": "ESNext" /* Specify what module code is generated. */,
+    "moduleResolution": "node" /* Specify how TypeScript looks up a file from a given module specifier. */,
+    "allowImportingTsExtensions": true,
+    /* JavaScript Support */
+    "allowJs": false /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
+    "maxNodeModuleJsDepth": 1 /* Specify the maximum folder depth used for checking JavaScript files from 'node_modules'. Only applicable with 'allowJs'. */,
+    /* Emit */
+    "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
+    "emitDeclarationOnly": true /* Only output d.ts files and not JavaScript files. */,
+    "sourceMap": true /* Create source map files for emitted JavaScript files. */,
+    "outDir": "./dist" /* Specify an output folder for all emitted files. */,
+    "declarationDir": "./types" /* Specify the output directory for generated declaration files. */,
+    /* Interop Constraints */
+    "allowSyntheticDefaultImports": true /* Allow 'import x from y' when a module doesn't have a default export. */,
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    /* Type Checking */
+    "strict": true /* Enable all strict type-checking options. */,
+    "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */,
+    "noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
+    "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */,
+    "noImplicitReturns": true /* Enable error reporting for codepaths that do not explicitly return in a function. */,
+    "noFallthroughCasesInSwitch": true /* Enable error reporting for fallthrough cases in switch statements. */,
+    "noUncheckedIndexedAccess": true /* Add 'undefined' to a type when accessed using an index. */,
+    "allowUnreachableCode": false /* Disable error reporting for unreachable code. */,
+    /* Completeness */
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

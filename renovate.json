@@ -1,0 +1,15 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "rangeStrategy": "bump",
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major", "minor", "patch", "pin", "digest"],
+      "groupName": "all dependencies"
+    }
+  ],
+  "assignees": ["robertlinde"]
+}
