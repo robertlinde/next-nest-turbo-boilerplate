@@ -12,6 +12,8 @@
     "start:prod": "turbo run start:prod",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
+    "test": "turbo run test",
+    "test:cov": "turbo run test:cov",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky"
   },

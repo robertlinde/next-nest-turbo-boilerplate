@@ -25,6 +25,12 @@
     "start:prod": {
       "cache": false,
       "persistent": true
+    },
+    "test": {
+      "dependsOn": ["^test"]
+    },
+    "test:cov": {
+      "dependsOn": ["^test:cov"]
     }
   }
 }
