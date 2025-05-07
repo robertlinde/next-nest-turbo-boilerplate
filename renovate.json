@@ -5,10 +5,12 @@
   "lockFileMaintenance": {
     "enabled": true
   },
+  "postUpdateOptions": ["npmDedupe"],
   "packageRules": [
     {
       "matchUpdateTypes": ["major", "minor", "patch", "pin", "digest"],
-      "groupName": "all dependencies"
+      "groupName": "all dependencies",
+      "postUpdateCommand": "npm install"
     }
   ],
   "assignees": ["robertlinde"]
