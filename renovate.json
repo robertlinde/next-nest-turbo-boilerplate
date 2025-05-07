@@ -9,8 +9,7 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["major", "minor", "patch", "pin", "digest"],
-      "groupName": "all dependencies",
-      "postUpdateCommand": "npm install"
+      "groupName": "all dependencies"
     }
   ],
   "assignees": ["robertlinde"]
