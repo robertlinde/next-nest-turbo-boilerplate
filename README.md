@@ -1,84 +1,88 @@
-# Turborepo starter
+# 🔐 Fullstack Auth Turborepo
 
-This Turborepo starter is maintained by the Turborepo core team.
+This monorepo provides a modern fullstack authentication boilerplate using **Next.js** for the frontend and **NestJS** for the backend — organized and managed with **Turborepo**.
 
-## Using this example
+It’s designed for scalability, type safety, and developer experience — ideal as a base for full-featured auth-driven applications.
 
-Run the following command:
+---
 
-```sh
-npx create-turbo@latest
-```
+## 1. 📦 Getting Started
 
-## What's inside?
+### 1. Use as Template or Clone
 
-This Turborepo includes the following packages/apps:
+Use this repo as a GitHub template (recommended), or clone it directly:
 
-### Apps and Packages
+- `git clone https://github.com/robertlinde/next-nest-turbo-auth-boilerplate.git`
+- `cd next-nest-turbo-auth-boilerplate`
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### 2. Install Dependencies
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+Install root-level dependencies (workspace-based):
 
-### Utilities
+- `npm install`
 
-This Turborepo has some additional tools already setup for you:
+This will install dependencies for all apps using Turborepo's workspace management.
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+### 3. Setup Environment Variables
 
-### Build
+Each app has its own .env.example. Copy and configure them:
 
-To build all apps and packages, run the following command:
+- `cp apps/frontend/.env.example apps/frontend/.env`
+- `cp apps/backend/.env.example apps/backend/.env`
 
-```
-cd my-turborepo
-pnpm build
-```
+Then fill in the required environment variables based on your setup (e.g., database credentials, JWT secrets, email service configs).
 
-### Develop
+### 4. Start the Backend
 
-To develop all apps and packages, run the following command:
+Start the database container and apply migrations:
 
-```
-cd my-turborepo
-pnpm dev
-```
+- `cd apps/backend`
+- `docker-compose up -d`
+- `npm run migration:create`
+- `npm run migration:up`
 
-### Remote Caching
+### 5. Start dev mode
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+At the root of your project, run:
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+- `npm run dev`
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+Your app should now be running with both frontend and backend services in development mode.
 
-```
-cd my-turborepo
-npx turbo login
-```
+---
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## 2. ⚙️ Base Tech Used
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+### 🖥 Frontend (`apps/frontend`)
 
-```
-npx turbo link
-```
+- **Next.js** (App Router)
+- **TypeScript**
+- **Tailwind CSS** + **PrimeReact**
+- **Zustand**
+- **React Hook Form** + **Joi**
+- **React Query**
 
-## Useful Links
+➡️ More in [apps/frontend/README.md](./apps/frontend/README.md)
 
-Learn more about the power of Turborepo:
+### 🛠 Backend (`apps/backend`)
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+- **NestJS**
+- **TypeScript**
+- **JWT Auth**
+- **MikroORM** + **PostgreSQL**
+- **Templated email service**
+- **class-validator**
+
+➡️ More in [apps/backend/README.md](./apps/backend/README.md)
+
+---
+
+## 3. 🤝 Contributing
+
+This repo is intended to be cloned, extended, and customized. Feel free to open issues or submit PRs if you're improving the base or adapting it.
+
+---
+
+## 4. 📝 License
+
+MIT — free to use, modify, and distribute.
