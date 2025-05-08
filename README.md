@@ -62,7 +62,7 @@ Your app should now be running with both frontend and backend services in develo
 - **React Hook Form** + **Joi**
 - **React Query**
 
-➡️ More in [apps/frontend/README.md](./apps/nextjs-frontend/README.md)
+➡️ More in [apps/nextjs-frontend/README.md](./apps/nextjs-frontend/README.md)
 
 ### 🛠 Backend (`apps/backend`)
 
@@ -73,7 +73,7 @@ Your app should now be running with both frontend and backend services in develo
 - **Templated email service**
 - **class-validator**
 
-➡️ More in [apps/backend/README.md](./apps/nestjs-backend/README.md)
+➡️ More in [apps/nestjs-backend/README.md](./apps/nestjs-backend/README.md)
 
 ---
 
@@ -86,3 +86,5 @@ This repo is intended to be cloned, extended, and customized. Feel free to open 
 ## 4. 📝 License
 
 MIT — free to use, modify, and distribute.
+
+➡️ More in [LICENCE](./LICENCE)
