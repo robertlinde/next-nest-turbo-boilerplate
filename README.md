@@ -87,4 +87,4 @@ This repo is intended to be cloned, extended, and customized. Feel free to open 
 
 MIT — free to use, modify, and distribute.
 
-➡️ More in [LICENCE](./LICENCE)
+➡️ More in [LICENSE](./LICENSE)
