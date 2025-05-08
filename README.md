@@ -27,8 +27,8 @@ This will install dependencies for all apps using Turborepo's workspace manageme
 
 Each app has its own .env.example. Copy and configure them:
 
-- `cp apps/frontend/.env.example apps/frontend/.env`
-- `cp apps/backend/.env.example apps/backend/.env`
+- `cp apps/nextjs-frontend/.env.example apps/nextjs-frontend/.env`
+- `cp apps/nestjs-backend/.env.example apps/nestjs-backend/.env`
 
 Then fill in the required environment variables based on your setup (e.g., database credentials, JWT secrets, email service configs).
 
@@ -36,7 +36,7 @@ Then fill in the required environment variables based on your setup (e.g., datab
 
 Start the database container and apply migrations:
 
-- `cd apps/backend`
+- `cd apps/nestjs-backend`
 - `docker-compose up -d`
 - `npm run migration:create`
 - `npm run migration:up`
@@ -62,7 +62,7 @@ Your app should now be running with both frontend and backend services in develo
 - **React Hook Form** + **Joi**
 - **React Query**
 
-➡️ More in [apps/frontend/README.md](./apps/frontend/README.md)
+➡️ More in [apps/frontend/README.md](./apps/nextjs-frontend/README.md)
 
 ### 🛠 Backend (`apps/backend`)
 
@@ -73,7 +73,7 @@ Your app should now be running with both frontend and backend services in develo
 - **Templated email service**
 - **class-validator**
 
-➡️ More in [apps/backend/README.md](./apps/backend/README.md)
+➡️ More in [apps/backend/README.md](./apps/nestjs-backend/README.md)
 
 ---
 
