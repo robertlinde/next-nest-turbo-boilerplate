@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "rangeStrategy": "bump",
+  "rangeStrategy": "update-lockfile",
   "lockFileMaintenance": {
     "enabled": true,
     "recreateWhen": "always",
