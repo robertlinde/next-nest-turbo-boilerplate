@@ -22,7 +22,7 @@
     "@commitlint/config-conventional": "^19.8.1",
     "eslint-plugin-unicorn": "^59.0.1",
     "husky": "^9.1.7",
-    "lint-staged": "^15.5.2",
+    "lint-staged": "^16.0.0",
     "prettier": "3.5.3",
     "turbo": "2.5.3",
     "eslint": "^9.26.0",
