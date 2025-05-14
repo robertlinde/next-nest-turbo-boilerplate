@@ -75,7 +75,6 @@
     "supertest": "7.1.1",
     "ts-jest": "29.3.3",
     "ts-loader": "9.5.2",
-    "ts-node": "10.9.2",
     "tsconfig-paths": "4.2.0",
     "typescript": "5.8.3"
   }
