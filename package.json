@@ -18,19 +18,19 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
-    "eslint-plugin-unicorn": "^59.0.1",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.0.0",
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "eslint-plugin-unicorn": "59.0.1",
+    "husky": "9.1.7",
+    "lint-staged": "16.0.0",
     "prettier": "3.5.3",
     "turbo": "2.5.3",
-    "eslint": "^9.26.0",
-    "xo": "^0.60.0"
+    "eslint": "9.26.0",
+    "xo": "0.60.0"
   },
   "engines": {
-    "node": ">=22.15.0",
-    "npm": ">=11.3.0"
+    "node": "24.0.1",
+    "npm": "11.3.0"
   },
   "packageManager": "npm@11.3.0"
 }
