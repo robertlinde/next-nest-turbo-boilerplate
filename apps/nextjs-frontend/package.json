@@ -19,7 +19,7 @@
     "primereact": "10.9.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-hook-form": "7.56.3",
+    "react-hook-form": "7.56.4",
     "zod": "3.24.4",
     "zustand": "5.0.4"
   },
