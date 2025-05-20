@@ -8,6 +8,5 @@
       "groupName": "all dependencies"
     }
   ],
-  "automerge": true,
-  "assignees": ["robertlinde"]
+  "automerge": true
 }
