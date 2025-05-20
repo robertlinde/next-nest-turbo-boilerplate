@@ -8,8 +8,8 @@
     "start:prod": "next start",
     "lint": "xo",
     "lint:fix": "xo --fix",
-    "test": "playwright test",
-    "test:debug": "playwright test --debug"
+    "test:e2e": "playwright test",
+    "test:e2e:debug": "playwright test --debug"
   },
   "dependencies": {
     "@hookform/resolvers": "5.0.1",
