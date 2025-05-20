@@ -16,6 +16,7 @@ import validationSchema from './config/validation-schema';
 import {CryptoModule} from './crypto/crypto.module';
 import {CryptoService} from './crypto/crypto.service';
 import {EmailModule} from './email/email.module';
+import {HealthModule} from './health/health.module';
 import {UsersModule} from './users/users.module';
 
 @Module({
@@ -40,6 +41,7 @@ import {UsersModule} from './users/users.module';
     CryptoModule,
     EmailModule,
     AuthModule,
+    HealthModule,
   ],
   providers: [
     CryptoService,
