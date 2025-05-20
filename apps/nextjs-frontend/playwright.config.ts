@@ -13,6 +13,16 @@ import {defineConfig, devices} from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
+
+  // Explicitly ignore backend Jest test files
+  testIgnore: [
+    '**/apps/nestjs-backend/**/*.spec.ts',
+    '**/apps/backend/**/*.spec.ts',
+    '**/*.unit.spec.ts',
+    '**/*.service.spec.ts',
+    '**/*.controller.spec.ts',
+  ],
+
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
