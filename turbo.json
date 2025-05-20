@@ -31,6 +31,9 @@
     },
     "test:cov": {
       "dependsOn": ["^test:cov"]
+    },
+    "test:e2e": {
+      "dependsOn": ["^test:e2e"]
     }
   }
 }

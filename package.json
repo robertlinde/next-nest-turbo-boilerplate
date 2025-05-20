@@ -13,6 +13,7 @@
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
     "test:cov": "turbo run test:cov",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky"
