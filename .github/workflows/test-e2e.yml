@@ -57,8 +57,6 @@ jobs:
       # Mail configuration (using MailDev)
       MAIL_HOST: localhost
       MAIL_PORT: 1025
-      MAIL_USER: ''
-      MAIL_PASS: ''
 
     steps:
       - name: Checkout repository
