@@ -33,17 +33,9 @@ const schemaMap: Record<ConfigKey, Joi.Schema> = {
     otherwise: Joi.required(),
   }),
 
-  [ConfigKey.MAIL_USER]: Joi.string().when(ConfigKey.NODE_ENV, {
-    is: 'development',
-    then: Joi.optional(),
-    otherwise: Joi.required(),
-  }),
+  [ConfigKey.MAIL_USER]: Joi.string().optional(),
 
-  [ConfigKey.MAIL_PASS]: Joi.string().when(ConfigKey.NODE_ENV, {
-    is: 'development',
-    then: Joi.optional(),
-    otherwise: Joi.required(),
-  }),
+  [ConfigKey.MAIL_PASS]: Joi.string().optional(),
 };
 
 export default Joi.object(schemaMap);

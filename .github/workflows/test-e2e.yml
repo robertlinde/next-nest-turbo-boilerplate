@@ -41,7 +41,7 @@ jobs:
     env:
       CI: true
       # Environment variables for the backend
-      NODE_ENV: development
+      NODE_ENV: production
       PORT: 4000
       ENABLE_SWAGGER: false
       FRONTEND_HOST: http://localhost:3000
