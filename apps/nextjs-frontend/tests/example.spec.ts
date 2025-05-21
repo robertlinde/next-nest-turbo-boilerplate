@@ -3,6 +3,10 @@ import {test, expect} from '@playwright/test';
 test('has title', async ({page}) => {
   await page.goto('/');
 
+  const response = await fetch('http://localhost:1080/email');
+  const emails = await response.json(); // eslint-disable-line @typescript-eslint/no-unsafe-assignment
+  console.log(emails); // eslint-disable-line no-console
+
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Next.js Frontend/);
 });
