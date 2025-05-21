@@ -26,13 +26,14 @@ const schemaMap: Record<ConfigKey, Joi.Schema> = {
     then: Joi.optional(),
     otherwise: Joi.forbidden(),
   }),
+
   [ConfigKey.MAIL_HOST]: Joi.string().required(),
 
   [ConfigKey.MAIL_PORT]: Joi.number().min(0).max(65_535).default(587).required(),
 
-  [ConfigKey.MAIL_USER]: Joi.string().required(),
+  [ConfigKey.MAIL_USER]: Joi.string().optional(),
 
-  [ConfigKey.MAIL_PASS]: Joi.string().required(),
+  [ConfigKey.MAIL_PASS]: Joi.string().optional(),
 };
 
 export default Joi.object(schemaMap);
