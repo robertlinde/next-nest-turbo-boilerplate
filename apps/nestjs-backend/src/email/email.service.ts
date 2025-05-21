@@ -5,12 +5,13 @@ import {MailerService} from '@nestjs-modules/mailer';
 export class EmailService {
   constructor(private readonly mailerService: MailerService) {}
 
-  async sendConfirmEmail(email: string, confirmationLink: string): Promise<void> {
+  async sendConfirmEmail(username: string, email: string, confirmationLink: string): Promise<void> {
     await this.mailerService.sendMail({
       to: email,
       subject: 'Welcome to Our Service',
       template: 'confirm-user',
       context: {
+        username,
         confirmationLink,
       },
     });

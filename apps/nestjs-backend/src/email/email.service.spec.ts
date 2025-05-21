@@ -36,33 +36,16 @@ describe('EmailService', () => {
 
       const email = 'test@example.com';
       const confirmationLink = 'http://example.com/confirm';
+      const username = 'testuser';
 
-      await service.sendConfirmEmail(email, confirmationLink);
+      await service.sendConfirmEmail(username, email, confirmationLink);
 
       expect(mailerService.sendMail).toHaveBeenCalledWith({
         to: email,
         subject: 'Welcome to Our Service',
         template: 'confirm-user',
-        context: {confirmationLink},
+        context: {username, confirmationLink},
       });
-    });
-
-    it('should log a message when in development environment', async (): Promise<void> => {
-      // Change the environment to simulate development
-      configService.get.mockImplementation((key: ConfigKey) => {
-        if (key === ConfigKey.NODE_ENV) return 'development';
-        return null;
-      });
-
-      const email = 'test@example.com';
-      const confirmationLink = 'http://example.com/confirm';
-
-      const consoleSpy = jest.spyOn(console, 'log');
-      await service.sendConfirmEmail(email, confirmationLink);
-
-      expect(consoleSpy).toHaveBeenCalledWith(
-        `Sending welcome email to ${email} with confirmation link: ${confirmationLink}`,
-      );
     });
   });
 
@@ -89,25 +72,6 @@ describe('EmailService', () => {
         },
       });
     });
-
-    it('should log a message when in development environment', async (): Promise<void> => {
-      // Change the environment to simulate development
-      configService.get.mockImplementation((key: ConfigKey) => {
-        if (key === ConfigKey.NODE_ENV) return 'development';
-        return null;
-      });
-
-      const email = 'test@example.com';
-      const username = 'testuser';
-      const passwordResetLink = 'http://example.com/reset';
-
-      const consoleSpy = jest.spyOn(console, 'log');
-      await service.sendRequestPasswordResetEmail(email, username, passwordResetLink);
-
-      expect(consoleSpy).toHaveBeenCalledWith(
-        `Sending password reset email to ${email} for user ${username} with link: ${passwordResetLink}`,
-      );
-    });
   });
 
   describe('sendTwoFactorAuthCodeEmail', () => {
@@ -128,22 +92,6 @@ describe('EmailService', () => {
         template: 'two-factor-auth-code',
         context: {code},
       });
-    });
-
-    it('should log a message when in development environment', async (): Promise<void> => {
-      // Change the environment to simulate development
-      configService.get.mockImplementation((key: ConfigKey) => {
-        if (key === ConfigKey.NODE_ENV) return 'development';
-        return null;
-      });
-
-      const email = 'test@example.com';
-      const code = '123456';
-
-      const consoleSpy = jest.spyOn(console, 'log');
-      await service.sendTwoFactorAuthCodeEmail(email, code);
-
-      expect(consoleSpy).toHaveBeenCalledWith(`Sending 2FA code email to ${email} with code: ${code}`);
     });
   });
 });
