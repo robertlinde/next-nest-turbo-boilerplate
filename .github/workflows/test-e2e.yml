@@ -8,8 +8,47 @@ jobs:
     name: Run E2E Tests
     runs-on: ubuntu-latest
     timeout-minutes: 60
+
+    # Add PostgreSQL service
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: postgres_db
+          POSTGRES_USER: postgres_user
+          POSTGRES_PASSWORD: postgres_password
+          TZ: UTC
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     env:
       CI: true
+      # Environment variables for the backend
+      NODE_ENV: development
+      PORT: 4000
+      ENABLE_SWAGGER: false
+      FRONTEND_HOST: http://localhost:3000
+      POSTGRES_TIMEZONE: UTC
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_PORT: 5432
+      POSTGRES_HOST: localhost
+      POSTGRES_USER: postgres_user
+      POSTGRES_DB_NAME: postgres_db
+      POSTGRES_DEBUG_MODE: false
+      JWT_ACCESS_SECRET: abcdefghijklmnopqrstuvwxyz
+      JWT_REFRESH_SECRET: zyxwvutsrqponmlkjihgfedcba
+      # Mail configuration (required by your config validation)
+      MAIL_HOST: localhost
+      MAIL_PORT: 1025
+      MAIL_USER: test
+      MAIL_PASS: test
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -25,8 +64,43 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: Build applications
+        run: npm run build
+
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          echo "🗃️  Waiting for PostgreSQL to be ready..."
+          until pg_isready -h localhost -p 5432 -U postgres_user; do
+            echo "⏳ PostgreSQL not ready yet, retrying..."
+            sleep 2
+          done
+          echo "✅ PostgreSQL is ready!"
+
+      - name: Create and run database migrations
+        run: |
+          echo "🏗️  Creating database migrations..."
+          cd apps/nestjs-backend
+          npm run migration:create
+          echo "🚀 Running database migrations..."
+          npm run migration:up
+          echo "✅ Database migrations completed!"
+
+      - name: Start backend server
+        run: |
+          echo "🚀 Starting backend server..."
+          cd apps/nestjs-backend
+          npm run start:prod &
+          cd ../..
+          # Wait for backend to be ready
+          echo "⏳ Waiting for backend health check..."
+          timeout 60 bash -c 'until curl -f http://localhost:4000/api/health; do echo "🔄 Backend starting..."; sleep 2; done'
+          echo "✅ Backend server is ready!"
+
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: |
+          echo "🧪 Running E2E tests..."
+          npm run test:e2e
+          echo "✅ E2E tests completed!"
 
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v4
