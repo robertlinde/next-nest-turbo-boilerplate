@@ -70,9 +70,7 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm ci
-        env:
-          HUSKY: 0 # Disable Husky in CI
+        run: HUSKY=0 npm ci
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
