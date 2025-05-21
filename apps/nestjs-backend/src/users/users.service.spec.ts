@@ -71,6 +71,7 @@ describe('UsersService', () => {
       expect(em.persistAndFlush).toHaveBeenCalled();
       expect(cryptoService.hash).toHaveBeenCalledWith('password123');
       expect(emailService.sendConfirmEmail).toHaveBeenCalledWith(
+        'tester',
         'test@example.com',
         expect.stringContaining('/confirm?token='),
       );
