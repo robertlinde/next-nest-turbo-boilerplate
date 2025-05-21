@@ -12,7 +12,7 @@ jobs:
     # Add PostgreSQL service
     services:
       postgres:
-        image: postgres:15
+        image: postgres
         env:
           POSTGRES_DB: postgres_db
           POSTGRES_USER: postgres_user
@@ -52,13 +52,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
+      - name: Build applications
+        run: npm run build
 
       - name: Wait for PostgreSQL to be ready
         run: |
@@ -67,7 +69,7 @@ jobs:
             sleep 2
           done
 
-      - name: Run database migrations
+      - name: Create and run database migrations
         run: |
           cd apps/nestjs-backend
           npm run migration:create
@@ -75,11 +77,11 @@ jobs:
 
       - name: Start backend server
         run: |
-          npm run start:dev &
+          cd apps/nestjs-backend
+          npm run start:prod &
+          cd ../..
           # Wait for backend to be ready
           timeout 60 bash -c 'until curl -f http://localhost:4000/api/health; do sleep 2; done'
-        env:
-          NODE_ENV: test
 
       - name: Run E2E tests
         run: npm run test:e2e
