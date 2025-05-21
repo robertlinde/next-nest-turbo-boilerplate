@@ -8,8 +8,42 @@ jobs:
     name: Run E2E Tests
     runs-on: ubuntu-latest
     timeout-minutes: 60
+
+    # Add PostgreSQL service
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: postgres_db
+          POSTGRES_USER: postgres_user
+          POSTGRES_PASSWORD: postgres_password
+          TZ: UTC
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     env:
       CI: true
+      # Environment variables for the backend
+      NODE_ENV: test
+      PORT: 4000
+      ENABLE_SWAGGER: false
+      FRONTEND_HOST: http://localhost:3000
+      POSTGRES_TIMEZONE: UTC
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_PORT: 5432
+      POSTGRES_HOST: localhost
+      POSTGRES_USER: postgres_user
+      POSTGRES_DB_NAME: postgres_db
+      POSTGRES_DEBUG_MODE: false
+      JWT_ACCESS_SECRET: abcdefghijklmnopqrstuvwxyz
+      JWT_REFRESH_SECRET: zyxwvutsrqponmlkjihgfedcba
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -18,12 +52,34 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          until pg_isready -h localhost -p 5432 -U postgres_user; do
+            echo "Waiting for PostgreSQL..."
+            sleep 2
+          done
+
+      - name: Run database migrations
+        run: |
+          cd apps/nestjs-backend
+          npm run migration:create
+          npm run migration:up
+
+      - name: Start backend server
+        run: |
+          npm run start:dev &
+          # Wait for backend to be ready
+          timeout 60 bash -c 'until curl -f http://localhost:4000/health || curl -f http://localhost:4000; do sleep 2; done'
+        env:
+          NODE_ENV: test
 
       - name: Run E2E tests
         run: npm run test:e2e
