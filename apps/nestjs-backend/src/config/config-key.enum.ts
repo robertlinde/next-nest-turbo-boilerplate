@@ -19,4 +19,5 @@ export enum ConfigKey {
   MAIL_PORT = 'MAIL_PORT',
   MAIL_USER = 'MAIL_USER',
   MAIL_PASS = 'MAIL_PASS',
+  MAILDEV_WEB_PORT = 'MAILDEV_WEB_PORT',
 }

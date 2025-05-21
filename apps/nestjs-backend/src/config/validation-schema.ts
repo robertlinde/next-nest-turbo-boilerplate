@@ -21,17 +21,14 @@ const schemaMap: Record<ConfigKey, Joi.Schema> = {
   [ConfigKey.JWT_ACCESS_SECRET]: Joi.string().required(),
   [ConfigKey.JWT_REFRESH_SECRET]: Joi.string().required(),
 
-  [ConfigKey.MAIL_HOST]: Joi.string().when(ConfigKey.NODE_ENV, {
+  [ConfigKey.MAILDEV_WEB_PORT]: Joi.number().min(0).max(65_535).default(1080).when(ConfigKey.NODE_ENV, {
     is: 'development',
     then: Joi.optional(),
     otherwise: Joi.required(),
   }),
+  [ConfigKey.MAIL_HOST]: Joi.string().required(),
 
-  [ConfigKey.MAIL_PORT]: Joi.number().min(0).max(65_535).default(587).when(ConfigKey.NODE_ENV, {
-    is: 'development',
-    then: Joi.optional(),
-    otherwise: Joi.required(),
-  }),
+  [ConfigKey.MAIL_PORT]: Joi.number().min(0).max(65_535).default(587).required(),
 
   [ConfigKey.MAIL_USER]: Joi.string().optional(),
 

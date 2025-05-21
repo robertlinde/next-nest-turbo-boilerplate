@@ -82,10 +82,10 @@ export class UsersService {
       confirmationCode,
     });
 
-    await this.em.persistAndFlush(userEntity);
-
     const confirmationLink = `${this.configService.get<string>(ConfigKey.FRONTEND_HOST)}/confirm?token=${userEntity.confirmationCode}`;
-    await this.emailService.sendConfirmEmail(email, confirmationLink);
+    await this.emailService.sendConfirmEmail(username, email, confirmationLink);
+
+    await this.em.persistAndFlush(userEntity);
 
     return userEntity;
   }
@@ -131,10 +131,11 @@ export class UsersService {
     const resetToken = Buffer.from(await this.cryptoService.hash(uuidv4())).toString('base64url');
     user.passwordResetToken = resetToken;
     user.passwordResetTokenCreatedAt = new Date(Date.now());
-    await this.em.persistAndFlush(user);
 
     const resetLink = `${this.configService.get<string>(ConfigKey.FRONTEND_HOST)}/reset-password?token=${resetToken}`;
     await this.emailService.sendRequestPasswordResetEmail(email, user.username, resetLink);
+
+    await this.em.persistAndFlush(user);
   }
 
   async confirmPasswordReset(resetToken: string, newPassword: string): Promise<void> {
