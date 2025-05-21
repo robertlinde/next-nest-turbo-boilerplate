@@ -24,8 +24,9 @@ const schemaMap: Record<ConfigKey, Joi.Schema> = {
   [ConfigKey.MAILDEV_WEB_PORT]: Joi.number().min(0).max(65_535).default(1080).when(ConfigKey.NODE_ENV, {
     is: 'development',
     then: Joi.optional(),
-    otherwise: Joi.required(),
+    otherwise: Joi.forbidden(),
   }),
+
   [ConfigKey.MAIL_HOST]: Joi.string().required(),
 
   [ConfigKey.MAIL_PORT]: Joi.number().min(0).max(65_535).default(587).required(),
