@@ -22,12 +22,12 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "7.56.4",
-    "zod": "3.25.7",
+    "zod": "3.25.13",
     "zustand": "5.0.4"
   },
   "devDependencies": {
     "@playwright/test": "1.52.0",
-    "@types/node": "22.15.20",
+    "@types/node": "22.15.21",
     "@types/react": "19.1.4",
     "@types/react-dom": "19.1.5",
     "postcss": "8.5.3",
