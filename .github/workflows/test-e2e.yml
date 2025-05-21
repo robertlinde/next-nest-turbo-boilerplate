@@ -30,7 +30,7 @@ jobs:
     env:
       CI: true
       # Environment variables for the backend
-      NODE_ENV: test
+      NODE_ENV: development
       PORT: 4000
       ENABLE_SWAGGER: false
       FRONTEND_HOST: http://localhost:3000
@@ -43,6 +43,11 @@ jobs:
       POSTGRES_DEBUG_MODE: false
       JWT_ACCESS_SECRET: abcdefghijklmnopqrstuvwxyz
       JWT_REFRESH_SECRET: zyxwvutsrqponmlkjihgfedcba
+      # Mail configuration (required by your config validation)
+      MAIL_HOST: localhost
+      MAIL_PORT: 1025
+      MAIL_USER: test
+      MAIL_PASS: test
 
     steps:
       - name: Checkout repository
