@@ -32,9 +32,9 @@ test.describe('Register', () => {
     const submitButton = page.getByTestId('register-submit');
 
     const username = uuidv4().slice(0, 8);
-    const emailAdress = `${username}@playwright.test`;
+    const emailAddress = `${username}@playwright.test`;
     const password = 'StrongPassword123!';
-    await emailInput.fill(emailAdress);
+    await emailInput.fill(emailAddress);
     await usernameInput.fill(username);
     await passwordInput.fill(password);
     await submitButton.click();
