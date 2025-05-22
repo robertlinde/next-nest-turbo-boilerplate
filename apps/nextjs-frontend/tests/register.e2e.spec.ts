@@ -43,7 +43,7 @@ test.describe('Register', () => {
 
     const mailDevResponse = await fetch(`${process.env.NEXT_PUBLIC_MAILDEV_API_URL}/email`); // eslint-disable-line n/prefer-global/process
     const emails = (await mailDevResponse.json()) as Array<{headers: {to: string; subject: string}; html: string}>;
-    const verificationEmail = emails.find((email) => email.headers.to === emailAdress);
+    const verificationEmail = emails.find((email) => email.headers.to === emailAddress);
     expect(verificationEmail).toBeDefined();
 
     if (!verificationEmail) {
