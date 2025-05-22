@@ -57,6 +57,10 @@ jobs:
       # Mail configuration (using MailDev)
       MAIL_HOST: localhost
       MAIL_PORT: 1025
+      # Environment variables for the frontend
+      NEXT_PUBLIC_NODE_ENV: development
+      NEXT_PUBLIC_BACKEND_URL: http://localhost:4000
+      NEXT_PUBLIC_MAILDEV_API_URL: http://localhost:1080
 
     steps:
       - name: Checkout repository
@@ -73,8 +77,12 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Build applications
-        run: npm run build
+      - name: Build backend only
+        run: |
+          echo "🏗️  Building backend application..."
+          cd apps/nestjs-backend
+          npm run build
+          echo "✅ Backend build completed!"
 
       - name: Wait for services to be ready
         run: |
@@ -97,7 +105,7 @@ jobs:
           echo "🏗️  Creating database migrations..."
           cd apps/nestjs-backend
           npm run migration:create
-          echo "🚀 Running database migrations..."
+          echo "🚀 Applying database migrations..."
           npm run migration:up
           echo "✅ Database migrations completed!"
 

@@ -1,12 +1,17 @@
-import {defineConfig, devices} from '@playwright/test';
+import {dirname, resolve} from 'node:path';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+import {fileURLToPath} from 'node:url';
+
+import {defineConfig, devices} from '@playwright/test';
+import dotenv from 'dotenv';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// eslint-disable-next-line n/prefer-global/process
+if (!process.env.CI) {
+  dotenv.config({path: resolve(__dirname, '.env')});
+}
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -36,7 +41,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://127.0.0.1:3000', // eslint-disable-line @typescript-eslint/naming-convention
+    baseURL: 'http://localhost:3000', // eslint-disable-line @typescript-eslint/naming-convention
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -78,7 +83,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: 'npm run start:dev',
-    url: 'http://127.0.0.1:3000',
+    url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI, // eslint-disable-line n/prefer-global/process
   },
 });
