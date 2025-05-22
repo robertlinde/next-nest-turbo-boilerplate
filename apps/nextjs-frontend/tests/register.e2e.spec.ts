@@ -89,4 +89,70 @@ test.describe('Register', () => {
 
     await expect(page.getByText('Confirmation successful!')).toBeVisible();
   });
+
+  test('should decline registration with duplicate email', async ({page}) => {
+    // Generate unique username but use the same email for both attempts
+    const username1 = uuidv4().slice(0, 8);
+    const username2 = uuidv4().slice(0, 8);
+    const emailAddress = `duplicate-test@playwright.test`;
+    const password = 'StrongPassword123!';
+    
+    const emailInput = page.getByTestId('register-email');
+    const usernameInput = page.getByTestId('register-username');
+    const passwordInput = page.getByTestId('register-password');
+    const submitButton = page.getByTestId('register-submit');
+
+    // First registration
+    await emailInput.fill(emailAddress);
+    await usernameInput.fill(username1);
+    await passwordInput.fill(password);
+    await submitButton.click();
+    
+    await expect(page.getByText('Registration successful!')).toBeVisible();
+    
+    // Navigate back to registration page
+    await page.goto('/register');
+    
+    // Second registration with same email
+    await emailInput.fill(emailAddress);
+    await usernameInput.fill(username2);
+    await passwordInput.fill(password);
+    await submitButton.click();
+    
+    // Expect error message for duplicate email
+    await expect(page.getByText('Email or username already exists')).toBeVisible();
+  });
+
+  test('should decline registration with duplicate username', async ({page}) => {
+    // Generate unique email but use the same username for both attempts
+    const username = `duplicate-user-${uuidv4().slice(0, 6)}`;
+    const emailAddress1 = `${uuidv4().slice(0, 8)}@playwright.test`;
+    const emailAddress2 = `${uuidv4().slice(0, 8)}@playwright.test`;
+    const password = 'StrongPassword123!';
+    
+    const emailInput = page.getByTestId('register-email');
+    const usernameInput = page.getByTestId('register-username');
+    const passwordInput = page.getByTestId('register-password');
+    const submitButton = page.getByTestId('register-submit');
+
+    // First registration
+    await emailInput.fill(emailAddress1);
+    await usernameInput.fill(username);
+    await passwordInput.fill(password);
+    await submitButton.click();
+    
+    await expect(page.getByText('Registration successful!')).toBeVisible();
+    
+    // Navigate back to registration page
+    await page.goto('/register');
+    
+    // Second registration with same username
+    await emailInput.fill(emailAddress2);
+    await usernameInput.fill(username);
+    await passwordInput.fill(password);
+    await submitButton.click();
+    
+    // Expect error message for duplicate username
+    await expect(page.getByText('Email or username already exists')).toBeVisible();
+  });
 });
