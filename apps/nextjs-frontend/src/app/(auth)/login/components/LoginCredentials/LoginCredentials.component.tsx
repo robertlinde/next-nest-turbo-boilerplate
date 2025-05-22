@@ -54,11 +54,16 @@ export const LoginCredentials = ({handleLoginCredentialsSuccess}: LoginCredentia
         className="mt-6 flex flex-col items-center gap-4 md:mt-10 md:gap-6 lg:mt-12 lg:gap-8"
       >
         <div className="flex flex-col flex-wrap items-center gap-1">
-          <FloatLabelInputText {...registerCredentials('email')} type="email" label="Email" />
+          <FloatLabelInputText {...registerCredentials('email')} type="email" label="Email" data-testid="login-email" />
           {errorsCredentials.email && <p className="text-red-700">{errorsCredentials.email.message}</p>}
         </div>
         <div className="flex flex-col flex-wrap items-center gap-1">
-          <FloatLabelInputText {...registerCredentials('password')} type="password" label="Password" />
+          <FloatLabelInputText
+            {...registerCredentials('password')}
+            type="password"
+            label="Password"
+            data-testid="login-password"
+          />
           {errorsCredentials.password && <p className="text-red-700">{errorsCredentials.password.message}</p>}
         </div>
         <div>
@@ -66,6 +71,7 @@ export const LoginCredentials = ({handleLoginCredentialsSuccess}: LoginCredentia
             label={isSubmittingCredentials ? 'Loading ...' : 'Login'}
             type="submit"
             disabled={isSubmittingCredentials}
+            data-testid="login-submit"
           />
         </div>
         {errorsCredentials.root && <p className="text-red-700">{errorsCredentials.root.message}</p>}

@@ -3,7 +3,8 @@ import {JSDOM} from 'jsdom';
 
 import {v4 as uuidv4} from 'uuid';
 
-import {type MailDevEmail} from './types/mail-dev-mail.type';
+import {getMaildevEmail} from '../get-maildev-email';
+
 import {type RegisterTestUserData} from './types/register-test-user-data.type';
 
 // Function to just fill the registration form - no assertions
@@ -32,45 +33,9 @@ const fillRegisterForm = async (
   return {username, email, password};
 };
 
-// Get verification email
-const getVerificationEmail = async (
-  emailAddress: string,
-  maxAttempts = 10,
-  initialDelay = 500,
-): Promise<MailDevEmail> => {
-  for (let attempts = 0; attempts < maxAttempts; attempts++) {
-    const delay = initialDelay * 1.5 ** attempts;
-
-    // eslint-disable-next-line no-await-in-loop
-    const mailDevResponse = await fetch(`${process.env.NEXT_PUBLIC_MAILDEV_API_URL}/email`); // eslint-disable-line n/prefer-global/process
-    if (!mailDevResponse.ok) {
-      throw new Error(`Failed to fetch emails from MailDev: ${mailDevResponse.statusText}`);
-    }
-
-    // eslint-disable-next-line no-await-in-loop
-    const emails = (await mailDevResponse.json()) as MailDevEmail[];
-    const verificationEmail = emails.find((email) => email.headers.to === emailAddress);
-
-    if (verificationEmail) {
-      return verificationEmail;
-    }
-
-    if (attempts < maxAttempts - 1) {
-      // eslint-disable-next-line no-await-in-loop
-      await new Promise<void>((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, delay);
-      });
-    }
-  }
-
-  throw new Error(`Verification email not found after ${maxAttempts} attempts`);
-};
-
 // Verify email by clicking the link in the email
 const verifyEmail = async (page: Page, emailAddress: string): Promise<void> => {
-  const verificationEmail = await getVerificationEmail(emailAddress);
+  const verificationEmail = await getMaildevEmail(emailAddress);
 
   const dom = new JSDOM(verificationEmail.html);
   const link = dom.window.document.querySelector('a');

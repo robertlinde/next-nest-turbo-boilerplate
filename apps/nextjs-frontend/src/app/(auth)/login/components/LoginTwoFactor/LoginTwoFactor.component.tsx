@@ -63,9 +63,14 @@ export const LoginTwoFactor = (): JSX.Element => {
         onSubmit={handleSubmit2fa(onSubmit2fa)}
         className="mt-4 flex flex-col items-center gap-4 md:mt-6 md:gap-6 lg:mt-8 lg:gap-8"
       >
-        <FloatLabelInputText {...register2fa('code')} maxLength={6} label="Code" />
+        <FloatLabelInputText {...register2fa('code')} maxLength={6} label="Code" data-testid="login-2fa" />
         {errors2fa.code && <p className="text-red-700">{errors2fa.code.message}</p>}
-        <Button label={isSubmitting2fa ? 'Loading ...' : 'Confirm'} type="submit" disabled={isSubmitting2fa} />
+        <Button
+          label={isSubmitting2fa ? 'Loading ...' : 'Confirm'}
+          type="submit"
+          disabled={isSubmitting2fa}
+          data-testid="login-submit-2fa"
+        />
         {errors2fa.root && <p className="text-red-700">{errors2fa.root.message}</p>}
       </form>
     </div>
