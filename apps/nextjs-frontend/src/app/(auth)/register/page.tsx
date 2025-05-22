@@ -103,7 +103,7 @@ export default function Register(): JSX.Element {
         <div className="flex w-full flex-col flex-wrap items-center gap-1">
           <FloatLabelInputText label="Username" {...register('username')} data-testid="register-username" type="text" />
           <small>Your username will be publicly visible. It can be changed later.</small>
-          {errors.email && <p className="text-red-700">{errors.username?.message}</p>}
+          {errors.username && <p className="text-red-700">{errors.username.message}</p>}
         </div>
         <div className="flex w-full flex-col flex-wrap items-center gap-1">
           <FloatLabelInputText
