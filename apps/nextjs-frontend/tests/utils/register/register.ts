@@ -91,15 +91,15 @@ export const register = async (
   options?: {
     registerUserData?: Partial<RegisterTestUserData>;
     skipEmailRegistrationConfirm?: boolean;
-    expectSuccess?: boolean;
+    expectCredentialsError?: boolean;
   },
 ): Promise<RegisterTestUserData> => {
-  const {registerUserData, skipEmailRegistrationConfirm = false, expectSuccess = true} = options ?? {};
+  const {registerUserData, skipEmailRegistrationConfirm = false, expectCredentialsError = false} = options ?? {};
 
   // Fill the form and submit
   const userData = await fillRegisterForm(page, registerUserData);
 
-  if (expectSuccess) {
+  if (!expectCredentialsError) {
     // Wait for successful registration message
     await expect(page.getByText('Registration successful!')).toBeVisible();
 

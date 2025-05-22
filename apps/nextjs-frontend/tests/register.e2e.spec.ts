@@ -3,10 +3,6 @@ import {test, expect} from '@playwright/test';
 import {register} from './utils/register/register';
 
 test.describe('Register', () => {
-  test.beforeEach(async ({page}) => {
-    await page.goto('/register');
-  });
-
   test('should decline registration when password is too weak', async ({page}) => {
     await register(page, {
       registerUserData: {
@@ -15,7 +11,7 @@ test.describe('Register', () => {
         password: 'weakpassword',
       },
       skipEmailRegistrationConfirm: true,
-      expectSuccess: false,
+      expectCredentialsError: true,
     });
 
     await expect(page.getByText('Password is not strong enough')).toBeVisible();
@@ -28,7 +24,7 @@ test.describe('Register', () => {
 
   test('should decline registration with duplicate email', async ({page}) => {
     // First registration
-    const {email} = await register(page, {skipEmailRegistrationConfirm: true, expectSuccess: true}); // Skip verification
+    const {email} = await register(page, {skipEmailRegistrationConfirm: true}); // Skip verification
 
     await register(page, {
       registerUserData: {
@@ -36,7 +32,7 @@ test.describe('Register', () => {
         username: `different-${Date.now().toString().slice(0, 8)}`,
       },
       skipEmailRegistrationConfirm: true,
-      expectSuccess: false,
+      expectCredentialsError: true,
     });
 
     // Expect error message for duplicate email
@@ -45,7 +41,7 @@ test.describe('Register', () => {
 
   test('should decline registration with duplicate username', async ({page}) => {
     // First registration
-    const {username} = await register(page, {skipEmailRegistrationConfirm: true, expectSuccess: true});
+    const {username} = await register(page, {skipEmailRegistrationConfirm: true});
 
     // Second registration with same username
     await page.goto('/register');
@@ -55,7 +51,7 @@ test.describe('Register', () => {
         email: `different-${Date.now()}@playwright.test`,
       },
       skipEmailRegistrationConfirm: true,
-      expectSuccess: false,
+      expectCredentialsError: true,
     });
 
     // Expect error message for duplicate username
