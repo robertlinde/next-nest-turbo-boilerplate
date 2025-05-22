@@ -44,6 +44,11 @@ export default function Profile(): JSX.Element {
 
   useEffect(() => {
     if (error || (!user && !loading)) {
+      showToast({
+        severity: 'error',
+        summary: 'Error loading profile',
+        detail: 'Please log in to access your profile.',
+      });
       router.push('/login');
     }
 
