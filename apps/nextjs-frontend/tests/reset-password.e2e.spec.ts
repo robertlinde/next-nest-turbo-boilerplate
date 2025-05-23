@@ -1,10 +1,11 @@
-import {test, expect} from '@playwright/test';
+import {expect} from '@playwright/test';
 
 import {JSDOM} from 'jsdom';
 
 import {getMaildevEmail} from './utils/get-maildev-email';
 import {login} from './utils/login/login';
 import {register} from './utils/register/register';
+import {test} from './utils/setup';
 
 test.describe('Reset password', () => {
   test('should reset password', async ({page}) => {

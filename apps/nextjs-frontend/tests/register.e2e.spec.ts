@@ -1,6 +1,7 @@
-import {test, expect} from '@playwright/test';
+import {expect} from '@playwright/test';
 
 import {register} from './utils/register/register';
+import {test} from './utils/setup';
 
 test.describe('Register', () => {
   test('should decline registration when password is too weak', async ({page}) => {
