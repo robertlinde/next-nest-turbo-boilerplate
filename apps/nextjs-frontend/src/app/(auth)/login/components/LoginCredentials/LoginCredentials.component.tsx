@@ -78,7 +78,7 @@ export const LoginCredentials = ({handleLoginCredentialsSuccess}: LoginCredentia
       </form>
       <p className="mt-4 md:mt-6 lg:mt-8">
         Forgot your password?{' '}
-        <Link className="underline" href="/forgot-password">
+        <Link className="underline" href="/forgot-password" data-testid="login-forgot-password">
           Reset it here
         </Link>
       </p>
