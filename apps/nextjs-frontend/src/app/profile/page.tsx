@@ -187,8 +187,20 @@ export default function Profile(): JSX.Element {
       <h1>Hey, {user?.username}!</h1>
       <div className="flex max-w-3xl flex-col gap-4 divide-y-2 divide-slate-300 md:gap-6 lg:gap-8">
         <form onSubmit={handleSubmit(onSubmitUpdate)} className="mt-6 flex flex-col gap-8 md:mt-10 lg:mt-12">
-          <FloatLabelInputText label="Email" {...register('email')} type="email" className="w-full" />
-          <FloatLabelInputText label="Username" {...register('username')} type="text" className="w-full" />
+          <FloatLabelInputText
+            label="Email"
+            {...register('email')}
+            type="email"
+            className="w-full"
+            data-testid="profile-email-input"
+          />
+          <FloatLabelInputText
+            label="Username"
+            {...register('username')}
+            type="text"
+            className="w-full"
+            data-testid="profile-username-input"
+          />
           <FloatLabelInputText label="Password" {...register('password')} type="password" className="w-full" />
           {errors.root && <p className="text-red-700">{errors.root.message}</p>}
           <div className="flex w-full justify-end">
@@ -197,6 +209,7 @@ export default function Profile(): JSX.Element {
               disabled={isSubmitting}
               label={isSubmitting ? 'Saving ...' : 'Update profile'}
               className="w-fit"
+              data-testid="profile-save-button"
             />
           </div>
         </form>
@@ -211,6 +224,7 @@ export default function Profile(): JSX.Element {
             }
             label="Logout"
             icon="pi pi-sign-out"
+            data-testid="profile-logout-button"
           />
           <Button
             onClick={onDelete}
