@@ -72,6 +72,10 @@ test.describe('Edit profile', () => {
 
     await page.getByTestId('profile-logout-button').click();
 
+    // Wait for logout to complete
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(1000);
+
     // Validate that the old email cannot be used to login
     await login(
       page,
@@ -83,6 +87,9 @@ test.describe('Edit profile', () => {
         expectCredentialsError: true,
       },
     );
+
+    // Clear any error state before trying new credentials
+    await page.waitForLoadState('networkidle');
 
     await login(page, {
       email: newEmail,
@@ -133,6 +140,9 @@ test.describe('Edit profile', () => {
     // Assert that the password has been changed
     await expect(page.getByText('Profile update successful')).toBeVisible();
 
+    // Wait for any updates to complete
+    await page.waitForLoadState('networkidle');
+
     // test login with old password
     await login(
       page,
@@ -144,6 +154,9 @@ test.describe('Edit profile', () => {
         expectCredentialsError: true,
       },
     );
+
+    // Clear any error state before trying new credentials
+    await page.waitForLoadState('networkidle');
 
     // test login with new password
     await login(
@@ -196,6 +209,9 @@ test.describe('Edit profile', () => {
 
     // Assert that the account has been deleted
     await expect(page.getByText('Deleted profile successfully')).toBeVisible();
+
+    // Wait for deletion to complete
+    await page.waitForLoadState('networkidle');
 
     // Validate that the old email cannot be used to login
     await login(

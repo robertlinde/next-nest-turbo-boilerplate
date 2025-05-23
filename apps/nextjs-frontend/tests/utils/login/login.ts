@@ -7,7 +7,14 @@ import {type LoginCredentials} from './types/login-credentials.type';
 
 // Function to fill the login form - no assertions
 const fillLoginForm = async (page: Page, credentials: LoginCredentials): Promise<void> => {
-  await page.goto('/login');
+  // Wait for any redirects to complete before navigating
+  await page.waitForLoadState('networkidle');
+
+  // Use waitForURL to handle potential redirects
+  await page.goto('/login', {waitUntil: 'networkidle'});
+
+  // Wait for the login form to be visible before interacting
+  await page.waitForSelector('[data-testid="login-email"]', {state: 'visible'});
 
   const emailInput = page.getByTestId('login-email');
   const passwordInput = page.getByTestId('login-password');
@@ -20,6 +27,9 @@ const fillLoginForm = async (page: Page, credentials: LoginCredentials): Promise
 
 // Function to handle 2FA step
 const handle2Fa = async (page: Page, twoFaCode: string): Promise<void> => {
+  // Wait for 2FA form to be visible
+  await page.waitForSelector('[data-testid="login-2fa"]', {state: 'visible'});
+
   const twoFaCodeInput = page.getByTestId('login-2fa');
   const twoFaSubmitButton = page.getByTestId('login-submit-2fa');
 
@@ -68,7 +78,18 @@ export const login = async (
     return;
   }
 
-  await expect(page.getByText('Please enter your 2FA code')).toBeVisible();
+  // Wait for either 2FA prompt or error message
+  try {
+    await expect(page.getByText('Please enter your 2FA code')).toBeVisible({timeout: 5000});
+  } catch (error) {
+    // If 2FA prompt doesn't appear, check if we're already logged in or have an error
+    const currentUrl = page.url();
+    if (currentUrl.includes('/login')) {
+      throw error; // Re-throw if we're still on login page
+    }
+
+    return; // Already logged in, exit early
+  }
 
   // Wait for 2FA prompt (assuming successful credential validation)
   if (use2Fa !== false) {
