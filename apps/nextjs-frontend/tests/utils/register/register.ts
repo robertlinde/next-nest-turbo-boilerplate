@@ -20,10 +20,10 @@ const fillRegisterForm = async (
   const password = registerUserData?.password ?? 'StrongPassword123!';
 
   // Fill the form
-  const emailInput = page.getByTestId('register-email');
-  const usernameInput = page.getByTestId('register-username');
-  const passwordInput = page.getByTestId('register-password');
-  const submitButton = page.getByTestId('register-submit');
+  const emailInput = page.getByTestId('register-email-input');
+  const usernameInput = page.getByTestId('register-username-input');
+  const passwordInput = page.getByTestId('register-password-input');
+  const submitButton = page.getByTestId('register-submit-button');
 
   await emailInput.fill(email);
   await usernameInput.fill(username);

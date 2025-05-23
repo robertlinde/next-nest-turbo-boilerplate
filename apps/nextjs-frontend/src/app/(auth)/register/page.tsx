@@ -96,12 +96,17 @@ export default function Register(): JSX.Element {
         className="mt-6 flex w-full max-w-sm flex-col items-center gap-4 md:mt-10 md:gap-6 lg:mt-12 lg:gap-8"
       >
         <div className="flex w-full flex-col flex-wrap items-center gap-1">
-          <FloatLabelInputText label="Email" {...register('email')} data-testid="register-email" type="email" />
+          <FloatLabelInputText label="Email" {...register('email')} data-testid="register-email-input" type="email" />
           <small>Your email won't be publicly visible.</small>
           {errors.email && <p className="text-red-700">{errors.email.message}</p>}
         </div>
         <div className="flex w-full flex-col flex-wrap items-center gap-1">
-          <FloatLabelInputText label="Username" {...register('username')} data-testid="register-username" type="text" />
+          <FloatLabelInputText
+            label="Username"
+            {...register('username')}
+            data-testid="register-username-input"
+            type="text"
+          />
           <small>Your username will be publicly visible. It can be changed later.</small>
           {errors.username && <p className="text-red-700">{errors.username.message}</p>}
         </div>
@@ -109,7 +114,7 @@ export default function Register(): JSX.Element {
           <FloatLabelInputText
             label="Password"
             {...register('password')}
-            data-testid="register-password"
+            data-testid="register-password-input"
             type="password"
           />
           {errors.password && <p className="text-red-700">{errors.password.message}</p>}
@@ -118,7 +123,7 @@ export default function Register(): JSX.Element {
           <Button
             label={isSubmitting ? 'Loading ...' : 'Register'}
             type="submit"
-            data-testid="register-submit"
+            data-testid="register-submit-button"
             disabled={isSubmitting}
           />
         </div>

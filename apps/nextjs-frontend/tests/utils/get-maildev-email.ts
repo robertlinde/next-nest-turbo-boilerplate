@@ -24,14 +24,14 @@ export const getMaildevEmail = async (
     const emails = (await mailDevResponse.json()) as MailDevEmail[];
 
     // Filter emails by recipient
-    const email = emails.find((email) => {
+    const foundEmail = emails.find((email) => {
       const subjectMatch = subject ? email.headers.subject === subject : true;
 
       return email.headers.to === emailAddress && subjectMatch;
     });
 
-    if (email) {
-      return email;
+    if (foundEmail) {
+      return foundEmail;
     }
 
     if (attempts < maxAttempts - 1) {
