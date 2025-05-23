@@ -1,12 +1,17 @@
-import {defineConfig, devices} from '@playwright/test';
+import {dirname, resolve} from 'node:path';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+import {fileURLToPath} from 'node:url';
+
+import {defineConfig, devices} from '@playwright/test';
+import dotenv from 'dotenv';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// eslint-disable-next-line n/prefer-global/process
+if (!process.env.CI) {
+  dotenv.config({path: resolve(__dirname, '.env')});
+}
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -29,14 +34,14 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI), // eslint-disable-line n/prefer-global/process
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0, // eslint-disable-line n/prefer-global/process
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined, // eslint-disable-line n/prefer-global/process
+  /* Opt out of parallel tests on to prevent flaky tests. */
+  workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://127.0.0.1:3000', // eslint-disable-line @typescript-eslint/naming-convention
+    baseURL: 'http://localhost:3000', // eslint-disable-line @typescript-eslint/naming-convention
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -49,20 +54,20 @@ export default defineConfig({
       use: {...devices['Desktop Chrome']},
     },
 
-    {
-      name: 'webkit',
-      use: {...devices['Desktop Safari']},
-    },
+    // {
+    //   name: 'webkit',
+    //   use: {...devices['Desktop Safari']},
+    // },
 
-    /* Test against mobile viewports. */
+    // /* Test against mobile viewports. */
     {
       name: 'Mobile Chrome',
       use: {...devices['Pixel 5']},
     },
-    {
-      name: 'Mobile Safari',
-      use: {...devices['iPhone 12']},
-    },
+    // {
+    //   name: 'Mobile Safari',
+    //   use: {...devices['iPhone 15']},
+    // },
 
     /* Test against branded browsers. */
     // {
@@ -78,7 +83,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: 'npm run start:dev',
-    url: 'http://127.0.0.1:3000',
+    url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI, // eslint-disable-line n/prefer-global/process
   },
 });

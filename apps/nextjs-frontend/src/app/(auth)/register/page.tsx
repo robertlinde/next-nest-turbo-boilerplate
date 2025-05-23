@@ -44,13 +44,33 @@ export default function Register(): JSX.Element {
           detail: 'You have registered. We will send you a confirmation email.',
         });
       },
-      onError(error: ApiError) {
-        if (error.response.status === 409) {
-          setError('root', {message: 'Email or username already exists'});
-        } else if (error.response.status === 500) {
-          setError('root', {message: 'Something went wrong'});
-        } else {
-          setError('root', {message: 'An unknown error occurred'});
+      async onError(error: ApiError) {
+        switch (error.response.status) {
+          case 400: {
+            const errorResponse = (await error.response.json()) as {message?: string[]};
+            const message: string = errorResponse?.message
+              ? errorResponse.message.map((msg) => msg.charAt(0).toUpperCase() + msg.slice(1)).join(', ')
+              : 'An unexpected error occurred.';
+            setError('root', {message});
+
+            break;
+          }
+
+          case 409: {
+            setError('root', {message: 'Email or username already exists'});
+
+            break;
+          }
+
+          case 500: {
+            setError('root', {message: 'Something went wrong'});
+
+            break;
+          }
+
+          default: {
+            setError('root', {message: 'An unknown error occurred'});
+          }
         }
       },
     });
@@ -76,21 +96,36 @@ export default function Register(): JSX.Element {
         className="mt-6 flex w-full max-w-sm flex-col items-center gap-4 md:mt-10 md:gap-6 lg:mt-12 lg:gap-8"
       >
         <div className="flex w-full flex-col flex-wrap items-center gap-1">
-          <FloatLabelInputText label="Email" {...register('email')} type="email" />
+          <FloatLabelInputText label="Email" {...register('email')} data-testid="register-email-input" type="email" />
           <small>Your email won't be publicly visible.</small>
           {errors.email && <p className="text-red-700">{errors.email.message}</p>}
         </div>
         <div className="flex w-full flex-col flex-wrap items-center gap-1">
-          <FloatLabelInputText label="Username" {...register('username')} type="text" />
+          <FloatLabelInputText
+            label="Username"
+            {...register('username')}
+            data-testid="register-username-input"
+            type="text"
+          />
           <small>Your username will be publicly visible. It can be changed later.</small>
-          {errors.email && <p className="text-red-700">{errors.username?.message}</p>}
+          {errors.username && <p className="text-red-700">{errors.username.message}</p>}
         </div>
         <div className="flex w-full flex-col flex-wrap items-center gap-1">
-          <FloatLabelInputText label="Password" {...register('password')} type="password" />
+          <FloatLabelInputText
+            label="Password"
+            {...register('password')}
+            data-testid="register-password-input"
+            type="password"
+          />
           {errors.password && <p className="text-red-700">{errors.password.message}</p>}
         </div>
         <div>
-          <Button label={isSubmitting ? 'Loading ...' : 'Register'} type="submit" disabled={isSubmitting} />
+          <Button
+            label={isSubmitting ? 'Loading ...' : 'Register'}
+            type="submit"
+            data-testid="register-submit-button"
+            disabled={isSubmitting}
+          />
         </div>
         {errors.root && <p className="text-red-700">{errors.root.message}</p>}
       </form>

@@ -63,6 +63,7 @@ export const Header = (): JSX.Element => {
         }}
         aria-controls="end_menu"
         aria-haspopup
+        data-testid="header-user-menu-button"
       />
     </div>
   );
@@ -70,7 +71,7 @@ export const Header = (): JSX.Element => {
   const notSignedInItem: JSX.Element = (
     <div className="flex gap-2">
       <Link href="/login">
-        <Button label="Login" outlined size="small" />
+        <Button label="Login" outlined size="small" data-testid="header-login-button" />
       </Link>
       <Link href="/register">
         <Button label="Register" size="small" />

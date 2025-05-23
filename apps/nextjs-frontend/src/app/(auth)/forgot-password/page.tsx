@@ -71,11 +71,21 @@ export default function ForgotPassword(): JSX.Element {
         className="mt-6 flex flex-col items-center gap-4 md:mt-10 md:gap-6 lg:mt-12 lg:gap-8"
       >
         <div className="flex flex-col flex-wrap items-center gap-1">
-          <FloatLabelInputText label="Email" {...register('email')} type="email" />
+          <FloatLabelInputText
+            label="Email"
+            {...register('email')}
+            type="email"
+            data-testid="forgot-password-email-input"
+          />
           {errors.email && <p className="text-red-700">{errors.email.message}</p>}
         </div>
         <div>
-          <Button label={isSubmitting ? 'Loading ...' : 'Reset password'} type="submit" disabled={isSubmitting} />
+          <Button
+            label={isSubmitting ? 'Loading ...' : 'Reset password'}
+            type="submit"
+            disabled={isSubmitting}
+            data-testid="forgot-password-submit-button"
+          />
         </div>
         {errors.root && <p className="text-red-700">{errors.root.message}</p>}
       </form>

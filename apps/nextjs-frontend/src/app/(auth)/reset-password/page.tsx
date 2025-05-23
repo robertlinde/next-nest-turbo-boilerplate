@@ -101,11 +101,21 @@ export default function ResetPassword(): JSX.Element {
         className="mt-6 flex flex-col items-center gap-4 md:mt-10 md:gap-6 lg:mt-12 lg:gap-8"
       >
         <div className="flex flex-col flex-wrap items-center gap-1">
-          <FloatLabelInputText label="Password" {...register('password')} type="password" />
+          <FloatLabelInputText
+            label="Password"
+            {...register('password')}
+            type="password"
+            data-testid="reset-password-password-input"
+          />
           {errors.password && <p className="text-red-700">{errors.password.message}</p>}
         </div>
         <div>
-          <Button label={isSubmitting ? 'Loading ...' : 'Reset password'} type="submit" disabled={isSubmitting} />
+          <Button
+            label={isSubmitting ? 'Loading ...' : 'Reset password'}
+            type="submit"
+            disabled={isSubmitting}
+            data-testid="reset-password-submit-button"
+          />
         </div>
         {errors.root && <p className="text-red-700">{errors.root.message}</p>}
       </form>
