@@ -68,10 +68,10 @@ export const login = async (
     return;
   }
 
+  await expect(page.getByText('Please enter your 2FA code')).toBeVisible();
+
   // Wait for 2FA prompt (assuming successful credential validation)
   if (use2Fa !== false) {
-    await expect(page.getByText('Please enter your 2FA code')).toBeVisible();
-
     const twoFaCode = typeof use2Fa === 'string' ? use2Fa : await get2FaCodeFromEmail(credentials.email);
 
     await handle2Fa(page, twoFaCode);

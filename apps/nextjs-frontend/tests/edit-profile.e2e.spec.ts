@@ -29,6 +29,26 @@ test.describe('Edit profile', () => {
     await expect(page.getByText(`Hey, ${newUsername}`)).toBeVisible();
   });
 
+  test('should show error when username is empty', async ({page}) => {
+    const user = await register(page);
+    await login(page, {
+      email: user.email,
+      password: user.password,
+    });
+
+    await page.getByTestId('header-user-menu-button').click();
+    await page.getByText('Profile').click();
+
+    // Assert that we are redirected to the profile page
+    await expect(page).toHaveURL(/\/profile/);
+
+    await page.getByTestId('profile-username-input').fill('');
+    await page.getByTestId('profile-save-button').click();
+
+    // Assert that the error message is shown
+    await expect(page.getByText('Username must be at least 4 characters long')).toBeVisible();
+  });
+
   test('should change email', async ({page}) => {
     const user = await register(page);
     await login(page, {
@@ -51,9 +71,141 @@ test.describe('Edit profile', () => {
 
     await page.getByTestId('profile-logout-button').click();
 
+    // Validate that the old email cannot be used to login
+    await login(
+      page,
+      {
+        email: user.email,
+        password: user.password,
+      },
+      {
+        expectCredentialsError: true,
+      },
+    );
+
     await login(page, {
       email: newEmail,
       password: user.password,
     });
+  });
+
+  test('should show error when email is empty', async ({page}) => {
+    const user = await register(page);
+    await login(page, {
+      email: user.email,
+      password: user.password,
+    });
+
+    await page.getByTestId('header-user-menu-button').click();
+    await page.getByText('Profile').click();
+
+    // Assert that we are redirected to the profile page
+    await expect(page).toHaveURL(/\/profile/);
+
+    await page.getByTestId('profile-email-input').fill('');
+    await page.getByTestId('profile-save-button').click();
+
+    // Assert that the error message is shown
+    await expect(page.getByText('Invalid email')).toBeVisible();
+  });
+
+  test('should change password', async ({page}) => {
+    const user = await register(page);
+    await login(page, {
+      email: user.email,
+      password: user.password,
+    });
+
+    await page.getByTestId('header-user-menu-button').click();
+    await page.getByText('Profile').click();
+
+    // Assert that we are redirected to the profile page
+    await expect(page).toHaveURL(/\/profile/);
+
+    const newPassword = 'NewStrongPassword123!';
+
+    await page.getByTestId('profile-password-input').fill(newPassword);
+    await page.getByTestId('profile-save-button').click();
+
+    await page.getByText('Yes').click();
+
+    // Assert that the password has been changed
+    await expect(page.getByText('Profile update successful')).toBeVisible();
+
+    // test login with old password
+    await login(
+      page,
+      {
+        email: user.email,
+        password: user.password,
+      },
+      {
+        expectCredentialsError: true,
+      },
+    );
+
+    // test login with new password
+    await login(
+      page,
+      {
+        email: user.email,
+        password: newPassword,
+      },
+      {
+        use2Fa: false, // Skip 2FA since confirmation of credentials is enough
+      },
+    );
+  });
+
+  test('should show error when password is empty', async ({page}) => {
+    const user = await register(page);
+    await login(page, {
+      email: user.email,
+      password: user.password,
+    });
+
+    await page.getByTestId('header-user-menu-button').click();
+    await page.getByText('Profile').click();
+
+    // Assert that we are redirected to the profile page
+    await expect(page).toHaveURL(/\/profile/);
+
+    await page.getByTestId('profile-password-input').fill('');
+    await page.getByTestId('profile-save-button').click();
+
+    // Assert that the error message is shown
+    await expect(page.getByText('Password must be at least 4 characters long')).toBeVisible();
+  });
+
+  test('should delete account', async ({page}) => {
+    const user = await register(page);
+    await login(page, {
+      email: user.email,
+      password: user.password,
+    });
+
+    await page.getByTestId('header-user-menu-button').click();
+    await page.getByText('Profile').click();
+
+    // Assert that we are redirected to the profile page
+    await expect(page).toHaveURL(/\/profile/);
+
+    await page.getByTestId('profile-delete-button').click();
+    await page.getByText('Yes').click();
+
+    // Assert that the account has been deleted
+    await expect(page.getByText('Deleted profile successfully')).toBeVisible();
+
+    // Validate that the old email cannot be used to login
+    await login(
+      page,
+      {
+        email: user.email,
+        password: user.password,
+      },
+      {
+        expectCredentialsError: true,
+      },
+    );
   });
 });
