@@ -2,7 +2,7 @@ import {Logger, ValidationPipe} from '@nestjs/common';
 import {NestFactory} from '@nestjs/core';
 
 import {DocumentBuilder, OpenAPIObject, SwaggerModule} from '@nestjs/swagger';
-import * as cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 
 import helmet from 'helmet';
 

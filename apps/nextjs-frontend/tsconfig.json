@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "ES2022",
+    "esModuleInterop": true,
+
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
     "plugins": [
@@ -12,8 +16,6 @@
       "@/*": ["./src/*"]
     },
     /* Modules */
-    "module": "ESNext" /* Specify what module code is generated. */,
-    "moduleResolution": "node" /* Specify how TypeScript looks up a file from a given module specifier. */,
     "allowImportingTsExtensions": true,
     /* JavaScript Support */
     "allowJs": false /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
@@ -26,7 +28,6 @@
     "declarationDir": "./types" /* Specify the output directory for generated declaration files. */,
     /* Interop Constraints */
     "allowSyntheticDefaultImports": true /* Allow 'import x from y' when a module doesn't have a default export. */,
-    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
     /* Type Checking */
     "strict": true /* Enable all strict type-checking options. */,
