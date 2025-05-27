@@ -31,8 +31,6 @@ const xoConfig: FlatXoConfig = [
 
       // Disable console logs in frontend
       'no-console': ['error'],
-
-      'unicorn/filename-case': 'off',
     },
   },
 ];

@@ -1,4 +1,4 @@
-import {type LoginCredentialsFormFields} from '../../../app/(auth)/login/components/LoginCredentials/types/login-credentials-form-fields.type.ts';
+import {type LoginCredentialsFormFields} from '../../../app/(auth)/login/components/login-credentials/types/login-credentials-form-fields.type.ts';
 import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
 
 export const loginCredentials = async (data: LoginCredentialsFormFields): Promise<void> => {

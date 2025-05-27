@@ -1,4 +1,4 @@
-import {type LoginTwoFactorFormFields} from '@/app/(auth)/login/components/LoginTwoFactor/types/login-two-factor-form-fields.type.ts';
+import {type LoginTwoFactorFormFields} from '@/app/(auth)/login/components/login-two-factor/types/login-two-factor-form-fields.type';
 import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
 
 export const loginTwoFactorAuth = async (data: LoginTwoFactorFormFields): Promise<void> => {
