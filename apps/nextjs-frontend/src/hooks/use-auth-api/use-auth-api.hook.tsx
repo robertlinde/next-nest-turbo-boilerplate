@@ -1,24 +1,21 @@
 'use client';
 
 import {type MutationFunction, useMutation, type UseMutationResult} from '@tanstack/react-query';
-
-import {confirm as confirmRequest} from './services/confirm.service';
-import {forgotPassword as forgotPasswordRequest} from './services/forgot-password.service';
-import {loginCredentials as loginCredentialsRequest} from './services/login-credentials.service';
-import {loginTwoFactorAuth} from './services/login-two-factor.service';
-import {logout as logoutRequest} from './services/logout.service';
-import {register as registerRequest} from './services/register.service';
-import {resetPassword as resetPasswordRequest} from './services/reset-password.service';
-
-import {type ConfirmHandlerOptions} from './types/confirm-handler-options.type';
-import {type ForgotPasswordHandlerOptions} from './types/forgot-password-handler-options.type';
-import {type LoginCredentialsHandlerOptions} from './types/login-credentials-handler-options.type';
-import {type LoginTwoFactorHandlerOptions} from './types/login-two-factor-handler-options.type';
-import {type LogoutHandlerOptions} from './types/logout-handler-options.type';
-import {type RegisterHandlerOptions} from './types/register-handler-options.type';
-import {type ResetPasswordHandlerOptions} from './types/reset-password-handler-options.type';
-
-import {useUserStore} from '@/store/user.store';
+import {confirm as confirmRequest} from './services/confirm.service.ts';
+import {forgotPassword as forgotPasswordRequest} from './services/forgot-password.service.ts';
+import {loginCredentials as loginCredentialsRequest} from './services/login-credentials.service.ts';
+import {loginTwoFactorAuth} from './services/login-two-factor.service.ts';
+import {logout as logoutRequest} from './services/logout.service.ts';
+import {register as registerRequest} from './services/register.service.ts';
+import {resetPassword as resetPasswordRequest} from './services/reset-password.service.ts';
+import {type ConfirmHandlerOptions} from './types/confirm-handler-options.type.ts';
+import {type ForgotPasswordHandlerOptions} from './types/forgot-password-handler-options.type.ts';
+import {type LoginCredentialsHandlerOptions} from './types/login-credentials-handler-options.type.ts';
+import {type LoginTwoFactorHandlerOptions} from './types/login-two-factor-handler-options.type.ts';
+import {type LogoutHandlerOptions} from './types/logout-handler-options.type.ts';
+import {type RegisterHandlerOptions} from './types/register-handler-options.type.ts';
+import {type ResetPasswordHandlerOptions} from './types/reset-password-handler-options.type.ts';
+import {useUserStore} from '@/store/user.store.ts';
 import type {ApiError} from '@/utils/api/api-error';
 
 /**
@@ -27,11 +24,10 @@ import type {ApiError} from '@/utils/api/api-error';
  * @param {MutationFunction} mutationFn - The mutation function to execute.
  * @returns {UseMutationResult<unknown, ApiError>} The mutation result.
  */
-const useApiMutation = (mutationFn: MutationFunction): UseMutationResult<unknown, ApiError> => {
-  return useMutation({
+const useApiMutation = (mutationFn: MutationFunction): UseMutationResult<unknown, ApiError> =>
+  useMutation({
     mutationFn,
   });
-};
 
 /**
  * A custom hook that provides methods for various authentication-related actions such as login,

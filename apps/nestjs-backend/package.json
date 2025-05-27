@@ -11,8 +11,6 @@
     "db:start": "docker-compose up -d",
     "db:stop": "docker-compose down",
     "db:restart": "docker-compose down && docker-compose up -d",
-    "lint": "xo",
-    "lint:fix": "xo --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
@@ -79,6 +77,9 @@
     "ts-jest": "29.3.4",
     "ts-loader": "9.5.2",
     "tsconfig-paths": "4.2.0",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "eslint": "9.27.0",
+    "eslint-plugin-unicorn": "59.0.1",
+    "xo": "1.0.0"
   }
 }

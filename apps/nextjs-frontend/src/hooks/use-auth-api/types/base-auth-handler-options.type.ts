@@ -1,4 +1,4 @@
-import {type ApiError} from '@/utils/api/api-error';
+import {type ApiError} from '@/utils/api/api-error.ts';
 
 export type BaseAuthHandlerOptions = {
   onSuccess?: () => void | Promise<void>;

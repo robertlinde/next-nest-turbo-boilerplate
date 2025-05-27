@@ -1,18 +1,15 @@
 'use client';
 
 import {useState, type JSX} from 'react';
-
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Button} from 'primereact/button';
 import {type SubmitHandler, useForm} from 'react-hook-form';
-
-import {type ForgotPasswordFormFields} from './types/forgot-password-form-fields.type';
-import {forgotPasswordSchema} from './types/forgot-password.schema';
-
-import {FloatLabelInputText} from '@/components/FloatLabelInputText/FloatLabelInputText.component';
-import {useAuthApi} from '@/hooks/useAuthApi/useAuthApi';
-import {useToast} from '@/hooks/useToast/useToast';
-import {type ApiError} from '@/utils/api/api-error';
+import {type ForgotPasswordFormFields} from './types/forgot-password-form-fields.type.ts';
+import {forgotPasswordSchema} from './types/forgot-password.schema.ts';
+import {FloatLabelInputText} from '@/components/float-label-input-text/float-label-input-text.component.tsx';
+import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
+import {useToast} from '@/hooks/use-toast/use-toast.hook.tsx';
+import {type ApiError} from '@/utils/api/api-error.ts';
 
 export default function ForgotPassword(): JSX.Element {
   const {showToast} = useToast();
@@ -67,8 +64,8 @@ export default function ForgotPassword(): JSX.Element {
     <div className="flex flex-col items-center">
       <h2>Reset your password</h2>
       <form
-        onSubmit={handleSubmit(onSubmit)}
         className="mt-6 flex flex-col items-center gap-4 md:mt-10 md:gap-6 lg:mt-12 lg:gap-8"
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex flex-col flex-wrap items-center gap-1">
           <FloatLabelInputText
@@ -77,7 +74,7 @@ export default function ForgotPassword(): JSX.Element {
             type="email"
             data-testid="forgot-password-email-input"
           />
-          {errors.email && <p className="text-red-700">{errors.email.message}</p>}
+          {errors.email ? <p className="text-red-700">{errors.email.message}</p> : null}
         </div>
         <div>
           <Button
@@ -87,7 +84,7 @@ export default function ForgotPassword(): JSX.Element {
             data-testid="forgot-password-submit-button"
           />
         </div>
-        {errors.root && <p className="text-red-700">{errors.root.message}</p>}
+        {errors.root ? <p className="text-red-700">{errors.root.message}</p> : null}
       </form>
     </div>
   );

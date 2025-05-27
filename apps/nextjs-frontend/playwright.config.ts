@@ -1,7 +1,5 @@
 import {dirname, resolve} from 'node:path';
-
 import {fileURLToPath} from 'node:url';
-
 import {defineConfig, devices} from '@playwright/test';
 import dotenv from 'dotenv';
 
@@ -21,11 +19,11 @@ export default defineConfig({
 
   // Explicitly ignore backend Jest test files
   testIgnore: [
-    '**/apps/nestjs-backend/**/*.spec.ts',
-    '**/apps/backend/**/*.spec.ts',
-    '**/*.unit.spec.ts',
-    '**/*.service.spec.ts',
-    '**/*.controller.spec.ts',
+    '**/apps/nestjs-backend/**/*.spec',
+    '**/apps/backend/**/*.spec',
+    '**/*.unit.spec',
+    '**/*.service.spec',
+    '**/*.controller.spec',
   ],
 
   /* Run tests in files in parallel */
