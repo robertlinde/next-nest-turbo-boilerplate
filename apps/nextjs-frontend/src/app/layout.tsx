@@ -8,7 +8,7 @@ import './globals.css';
 import {ReactQueryProvider} from '@/providers/react-query.provider.tsx';
 import {ToastProvider} from '@/providers/toast.provider.tsx';
 import {UserProvider} from '@/providers/user.provider.tsx';
-import {Header} from '@/components/header/Header.component.tsx';
+import {Header} from '@/components/header/my-header.component.tsx';
 
 export const metadata: Metadata = {
   title: 'Next.js Frontend',
