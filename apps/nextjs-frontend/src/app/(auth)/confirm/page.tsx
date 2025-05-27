@@ -32,7 +32,7 @@ export default function Confirm(): JSX.Element {
         },
       });
     }
-  }, [searchParameters, confirm]);
+  }, [searchParameters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>

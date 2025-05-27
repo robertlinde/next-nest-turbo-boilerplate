@@ -1,1 +1,4 @@
-{"**/*.{js,ts,tsx,jsx}": ["xo --fix", "prettier --write"], "**/*.{json,md,css,html}": ["prettier --write"]}
+{
+  "*.{js,ts,tsx}": ["npm run format", "npm run lint:fix"],
+  "*.{json,md,css,html}": ["npm run format"]
+}

@@ -54,7 +54,7 @@ export default function Profile(): JSX.Element {
         username: user.username,
       });
     }
-  }, [error, loading, user, reset, router, showToast]);
+  }, [error, loading, user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateProfileMutation = useMutation({
     mutationFn: updateProfile,
