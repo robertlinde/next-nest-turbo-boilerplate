@@ -1,25 +1,21 @@
 'use client';
 
 import {type JSX, useEffect} from 'react';
-
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useMutation} from '@tanstack/react-query';
 import {useRouter} from 'next/navigation';
 import {Button} from 'primereact/button';
 import {type SubmitHandler, useForm} from 'react-hook-form';
-
-import {deleteProfile} from './services/delete-profile.service';
-import {updateProfile} from './services/update-profile.service';
-import {type ProfileFormFields} from './types/profile-form-fields.type';
-import {profileSchema} from './types/profile.schema';
-
-import {FloatLabelInputText} from '@/components/FloatLabelInputText/FloatLabelInputText.component';
-
-import {useAuthApi} from '@/hooks/useAuthApi/useAuthApi';
-import {useConfirmDialog} from '@/hooks/useConfirmDialog/useConfirmDialog';
-import {useToast} from '@/hooks/useToast/useToast';
-import {useUserStore} from '@/store/user.store';
-import {type ApiError} from '@/utils/api/api-error';
+import {deleteProfile} from './services/delete-profile.service.ts';
+import {updateProfile} from './services/update-profile.service.ts';
+import {type ProfileFormFields} from './types/profile-form-fields.type.ts';
+import {profileSchema} from './types/profile.schema.ts';
+import {FloatLabelInputText} from '@/components/FloatLabelInputText/FloatLabelInputText.component.tsx';
+import {useAuthApi} from '@/hooks/useAuthApi/useAuthApi.tsx';
+import {useConfirmDialog} from '@/hooks/useConfirmDialog/useConfirmDialog.tsx';
+import {useToast} from '@/hooks/useToast/useToast.tsx';
+import {useUserStore} from '@/store/user.store.ts';
+import {type ApiError} from '@/utils/api/api-error.ts';
 
 export default function Profile(): JSX.Element {
   const {user, loading, error, loadUser} = useUserStore();
@@ -58,7 +54,7 @@ export default function Profile(): JSX.Element {
         username: user.username,
       });
     }
-  }, [error, loading, user]);
+  }, [error, loading, user, reset, router, showToast]);
 
   const updateProfileMutation = useMutation({
     mutationFn: updateProfile,
@@ -186,7 +182,7 @@ export default function Profile(): JSX.Element {
     <>
       <h1>Hey, {user?.username}!</h1>
       <div className="flex max-w-3xl flex-col gap-4 divide-y-2 divide-slate-300 md:gap-6 lg:gap-8">
-        <form onSubmit={handleSubmit(onSubmitUpdate)} className="mt-6 flex flex-col gap-8 md:mt-10 lg:mt-12">
+        <form className="mt-6 flex flex-col gap-8 md:mt-10 lg:mt-12" onSubmit={handleSubmit(onSubmitUpdate)}>
           <div className="flex flex-col flex-wrap items-center gap-1">
             <FloatLabelInputText
               label="Email"
@@ -195,7 +191,7 @@ export default function Profile(): JSX.Element {
               className="w-full"
               data-testid="profile-email-input"
             />
-            {errors.email && <p className="text-red-700">{errors.email.message}</p>}
+            {errors.email ? <p className="text-red-700">{errors.email.message}</p> : null}
           </div>
           <div className="flex flex-col flex-wrap items-center gap-1">
             <FloatLabelInputText
@@ -205,7 +201,7 @@ export default function Profile(): JSX.Element {
               className="w-full"
               data-testid="profile-username-input"
             />
-            {errors.username && <p className="text-red-700">{errors.username.message}</p>}
+            {errors.username ? <p className="text-red-700">{errors.username.message}</p> : null}
           </div>
           <div className="flex flex-col flex-wrap items-center gap-1">
             <FloatLabelInputText
@@ -215,9 +211,9 @@ export default function Profile(): JSX.Element {
               className="w-full"
               data-testid="profile-password-input"
             />
-            {errors.password && <p className="text-red-700">{errors.password.message}</p>}
+            {errors.password ? <p className="text-red-700">{errors.password.message}</p> : null}
           </div>
-          {errors.root && <p className="text-red-700">{errors.root.message}</p>}
+          {errors.root ? <p className="text-red-700">{errors.root.message}</p> : null}
           <div className="flex w-full justify-end">
             <Button
               type="submit"
@@ -230,6 +226,9 @@ export default function Profile(): JSX.Element {
         </form>
         <div className="flex flex-row flex-wrap justify-between gap-2 pt-4 md:pt-6 lg:pt-8">
           <Button
+            label="Logout"
+            icon="pi pi-sign-out"
+            data-testid="profile-logout-button"
             onClick={async () =>
               logout({
                 onSuccess() {
@@ -237,16 +236,13 @@ export default function Profile(): JSX.Element {
                 },
               })
             }
-            label="Logout"
-            icon="pi pi-sign-out"
-            data-testid="profile-logout-button"
           />
           <Button
-            onClick={onDelete}
             label="Delete account"
             icon="pi pi-trash"
             className="!bg-red-700 text-white hover:bg-red-600"
             data-testid="profile-delete-button"
+            onClick={onDelete}
           />
         </div>
       </div>

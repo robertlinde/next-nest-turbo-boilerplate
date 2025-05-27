@@ -1,14 +1,11 @@
 import {Logger, ValidationPipe} from '@nestjs/common';
 import {NestFactory} from '@nestjs/core';
-
 import {DocumentBuilder, OpenAPIObject, SwaggerModule} from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
-
 import helmet from 'helmet';
-
-import {AppModule} from './app.module';
+import {AppModule} from './app.module.ts';
 import {MikroOrmExceptionFilter} from './common/filters/mikro-orm-exception/mikro-orm-exception.filter';
-import {Logger as LoggerService} from './common/logger/logger.service';
+import {Logger as LoggerService} from './common/logger/logger.service.ts';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {

@@ -1,8 +1,7 @@
 import {Cascade, Entity, Enum, OneToMany, Property, types, Unique} from '@mikro-orm/core';
-
-import {TwoFactorAuth} from '../../auth/entities/two-factor-auth.entity';
-import {BaseEntity} from '../../common/entities/base-entity.entity';
-import {UserStatus} from '../types/user-status.enum';
+import {TwoFactorAuth} from '../../auth/entities/two-factor-auth.entity.ts';
+import {BaseEntity} from '../../common/entities/base-entity.entity.ts';
+import {UserStatus} from '../types/user-status.enum.ts';
 
 @Entity()
 export class User extends BaseEntity {

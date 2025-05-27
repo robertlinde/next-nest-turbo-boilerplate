@@ -1,6 +1,5 @@
 import {create} from 'zustand';
-
-import {apiRequestHandler} from '@/utils/api/api-request-handler';
+import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
 
 /**
  * Represents a user object.

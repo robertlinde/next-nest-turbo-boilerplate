@@ -1,7 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger';
-
-import {User} from '../entities/user.entity';
-import {UserStatus} from '../types/user-status.enum';
+import {User} from '../entities/user.entity.ts';
+import {UserStatus} from '../types/user-status.enum.ts';
 
 export class UserDto {
   @ApiProperty({

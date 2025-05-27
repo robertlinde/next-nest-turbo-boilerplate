@@ -1,22 +1,18 @@
 'use client';
 
 import {type JSX} from 'react';
-
 import {zodResolver} from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import {Button} from 'primereact/button';
 import {useForm, type SubmitHandler} from 'react-hook-form';
+import {type LoginCredentialsFormFields} from './types/login-credentials-form-fields.type.ts';
+import {type LoginCredentialsProps} from './types/login-credentials-props.type.ts';
+import {loginCredentialsSchema} from './types/login-credentials.schema.ts';
+import {FloatLabelInputText} from '@/components/FloatLabelInputText/FloatLabelInputText.component.tsx';
+import {useAuthApi} from '@/hooks/useAuthApi/useAuthApi.tsx';
+import {type ApiError} from '@/utils/api/api-error.ts';
 
-import {type LoginCredentialsFormFields} from './types/login-credentials-form-fields.type';
-import {type LoginCredentialsProps} from './types/login-credentials-props.type';
-import {loginCredentialsSchema} from './types/login-credentials.schema';
-
-import {FloatLabelInputText} from '@/components/FloatLabelInputText/FloatLabelInputText.component';
-
-import {useAuthApi} from '@/hooks/useAuthApi/useAuthApi';
-import {type ApiError} from '@/utils/api/api-error';
-
-export const LoginCredentials = ({handleLoginCredentialsSuccess}: LoginCredentialsProps): JSX.Element => {
+export function LoginCredentials({handleLoginCredentialsSuccess}: LoginCredentialsProps): JSX.Element {
   const {loginCredentials} = useAuthApi();
 
   const {
@@ -50,12 +46,12 @@ export const LoginCredentials = ({handleLoginCredentialsSuccess}: LoginCredentia
     <div className="flex flex-col items-center">
       <h2>Welcome back!</h2>
       <form
-        onSubmit={handleSubmitCredentials(onSubmitCredentials)}
         className="mt-6 flex flex-col items-center gap-4 md:mt-10 md:gap-6 lg:mt-12 lg:gap-8"
+        onSubmit={handleSubmitCredentials(onSubmitCredentials)}
       >
         <div className="flex flex-col flex-wrap items-center gap-1">
           <FloatLabelInputText {...registerCredentials('email')} type="email" label="Email" data-testid="login-email" />
-          {errorsCredentials.email && <p className="text-red-700">{errorsCredentials.email.message}</p>}
+          {errorsCredentials.email ? <p className="text-red-700">{errorsCredentials.email.message}</p> : null}
         </div>
         <div className="flex flex-col flex-wrap items-center gap-1">
           <FloatLabelInputText
@@ -64,7 +60,7 @@ export const LoginCredentials = ({handleLoginCredentialsSuccess}: LoginCredentia
             label="Password"
             data-testid="login-password"
           />
-          {errorsCredentials.password && <p className="text-red-700">{errorsCredentials.password.message}</p>}
+          {errorsCredentials.password ? <p className="text-red-700">{errorsCredentials.password.message}</p> : null}
         </div>
         <div>
           <Button
@@ -74,7 +70,7 @@ export const LoginCredentials = ({handleLoginCredentialsSuccess}: LoginCredentia
             data-testid="login-submit"
           />
         </div>
-        {errorsCredentials.root && <p className="text-red-700">{errorsCredentials.root.message}</p>}
+        {errorsCredentials.root ? <p className="text-red-700">{errorsCredentials.root.message}</p> : null}
       </form>
       <p className="mt-4 md:mt-6 lg:mt-8">
         Forgot your password?{' '}
@@ -90,4 +86,4 @@ export const LoginCredentials = ({handleLoginCredentialsSuccess}: LoginCredentia
       </p>
     </div>
   );
-};
+}

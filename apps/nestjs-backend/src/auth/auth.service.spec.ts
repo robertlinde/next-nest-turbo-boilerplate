@@ -4,17 +4,15 @@ import {ConfigService} from '@nestjs/config';
 import {JwtService} from '@nestjs/jwt';
 import {Test, TestingModule} from '@nestjs/testing';
 import {mock, MockProxy} from 'jest-mock-extended';
-
-import {ConfigKey} from '../config/config-key.enum';
-import {CryptoService} from '../crypto/crypto.service';
-import {EmailService} from '../email/email.service';
-import {User} from '../users/entities/user.entity';
-import {UserStatus} from '../users/types/user-status.enum';
-import {UsersService} from '../users/users.service';
-
-import {AuthService} from './auth.service';
-import {RevokedRefreshToken} from './entities/revoked-refresh-token.entity';
-import {TwoFactorAuth} from './entities/two-factor-auth.entity';
+import {ConfigKey} from '../config/config-key.enum.ts';
+import {CryptoService} from '../crypto/crypto.service.ts';
+import {EmailService} from '../email/email.service.ts';
+import {User} from '../users/entities/user.entity.ts';
+import {UserStatus} from '../users/types/user-status.enum.ts';
+import {UsersService} from '../users/users.service.ts';
+import {AuthService} from './auth.service.ts';
+import {RevokedRefreshToken} from './entities/revoked-refresh-token.entity.ts';
+import {TwoFactorAuth} from './entities/two-factor-auth.entity.ts';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -26,8 +24,6 @@ describe('AuthService', () => {
   let emailService: MockProxy<EmailService>;
   let configService: MockProxy<ConfigService>;
 
-  let mockQueryBuilder: jest.Mocked<QueryBuilder<RevokedRefreshToken>>;
-
   beforeEach(async (): Promise<void> => {
     em = mock<EntityManager>();
     usersService = mock<UsersService>();
@@ -36,21 +32,28 @@ describe('AuthService', () => {
     emailService = mock<EmailService>();
     configService = mock<ConfigService>();
 
-    mockQueryBuilder = {
+    // Create a comprehensive mock for QueryBuilder
+    const mockQueryBuilder = {
       delete: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
       execute: jest.fn().mockResolvedValue({affectedRows: 3}),
-    } as unknown as jest.Mocked<QueryBuilder<RevokedRefreshToken>>;
+    };
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object>);
+    // eslint-disable-next-line @typescript-eslint/no-restricted-types
+    em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
 
     jwtService.sign.mockReturnValue('mock-token');
     cryptoService.hash.mockResolvedValue('hashed-value');
     cryptoService.generateRandomCode.mockReturnValue('123456');
     configService.get.mockImplementation((key: ConfigKey) => {
-      if (key === ConfigKey.JWT_ACCESS_SECRET) return 'access-secret';
-      if (key === ConfigKey.JWT_REFRESH_SECRET) return 'refresh-secret';
+      if (key === ConfigKey.JWT_ACCESS_SECRET) {
+        return 'access-secret';
+      }
+
+      if (key === ConfigKey.JWT_REFRESH_SECRET) {
+        return 'refresh-secret';
+      }
+
       return null;
     });
 
@@ -345,7 +348,7 @@ describe('AuthService', () => {
     it('should throw ForbiddenException if user does not exist', async (): Promise<void> => {
       em.findOne.mockResolvedValue(null);
       jwtService.verifyAsync.mockResolvedValue({sub: 'nonexistent-user-id'});
-      usersService.getUserById.mockRejectedValueOnce(new NotFoundException(`User with id not found`));
+      usersService.getUserById.mockRejectedValueOnce(new NotFoundException('User with id not found'));
 
       await expect(service.refreshTokens('valid-token-invalid-user')).rejects.toThrow(ForbiddenException);
     });
@@ -361,8 +364,8 @@ describe('AuthService', () => {
         execute: jest.fn().mockResolvedValue(mockExecuteResult),
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object>);
+      // eslint-disable-next-line @typescript-eslint/no-restricted-types
+      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
 
       // Spy on console.log
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
@@ -389,8 +392,8 @@ describe('AuthService', () => {
         execute: jest.fn().mockResolvedValue(mockExecuteResult),
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object>);
+      // eslint-disable-next-line @typescript-eslint/no-restricted-types
+      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
 
       // Spy on console.log
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
@@ -413,8 +416,8 @@ describe('AuthService', () => {
         execute: jest.fn().mockResolvedValue(mockExecuteResult),
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object>);
+      // eslint-disable-next-line @typescript-eslint/no-restricted-types
+      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
 
       // Spy on console.log
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
@@ -441,8 +444,8 @@ describe('AuthService', () => {
         execute: jest.fn().mockResolvedValue(mockExecuteResult),
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object>);
+      // eslint-disable-next-line @typescript-eslint/no-restricted-types
+      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
 
       // Spy on console.log
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();

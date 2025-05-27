@@ -1,18 +1,16 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import {mock} from 'jest-mock-extended';
-
-import {ActiveUserData} from '../auth/types/active-user-data.type';
-
-import {ConfirmUserParamDto} from './dto/confirm-user-param.dto';
-import {CreateUserBodyDto} from './dto/create-user-body.dto';
-import {MeDto} from './dto/me.dto';
-import {ResetPasswordConfirmBodyDto} from './dto/reset-password-confirm-body.dto';
-import {ResetPasswordRequestBodyDto} from './dto/reset-password-request-body.dto';
-import {UpdateUserBodyDto} from './dto/update-user-body.dto';
-import {UserDto} from './dto/user.dto';
-import {User} from './entities/user.entity';
-import {UsersController} from './users.controller';
-import {UsersService} from './users.service';
+import {ActiveUserData} from '../auth/types/active-user-data.type.ts';
+import {ConfirmUserParamDto} from './dto/confirm-user-param.dto.ts';
+import {CreateUserBodyDto} from './dto/create-user-body.dto.ts';
+import {MeDto} from './dto/me.dto.ts';
+import {ResetPasswordConfirmBodyDto} from './dto/reset-password-confirm-body.dto.ts';
+import {ResetPasswordRequestBodyDto} from './dto/reset-password-request-body.dto.ts';
+import {UpdateUserBodyDto} from './dto/update-user-body.dto.ts';
+import {UserDto} from './dto/user.dto.ts';
+import {User} from './entities/user.entity.ts';
+import {UsersController} from './users.controller.ts';
+import {UsersService} from './users.service.ts';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -88,13 +86,13 @@ describe('UsersController', () => {
 
   describe('confirmUser', () => {
     it('should confirm a user registration', async () => {
-      const mockConfirmUserParam: ConfirmUserParamDto = {
+      const mockConfirmUserParameter: ConfirmUserParamDto = {
         confirmationCode: 'abc123',
       };
 
       usersService.confirmUser.mockResolvedValue(mockUserEntity);
 
-      const result = await controller.confirmUser(mockConfirmUserParam);
+      const result = await controller.confirmUser(mockConfirmUserParameter);
 
       expect(result).toBeInstanceOf(UserDto);
       expect(result.id).toBe('1');

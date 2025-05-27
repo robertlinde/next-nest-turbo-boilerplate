@@ -1,6 +1,5 @@
-import {type ResetPasswordFormFields} from '../../../app/(auth)/reset-password/types/reset-password-form-fields.type';
-
-import {apiRequestHandler} from '@/utils/api/api-request-handler';
+import {type ResetPasswordFormFields} from '../../../app/(auth)/reset-password/types/reset-password-form-fields.type.ts';
+import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
 
 export const resetPassword = async (data: ResetPasswordFormFields & {token: string}): Promise<void> => {
   // eslint-disable-next-line n/prefer-global/process

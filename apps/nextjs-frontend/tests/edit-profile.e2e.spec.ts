@@ -1,8 +1,7 @@
 import {expect} from '@playwright/test';
-
-import {login} from './utils/login/login';
-import {register} from './utils/register/register';
-import {test} from './utils/setup';
+import {login} from './utils/login/login.ts';
+import {register} from './utils/register/register.ts';
+import {test} from './utils/setup.ts';
 
 test.describe('Edit profile', () => {
   test('should change username', async ({page}) => {
@@ -143,7 +142,7 @@ test.describe('Edit profile', () => {
     // Wait for any updates to complete
     await page.waitForLoadState('networkidle');
 
-    // test login with old password
+    // Test login with old password
     await login(
       page,
       {
@@ -158,7 +157,7 @@ test.describe('Edit profile', () => {
     // Clear any error state before trying new credentials
     await page.waitForLoadState('networkidle');
 
-    // test login with new password
+    // Test login with new password
     await login(
       page,
       {

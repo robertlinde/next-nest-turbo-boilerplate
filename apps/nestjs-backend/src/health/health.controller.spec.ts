@@ -1,8 +1,7 @@
 import {HealthCheckService, MikroOrmHealthIndicator, HealthIndicatorResult, HealthCheckResult} from '@nestjs/terminus';
 import {Test, TestingModule} from '@nestjs/testing';
 import {mockDeep, DeepMockProxy} from 'jest-mock-extended';
-
-import {HealthController} from './health.controller';
+import {HealthController} from './health.controller.ts';
 
 describe('HealthController', () => {
   let controller: HealthController;

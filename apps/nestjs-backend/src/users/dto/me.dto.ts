@@ -1,6 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
-
-import {User} from '../entities/user.entity';
+import {User} from '../entities/user.entity.ts';
 
 export class MeDto {
   @ApiProperty({

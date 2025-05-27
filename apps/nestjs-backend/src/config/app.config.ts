@@ -1,4 +1,4 @@
-import {ConfigKey} from './config-key.enum';
+import {ConfigKey} from './config-key.enum.ts';
 
 const appConfig = (): Record<ConfigKey, unknown> => ({
   [ConfigKey.NODE_ENV]: process.env.NODE_ENV,

@@ -1,4 +1,4 @@
-import {ApiError} from './api-error';
+import {ApiError} from './api-error.ts';
 
 /**
  * A function that handles API requests and manages authentication tokens. It automatically retries the request if the token is expired and refreshes it.
@@ -18,19 +18,19 @@ export const apiRequestHandler = async (
 
   if (inputResponse.status === 401) {
     // eslint-disable-next-line n/prefer-global/process
-    const refreshRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/refresh`, {
+    const refreshResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/refresh`, {
       method: 'POST',
       credentials: 'include',
     });
 
-    if (refreshRes.ok) {
+    if (refreshResponse.ok) {
       // Retry original request
       inputResponse = await fetch(input, {
         ...init,
         credentials: 'include',
       });
     } else {
-      throw new ApiError('Unauthorized', refreshRes);
+      throw new ApiError('Unauthorized', refreshResponse);
     }
   }
 

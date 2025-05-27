@@ -1,4 +1,4 @@
-import {type MailDevEmail} from './register/types/mail-dev-mail.type';
+import {type MailDevEmail} from './register/types/mail-dev-mail.type.ts';
 
 // Get email
 export const getMaildevEmail = async (
@@ -12,7 +12,7 @@ export const getMaildevEmail = async (
   const {maxAttempts = 10, initialDelay = 1000, subject} = options ?? {};
 
   for (let attempts = 0; attempts < maxAttempts; attempts++) {
-    const delay = initialDelay * 1.5 ** attempts;
+    const delay = (initialDelay * 1.5) ** attempts;
 
     // eslint-disable-next-line no-await-in-loop
     const mailDevResponse = await fetch(`${process.env.NEXT_PUBLIC_MAILDEV_API_URL}/email`); // eslint-disable-line n/prefer-global/process

@@ -1,12 +1,9 @@
 import {type JSX} from 'react';
-
 import {FloatLabel} from 'primereact/floatlabel';
-
 import {InputText, type InputTextProps} from 'primereact/inputtext';
+import {type FloatLabelInputTextProps} from './types/float-label-input-text-props.type.ts';
 
-import {type FloatLabelInputTextProps} from './types/float-label-input-text-props.type';
-
-export const FloatLabelInputText = ({label, className, ...inputTextProps}: FloatLabelInputTextProps): JSX.Element => {
+export function FloatLabelInputText({label, className, ...inputTextProps}: FloatLabelInputTextProps): JSX.Element {
   const mergedClassName = `p-2 ring-2 ring-slate-200 focus:ring-2 focus:ring-slate-600 ${className ?? ''}`;
 
   return (
@@ -15,4 +12,4 @@ export const FloatLabelInputText = ({label, className, ...inputTextProps}: Float
       <label htmlFor={label}>{label}</label>
     </FloatLabel>
   );
-};
+}

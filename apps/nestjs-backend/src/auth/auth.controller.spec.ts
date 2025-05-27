@@ -2,15 +2,13 @@ import {ConfigService} from '@nestjs/config';
 import {Test, TestingModule} from '@nestjs/testing';
 import {Request, Response} from 'express';
 import {mock, mockDeep, DeepMockProxy} from 'jest-mock-extended';
-
-import {ConfigKey} from '../config/config-key.enum';
-import {User} from '../users/entities/user.entity';
-import {oneMinute, oneWeek} from '../utils/time';
-
-import {AuthController} from './auth.controller';
-import {AuthService} from './auth.service';
-import {LoginCredentialsBodyDto} from './dto/login-credentials-body.dto';
-import {LoginTwoFactorAuthBodyDto} from './dto/login-two-factor-auth-body.dto';
+import {ConfigKey} from '../config/config-key.enum.ts';
+import {User} from '../users/entities/user.entity.ts';
+import {oneMinute, oneWeek} from '../utils/time.ts';
+import {AuthController} from './auth.controller.ts';
+import {AuthService} from './auth.service.ts';
+import {LoginCredentialsBodyDto} from './dto/login-credentials-body.dto.ts';
+import {LoginTwoFactorAuthBodyDto} from './dto/login-two-factor-auth-body.dto.ts';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -18,15 +16,13 @@ describe('AuthController', () => {
   let configService: DeepMockProxy<ConfigService>;
 
   const mockResponse = (): Response => {
-    const res = mock<Response>();
-    res.cookie.mockReturnThis();
-    res.clearCookie.mockReturnThis();
-    return res;
+    const response = mock<Response>();
+    response.cookie.mockReturnThis();
+    response.clearCookie.mockReturnThis();
+    return response;
   };
 
-  const mockRequest = (cookies = {}): Request => {
-    return mock<Request>({cookies});
-  };
+  const mockRequest = (cookies = {}): Request => mock<Request>({cookies});
 
   const mockUser = new User({
     email: 'test@example.com',
@@ -41,7 +37,10 @@ describe('AuthController', () => {
 
     // Default configuration for environment
     configService.get.mockImplementation((key: ConfigKey) => {
-      if (key === ConfigKey.NODE_ENV) return 'development';
+      if (key === ConfigKey.NODE_ENV) {
+        return 'development';
+      }
+
       return null;
     });
 
@@ -72,15 +71,15 @@ describe('AuthController', () => {
         email: 'test@example.com',
         password: 'password123',
       };
-      const res = mockResponse();
+      const response = mockResponse();
       const twoFactorAuthHashedId = 'mock-2fa-hashed-id';
 
       authService.validateUserCredentials.mockResolvedValue(twoFactorAuthHashedId);
 
-      await controller.login(loginDto, res);
+      await controller.login(loginDto, response);
 
       expect(authService.validateUserCredentials).toHaveBeenCalledWith('test@example.com', 'password123');
-      expect(res.cookie).toHaveBeenCalledWith('two_factor_auth', twoFactorAuthHashedId, {
+      expect(response.cookie).toHaveBeenCalledWith('two_factor_auth', twoFactorAuthHashedId, {
         httpOnly: true,
         secure: false,
         sameSite: 'lax',
@@ -96,8 +95,8 @@ describe('AuthController', () => {
       };
       const twoFactorAuthHashedId = 'mock-2fa-hashed-id';
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      const req = mockRequest({two_factor_auth: twoFactorAuthHashedId});
-      const res = mockResponse();
+      const request = mockRequest({two_factor_auth: twoFactorAuthHashedId});
+      const response = mockResponse();
       const accessToken = 'mock-access-token';
       const refreshToken = 'mock-refresh-token';
 
@@ -105,20 +104,20 @@ describe('AuthController', () => {
       authService.generateAccessToken.mockResolvedValue(accessToken);
       authService.generateRefreshToken.mockResolvedValue(refreshToken);
 
-      await controller.login2fa(login2faDto, req, res);
+      await controller.login2fa(login2faDto, request, response);
 
       expect(authService.validateTwoFactorAuth).toHaveBeenCalledWith(twoFactorAuthHashedId, '123456');
       expect(authService.generateAccessToken).toHaveBeenCalledWith(mockUser);
       expect(authService.generateRefreshToken).toHaveBeenCalledWith(mockUser);
 
-      expect(res.cookie).toHaveBeenCalledWith('access_token', accessToken, {
+      expect(response.cookie).toHaveBeenCalledWith('access_token', accessToken, {
         httpOnly: true,
         secure: false,
         sameSite: 'lax',
         maxAge: oneMinute * 15,
       });
 
-      expect(res.cookie).toHaveBeenCalledWith('refresh_token', refreshToken, {
+      expect(response.cookie).toHaveBeenCalledWith('refresh_token', refreshToken, {
         httpOnly: true,
         secure: false,
         sameSite: 'lax',
@@ -130,8 +129,8 @@ describe('AuthController', () => {
   describe('refresh', () => {
     it('should refresh tokens and update cookies', async () => {
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      const req = mockRequest({refresh_token: 'old-refresh-token'});
-      const res = mockResponse();
+      const request = mockRequest({refresh_token: 'old-refresh-token'});
+      const response = mockResponse();
       const newAccessToken = 'new-access-token';
       const newRefreshToken = 'new-refresh-token';
 
@@ -140,19 +139,19 @@ describe('AuthController', () => {
         refreshToken: newRefreshToken,
       });
 
-      await controller.refresh(req, res);
+      await controller.refresh(request, response);
 
       expect(authService.refreshTokens).toHaveBeenCalledWith('old-refresh-token');
-      expect(res.clearCookie).toHaveBeenCalledWith('refresh_token');
+      expect(response.clearCookie).toHaveBeenCalledWith('refresh_token');
 
-      expect(res.cookie).toHaveBeenCalledWith('access_token', newAccessToken, {
+      expect(response.cookie).toHaveBeenCalledWith('access_token', newAccessToken, {
         httpOnly: true,
         secure: false,
         sameSite: 'lax',
         maxAge: oneMinute * 15,
       });
 
-      expect(res.cookie).toHaveBeenCalledWith('refresh_token', newRefreshToken, {
+      expect(response.cookie).toHaveBeenCalledWith('refresh_token', newRefreshToken, {
         httpOnly: true,
         secure: false,
         sameSite: 'lax',
@@ -163,12 +162,12 @@ describe('AuthController', () => {
 
   describe('logout', () => {
     it('should clear auth cookies', async () => {
-      const res = mockResponse();
+      const response = mockResponse();
 
-      await controller.logout(res);
+      await controller.logout(response);
 
-      expect(res.clearCookie).toHaveBeenCalledWith('access_token');
-      expect(res.clearCookie).toHaveBeenCalledWith('refresh_token');
+      expect(response.clearCookie).toHaveBeenCalledWith('access_token');
+      expect(response.clearCookie).toHaveBeenCalledWith('refresh_token');
     });
   });
 
@@ -177,7 +176,10 @@ describe('AuthController', () => {
       // Create a new instance with production environment
       const prodConfigService = mockDeep<ConfigService>();
       prodConfigService.get.mockImplementation((key: ConfigKey) => {
-        if (key === ConfigKey.NODE_ENV) return 'production';
+        if (key === ConfigKey.NODE_ENV) {
+          return 'production';
+        }
+
         return null;
       });
 
@@ -201,14 +203,14 @@ describe('AuthController', () => {
         email: 'test@example.com',
         password: 'password123',
       };
-      const res = mockResponse();
+      const response = mockResponse();
       const twoFactorAuthHashedId = 'mock-2fa-hashed-id';
 
       authService.validateUserCredentials.mockResolvedValue(twoFactorAuthHashedId);
 
-      await productionController.login(loginDto, res);
+      await productionController.login(loginDto, response);
 
-      expect(res.cookie).toHaveBeenCalledWith('two_factor_auth', twoFactorAuthHashedId, {
+      expect(response.cookie).toHaveBeenCalledWith('two_factor_auth', twoFactorAuthHashedId, {
         httpOnly: true,
         secure: true, // Should be true in production
         sameSite: 'lax',

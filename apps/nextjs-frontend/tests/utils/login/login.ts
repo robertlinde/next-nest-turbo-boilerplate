@@ -1,9 +1,7 @@
 import {type Page, expect} from '@playwright/test';
 import {JSDOM} from 'jsdom';
-
-import {getMaildevEmail} from '../get-maildev-email';
-
-import {type LoginCredentials} from './types/login-credentials.type';
+import {getMaildevEmail} from '../get-maildev-email.ts';
+import {type LoginCredentials} from './types/login-credentials.type.ts';
 
 // Function to fill the login form - no assertions
 const fillLoginForm = async (page: Page, credentials: LoginCredentials): Promise<void> => {
@@ -59,7 +57,7 @@ export const login = async (
   options?: {
     expectCredentialsError?: boolean;
     expectInvalid2Fa?: boolean;
-    use2Fa?: string | boolean; // string for specific code, true to get from email, false to skip
+    use2Fa?: string | boolean; // String for specific code, true to get from email, false to skip
     skipSuccessAssertion?: boolean;
   },
 ): Promise<void> => {

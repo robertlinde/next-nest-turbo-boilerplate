@@ -1,27 +1,39 @@
+// eslint-disable-next-line n/no-extraneous-import
 import {type FlatXoConfig} from 'xo';
-import baseConfig from '../../xo.config.base';
+// eslint-disable-next-line n/no-extraneous-import
+import tseslint from 'typescript-eslint';
+// eslint-disable-next-line n/no-extraneous-import, import-x/no-extraneous-dependencies
+import {ESLint, Linter} from 'eslint';
 
 const xoConfig: FlatXoConfig = [
   // Extend the base config by merging its properties with nestjs specific additions
   {
-    ...baseConfig, // Spread all base config properties
-    ignores: [
-      ...(baseConfig.ignores || []), // Keep existing ignores from base
-      'node_modules',
-      'commitlint.config.js',
-    ],
+    ignores: ['node_modules', 'commitlint.config.js'],
+    prettier: 'compat',
+    space: true,
+    plugins: {
+      '@typescript-eslint': tseslint.plugin as ESLint.Plugin,
+    },
+    languageOptions: {
+      parser: tseslint.parser as Linter.Parser,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+        sourceType: 'module',
+      },
+    },
     rules: {
-      ...baseConfig.rules, // Keep all base rules
-      // Add/override Nest.js specific rules
-      'new-cap': 'off', // Does not work with decorators
+      // Disabled for flexibility in naming -> "component.props.ts" instead of "component.properties.ts"
+      'unicorn/prevent-abbreviations': 'error',
+
+      // Does not work with decorators
+      'new-cap': 'off',
+
       'no-warning-comments': 'error',
 
       // Nest.js specific rules
       '@typescript-eslint/consistent-type-imports': 'off', // Open API doc fails to recognize type import of DTOs correctly
       'n/prefer-global/process': 'off',
-
-      // Allow __dirname and __filename -> it is running commonjs so it is not a problem
-      'unicorn/prefer-module': 'off',
 
       // Forbid mikro orm findOneOrFail -> it's better to use findOne and handle the error manually
       'no-restricted-syntax': [
@@ -36,14 +48,16 @@ const xoConfig: FlatXoConfig = [
   },
 
   // File-specific overrides
+  // Disables to follow mikro orm conventions for file names
   {
-    files: ['src/migrations/**/*'], // Disables to follow mikro orm conventions for file names
+    files: ['src/migrations/**/*'],
     rules: {
       'unicorn/filename-case': 'off',
     },
   },
+  // Disables to follow mikro orm conventions for relations
   {
-    files: ['**/*.entity.ts'], // Disables to follow mikro orm conventions for relations
+    files: ['**/*.entity.ts'],
     rules: {
       'import/no-cycle': 'off',
     },

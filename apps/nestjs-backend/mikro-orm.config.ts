@@ -1,11 +1,11 @@
 import {Migrator} from '@mikro-orm/migrations';
 import {defineConfig, PostgreSqlDriver} from '@mikro-orm/postgresql';
-// eslint-disable-next-line import/no-unassigned-import
+// eslint-disable-next-line import-x/no-unassigned-import
 import 'dotenv/config';
 
 const mikroOrmConfig = defineConfig({
   entities: ['dist/**/entities/*.entity.js'],
-  entitiesTs: ['src/**/entities/*.entity.ts'], // for TypeScript src folder
+  entitiesTs: ['src/**/entities/*.entity.ts'], // For TypeScript src folder
   driver: PostgreSqlDriver,
   dbName: process.env.POSTGRES_DB_NAME,
   password: process.env.POSTGRES_PASSWORD,

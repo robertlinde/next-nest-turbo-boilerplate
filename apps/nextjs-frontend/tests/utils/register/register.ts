@@ -1,11 +1,8 @@
 import {type Page, expect} from '@playwright/test';
 import {JSDOM} from 'jsdom';
-
 import {v4 as uuidv4} from 'uuid';
-
-import {getMaildevEmail} from '../get-maildev-email';
-
-import {type RegisterTestUserData} from './types/register-test-user-data.type';
+import {getMaildevEmail} from '../get-maildev-email.ts';
+import {type RegisterTestUserData} from './types/register-test-user-data.type.ts';
 
 // Function to just fill the registration form - no assertions
 const fillRegisterForm = async (
@@ -45,7 +42,7 @@ const verifyEmail = async (page: Page, emailAddress: string): Promise<void> => {
     throw new Error('Verification link not found in email');
   }
 
-  const navigationPromise = page.waitForNavigation();
+  const navigationPromise = page.waitForURL(hrefValue, {waitUntil: 'networkidle'});
   await page.goto(hrefValue);
   await navigationPromise;
 };

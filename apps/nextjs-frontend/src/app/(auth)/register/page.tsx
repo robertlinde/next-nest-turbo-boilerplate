@@ -1,21 +1,16 @@
 'use client';
 
 import {useState, type JSX} from 'react';
-
 import {zodResolver} from '@hookform/resolvers/zod';
-
-import Link from 'next/link';
 import {Button} from 'primereact/button';
 import {type SubmitHandler, useForm} from 'react-hook-form';
-
-import {type RegisterFormFields} from './types/register-form-fields.type';
-import {registerSchema} from './types/register.schema';
-
-import {FloatLabelInputText} from '@/components/FloatLabelInputText/FloatLabelInputText.component';
-
-import {useAuthApi} from '@/hooks/useAuthApi/useAuthApi';
-import {useToast} from '@/hooks/useToast/useToast';
-import {type ApiError} from '@/utils/api/api-error';
+import Link from 'next/link';
+import {type RegisterFormFields} from './types/register-form-fields.type.ts';
+import {registerSchema} from './types/register.schema.ts';
+import {FloatLabelInputText} from '@/components/FloatLabelInputText/FloatLabelInputText.component.tsx';
+import {useAuthApi} from '@/hooks/useAuthApi/useAuthApi.tsx';
+import {useToast} from '@/hooks/useToast/useToast.tsx';
+import {type ApiError} from '@/utils/api/api-error.ts';
 
 export default function Register(): JSX.Element {
   const {showToast} = useToast();
@@ -49,7 +44,7 @@ export default function Register(): JSX.Element {
           case 400: {
             const errorResponse = (await error.response.json()) as {message?: string[]};
             const message: string = errorResponse?.message
-              ? errorResponse.message.map((msg) => msg.charAt(0).toUpperCase() + msg.slice(1)).join(', ')
+              ? errorResponse.message.map((message_) => message_.charAt(0).toUpperCase() + message_.slice(1)).join(', ')
               : 'An unexpected error occurred.';
             setError('root', {message});
 
@@ -92,13 +87,13 @@ export default function Register(): JSX.Element {
     <div className="flex flex-col items-center">
       <h2>Welcome!</h2>
       <form
-        onSubmit={handleSubmit(onSubmit)}
         className="mt-6 flex w-full max-w-sm flex-col items-center gap-4 md:mt-10 md:gap-6 lg:mt-12 lg:gap-8"
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex w-full flex-col flex-wrap items-center gap-1">
           <FloatLabelInputText label="Email" {...register('email')} data-testid="register-email-input" type="email" />
-          <small>Your email won't be publicly visible.</small>
-          {errors.email && <p className="text-red-700">{errors.email.message}</p>}
+          <small>Your email won&apos;t be publicly visible.</small>
+          {errors.email ? <p className="text-red-700">{errors.email.message}</p> : null}
         </div>
         <div className="flex w-full flex-col flex-wrap items-center gap-1">
           <FloatLabelInputText
@@ -108,7 +103,7 @@ export default function Register(): JSX.Element {
             type="text"
           />
           <small>Your username will be publicly visible. It can be changed later.</small>
-          {errors.username && <p className="text-red-700">{errors.username.message}</p>}
+          {errors.username ? <p className="text-red-700">{errors.username.message}</p> : null}
         </div>
         <div className="flex w-full flex-col flex-wrap items-center gap-1">
           <FloatLabelInputText
@@ -117,7 +112,7 @@ export default function Register(): JSX.Element {
             data-testid="register-password-input"
             type="password"
           />
-          {errors.password && <p className="text-red-700">{errors.password.message}</p>}
+          {errors.password ? <p className="text-red-700">{errors.password.message}</p> : null}
         </div>
         <div>
           <Button
@@ -127,7 +122,7 @@ export default function Register(): JSX.Element {
             disabled={isSubmitting}
           />
         </div>
-        {errors.root && <p className="text-red-700">{errors.root.message}</p>}
+        {errors.root ? <p className="text-red-700">{errors.root.message}</p> : null}
       </form>
       <p className="mt-4 md:mt-6 lg:mt-8">
         Already registered?{' '}

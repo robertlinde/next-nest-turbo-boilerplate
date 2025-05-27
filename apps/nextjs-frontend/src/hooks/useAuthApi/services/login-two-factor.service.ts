@@ -1,6 +1,5 @@
-import {type LoginTwoFactorFormFields} from '@/app/(auth)/login/components/LoginTwoFactor/types/login-two-factor-form-fields.type';
-
-import {apiRequestHandler} from '@/utils/api/api-request-handler';
+import {type LoginTwoFactorFormFields} from '@/app/(auth)/login/components/LoginTwoFactor/types/login-two-factor-form-fields.type.ts';
+import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
 
 export const loginTwoFactorAuth = async (data: LoginTwoFactorFormFields): Promise<void> => {
   // eslint-disable-next-line n/prefer-global/process

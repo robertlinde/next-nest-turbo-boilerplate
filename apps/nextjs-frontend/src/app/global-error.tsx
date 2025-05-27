@@ -4,13 +4,14 @@ import {type JSX} from 'react';
 
 // Error boundaries must be Client Components
 
-const GlobalError = ({reset, error}: {error: Error; reset: () => void}): JSX.Element => {
+function GlobalError({reset, error}: {readonly error: Error; readonly reset: () => void}): JSX.Element {
   return (
     <html>
       <body>
         <h2>Something went wrong!</h2>
         <p>{error.message}</p>
         <button
+          type="button"
           onClick={() => {
             reset();
           }}
@@ -20,6 +21,6 @@ const GlobalError = ({reset, error}: {error: Error; reset: () => void}): JSX.Ele
       </body>
     </html>
   );
-};
+}
 
 export default GlobalError;

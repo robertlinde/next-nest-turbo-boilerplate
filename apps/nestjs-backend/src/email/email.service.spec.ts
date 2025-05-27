@@ -2,10 +2,8 @@ import {ConfigService} from '@nestjs/config';
 import {Test, TestingModule} from '@nestjs/testing';
 import {MailerService} from '@nestjs-modules/mailer';
 import {mock, MockProxy} from 'jest-mock-extended';
-
-import {ConfigKey} from '../config/config-key.enum';
-
-import {EmailService} from './email.service';
+import {ConfigKey} from '../config/config-key.enum.ts';
+import {EmailService} from './email.service.ts';
 
 describe('EmailService', () => {
   let service: EmailService;
@@ -30,7 +28,10 @@ describe('EmailService', () => {
   describe('sendConfirmEmail', () => {
     it('should call mailerService.sendMail when in production environment', async (): Promise<void> => {
       configService.get.mockImplementation((key: ConfigKey) => {
-        if (key === ConfigKey.NODE_ENV) return 'production';
+        if (key === ConfigKey.NODE_ENV) {
+          return 'production';
+        }
+
         return null;
       });
 
@@ -52,7 +53,10 @@ describe('EmailService', () => {
   describe('sendRequestPasswordResetEmail', () => {
     it('should call mailerService.sendMail when in production environment', async (): Promise<void> => {
       configService.get.mockImplementation((key: ConfigKey) => {
-        if (key === ConfigKey.NODE_ENV) return 'production';
+        if (key === ConfigKey.NODE_ENV) {
+          return 'production';
+        }
+
         return null;
       });
 
@@ -77,7 +81,10 @@ describe('EmailService', () => {
   describe('sendTwoFactorAuthCodeEmail', () => {
     it('should call mailerService.sendMail when in production environment', async (): Promise<void> => {
       configService.get.mockImplementation((key: ConfigKey) => {
-        if (key === ConfigKey.NODE_ENV) return 'production';
+        if (key === ConfigKey.NODE_ENV) {
+          return 'production';
+        }
+
         return null;
       });
 

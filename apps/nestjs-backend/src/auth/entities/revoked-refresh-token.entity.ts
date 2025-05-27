@@ -1,6 +1,5 @@
 import {Entity, Property, types} from '@mikro-orm/core';
-
-import {BaseEntity} from '../../common/entities/base-entity.entity';
+import {BaseEntity} from '../../common/entities/base-entity.entity.ts';
 
 @Entity()
 export class RevokedRefreshToken extends BaseEntity {

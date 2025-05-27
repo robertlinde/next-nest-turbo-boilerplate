@@ -1,37 +1,51 @@
+// eslint-disable-next-line n/no-extraneous-import
 import {type FlatXoConfig} from 'xo';
-import baseConfig from '../../xo.config.base';
+// eslint-disable-next-line n/no-extraneous-import
+import tseslint from 'typescript-eslint';
+import {type ESLint, type Linter} from 'eslint';
+// eslint-disable-next-line n/no-extraneous-import, import-x/no-extraneous-dependencies
+import unicorn from 'eslint-plugin-unicorn';
 
 const xoConfig: FlatXoConfig = [
   // Extend the base config by merging its properties with nestjs specific additions
   {
-    ...baseConfig, // Spread all base config properties
-    ignores: [
-      ...(baseConfig.ignores || []), // Keep existing ignores from base
-      'node_modules',
-      'postcss.config.js',
-      'postcss.config.mjs',
-      'commitlint.config.js',
-    ],
+    ignores: ['node_modules', 'postcss.config.mjs', 'commitlint.config.js'],
+  },
+  {
+    plugins: {
+      '@typescript-eslint': tseslint.plugin as ESLint.Plugin,
+      unicorn,
+    },
+    languageOptions: {
+      parser: tseslint.parser as Linter.Parser,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+        sourceType: 'module',
+      },
+    },
     react: true,
+    prettier: 'compat',
+    space: true,
     rules: {
-      ...baseConfig.rules, // Keep all base rules
-      // Add/override Next.js specific rules
+      // Since Next.js is used this can be disabled
+      'react/react-in-jsx-scope': 'off',
+
       // Disable console logs in frontend
       'no-console': ['error'],
 
-      // Next.js specific rule
-      '@typescript-eslint/consistent-type-imports': 'error',
+      'unicorn/filename-case': 'off',
     },
   },
 
   // File-specific overrides
-  {
-    files: ['**/*.tsx'],
-    rules: {
-      // Disabling this rule as filenames of React components are in PascalCase
-      'unicorn/filename-case': 'off',
-    },
-  },
+  // {
+  //   files: ['**/*.tsx'],
+  //   rules: {
+  //     // Disabling this rule as filenames of React components are in PascalCase
+  //     'unicorn/filename-case': 'off',
+  //   },
+  // },
 ];
 
 export default xoConfig;

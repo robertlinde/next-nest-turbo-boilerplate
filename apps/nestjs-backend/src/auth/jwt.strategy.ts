@@ -1,13 +1,12 @@
-// src/auth/jwt.strategy.ts
+// Src/auth/jwt.strategy.ts
 
 import {Injectable} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {PassportStrategy} from '@nestjs/passport';
 import {Request} from 'express';
 import {ExtractJwt, Strategy} from 'passport-jwt';
-import {ConfigKey} from 'src/config/config-key.enum';
-
-import {ActiveUserData} from './types/active-user-data.type';
+import {ConfigKey} from 'src/config/config-key.enum.ts';
+import {ActiveUserData} from './types/active-user-data.type.ts';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -16,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
-        (req: Request): string => req?.cookies?.access_token as string, // ← from cookie
+        (request: Request): string => request?.cookies?.access_token as string, // ← from cookie
       ]),
       ignoreExpiration: false,
       secretOrKey: jwtAccessSecret,

@@ -2,7 +2,6 @@
 import {DriverException} from '@mikro-orm/core';
 import {ArgumentsHost, Catch, ExceptionFilter, HttpStatus} from '@nestjs/common';
 import {Request, Response} from 'express';
-
 import {ErrorResponse} from './types/error-response.type';
 
 @Catch(DriverException)
@@ -11,7 +10,7 @@ export class MikroOrmExceptionFilter<T extends DriverException> implements Excep
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
-    const code = exception.code;
+    const {code} = exception;
 
     const errorResponse: ErrorResponse = {
       statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -187,6 +186,13 @@ export class MikroOrmExceptionFilter<T extends DriverException> implements Excep
       case '40003': {
         errorResponse.statusCode = HttpStatus.CONFLICT;
         errorResponse.message = 'Statement completion unknown';
+        break;
+      }
+
+      case undefined: {
+        // If the code is undefined, it means the exception is not a known MikroORM error
+        errorResponse.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+        errorResponse.message = 'An unexpected database error occurred';
         break;
       }
 

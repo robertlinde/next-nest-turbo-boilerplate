@@ -1,20 +1,18 @@
 import {Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post} from '@nestjs/common';
 import {ApiResponse, ApiTags, ApiOperation} from '@nestjs/swagger';
 import {Throttle} from '@nestjs/throttler';
-
-import {Public} from '../auth/decorators/public.decorator';
-import {User} from '../auth/decorators/user.decorator';
-import {ActiveUserData} from '../auth/types/active-user-data.type';
-import {oneHour, oneMinute} from '../utils/time';
-
-import {ConfirmUserParamDto} from './dto/confirm-user-param.dto';
-import {CreateUserBodyDto} from './dto/create-user-body.dto';
-import {MeDto} from './dto/me.dto';
-import {ResetPasswordConfirmBodyDto} from './dto/reset-password-confirm-body.dto';
-import {ResetPasswordRequestBodyDto} from './dto/reset-password-request-body.dto';
-import {UpdateUserBodyDto} from './dto/update-user-body.dto';
-import {UserDto} from './dto/user.dto';
-import {UsersService} from './users.service';
+import {Public} from '../auth/decorators/public.decorator.ts';
+import {User} from '../auth/decorators/user.decorator.ts';
+import {type ActiveUserData} from '../auth/types/active-user-data.type.ts';
+import {oneHour, oneMinute} from '../utils/time.ts';
+import {ConfirmUserParamDto} from './dto/confirm-user-param.dto.ts';
+import {CreateUserBodyDto} from './dto/create-user-body.dto.ts';
+import {MeDto} from './dto/me.dto.ts';
+import {ResetPasswordConfirmBodyDto} from './dto/reset-password-confirm-body.dto.ts';
+import {ResetPasswordRequestBodyDto} from './dto/reset-password-request-body.dto.ts';
+import {UpdateUserBodyDto} from './dto/update-user-body.dto.ts';
+import {UserDto} from './dto/user.dto.ts';
+import {UsersService} from './users.service.ts';
 
 @ApiTags('users')
 @Controller('users')
@@ -39,7 +37,7 @@ export class UsersController {
 
   @Post()
   @Public()
-  @Throttle({default: {ttl: oneHour, limit: 60}}) // allow 60 requests per hour per IP address
+  @Throttle({default: {ttl: oneHour, limit: 60}}) // Allow 60 requests per hour per IP address
   @ApiOperation({
     summary: 'Create a new user',
     description: 'This endpoint creates a new user by providing an email, password, and username.',
@@ -57,7 +55,7 @@ export class UsersController {
 
   @Post('confirm/:confirmationCode')
   @Public()
-  @Throttle({default: {ttl: oneMinute * 15, limit: 10}}) // allow 10 requests per 15 minutes per IP address
+  @Throttle({default: {ttl: oneMinute * 15, limit: 10}}) // Allow 10 requests per 15 minutes per IP address
   @ApiOperation({
     summary: 'Confirm user registration',
     description: 'This endpoint confirms a user registration using a confirmation code sent to their email.',
@@ -71,8 +69,8 @@ export class UsersController {
     status: HttpStatus.NOT_FOUND,
     description: 'Invalid confirmation code.',
   })
-  async confirmUser(@Param() param: ConfirmUserParamDto): Promise<UserDto> {
-    const {confirmationCode} = param;
+  async confirmUser(@Param() parameter: ConfirmUserParamDto): Promise<UserDto> {
+    const {confirmationCode} = parameter;
     const userEntity = await this.usersService.confirmUser(confirmationCode);
     return new UserDto(userEntity);
   }
@@ -93,7 +91,7 @@ export class UsersController {
 
   @Post('reset-password/request')
   @Public()
-  @Throttle({default: {ttl: oneMinute * 15, limit: 10}}) // allow 10 requests per 15 minutes per IP address
+  @Throttle({default: {ttl: oneMinute * 15, limit: 10}}) // Allow 10 requests per 15 minutes per IP address
   @ApiOperation({
     summary: 'Request password reset',
     description: 'This endpoint requests a password reset for the user using their email address.',
@@ -109,7 +107,7 @@ export class UsersController {
 
   @Post('reset-password/confirm')
   @Public()
-  @Throttle({default: {ttl: oneMinute * 15, limit: 3}}) // allow 10 requests per 15 minutes per IP address
+  @Throttle({default: {ttl: oneMinute * 15, limit: 3}}) // Allow 10 requests per 15 minutes per IP address
   @ApiOperation({
     summary: 'Confirm password reset',
     description: 'This endpoint confirms the password reset by providing a valid token and new password.',
@@ -128,7 +126,7 @@ export class UsersController {
   }
 
   @Patch()
-  @Throttle({default: {ttl: oneMinute * 15, limit: 10}}) // allow 10 requests per 15 minutes per IP address
+  @Throttle({default: {ttl: oneMinute * 15, limit: 10}}) // Allow 10 requests per 15 minutes per IP address
   @ApiOperation({
     summary: 'Update current user details',
     description: 'This endpoint allows the currently authenticated user to update their email, password, or username.',

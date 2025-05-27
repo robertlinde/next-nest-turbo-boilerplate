@@ -1,11 +1,9 @@
 import {expect} from '@playwright/test';
-
 import {JSDOM} from 'jsdom';
-
-import {getMaildevEmail} from './utils/get-maildev-email';
-import {login} from './utils/login/login';
-import {register} from './utils/register/register';
-import {test} from './utils/setup';
+import {getMaildevEmail} from './utils/get-maildev-email.ts';
+import {login} from './utils/login/login.ts';
+import {register} from './utils/register/register.ts';
+import {test} from './utils/setup.ts';
 
 test.describe('Reset password', () => {
   test('should reset password', async ({page}) => {
@@ -33,7 +31,7 @@ test.describe('Reset password', () => {
       throw new Error('Reset password link not found in email');
     }
 
-    const navigationPromise = page.waitForNavigation();
+    const navigationPromise = page.waitForURL(hrefValue, {waitUntil: 'networkidle'});
     await page.goto(hrefValue);
     await navigationPromise;
 
@@ -46,7 +44,7 @@ test.describe('Reset password', () => {
 
     await expect(page.getByText('Password reset successful!')).toBeVisible();
 
-    // test login with old password
+    // Test login with old password
     await login(
       page,
       {
@@ -58,7 +56,7 @@ test.describe('Reset password', () => {
       },
     );
 
-    // test login with new password
+    // Test login with new password
     await login(page, {
       email: user.email,
       password: newPassword,

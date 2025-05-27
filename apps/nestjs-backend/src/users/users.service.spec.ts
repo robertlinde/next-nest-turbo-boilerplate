@@ -3,15 +3,13 @@ import {ConflictException, GoneException, NotFoundException} from '@nestjs/commo
 import {ConfigService} from '@nestjs/config';
 import {Test, TestingModule} from '@nestjs/testing';
 import {mock, MockProxy} from 'jest-mock-extended';
-
-import {ConfigKey} from '../config/config-key.enum';
-import {CryptoService} from '../crypto/crypto.service';
-import {EmailService} from '../email/email.service';
-import {oneDay, oneHour, oneMinute} from '../utils/time';
-
-import {User} from './entities/user.entity';
-import {UserStatus} from './types/user-status.enum';
-import {UsersService} from './users.service';
+import {ConfigKey} from '../config/config-key.enum.ts';
+import {CryptoService} from '../crypto/crypto.service.ts';
+import {EmailService} from '../email/email.service.ts';
+import {oneDay, oneHour, oneMinute} from '../utils/time.ts';
+import {User} from './entities/user.entity.ts';
+import {UserStatus} from './types/user-status.enum.ts';
+import {UsersService} from './users.service.ts';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -28,19 +26,21 @@ describe('UsersService', () => {
     emailService = mock<EmailService>();
     configService = mock<ConfigService>();
 
-    // Create mock query builder manually instead of using mockDeep
-    mockQueryBuilder = {
+    const mockQueryBuilder = {
       delete: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
       execute: jest.fn().mockResolvedValue({affectedRows: 3}),
-    } as unknown as jest.Mocked<QueryBuilder<User>>;
+    };
 
-    // Setup default behaviors
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object>);
+    // eslint-disable-next-line @typescript-eslint/no-restricted-types
+    em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
+
     cryptoService.hash.mockResolvedValue('hashed-value');
     configService.get.mockImplementation((key: ConfigKey) => {
-      if (key === ConfigKey.FRONTEND_HOST) return 'http://localhost';
+      if (key === ConfigKey.FRONTEND_HOST) {
+        return 'http://localhost';
+      }
+
       return null;
     });
 
@@ -346,7 +346,7 @@ describe('UsersService', () => {
       const result = await service.updateUser('user-123', 'new@example.com');
 
       expect(result.email).toBe('new@example.com');
-      expect(result.username).toBe('oldname'); // unchanged
+      expect(result.username).toBe('oldname'); // Unchanged
       expect(em.persistAndFlush).toHaveBeenCalledWith(mockUser);
     });
 
@@ -363,7 +363,7 @@ describe('UsersService', () => {
 
       const result = await service.updateUser('user-123', undefined, 'newname');
 
-      expect(result.email).toBe('test@example.com'); // unchanged
+      expect(result.email).toBe('test@example.com'); // Unchanged
       expect(result.username).toBe('newname');
       expect(em.persistAndFlush).toHaveBeenCalledWith(mockUser);
     });
@@ -415,7 +415,14 @@ describe('UsersService', () => {
 
   describe('removeExpiredPendingUsers', () => {
     it('should remove expired pending users', async (): Promise<void> => {
-      mockQueryBuilder.execute.mockResolvedValue({affectedRows: 3});
+      const mockQueryBuilder = {
+        delete: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        execute: jest.fn().mockResolvedValue({affectedRows: 3}),
+      };
+
+      // eslint-disable-next-line @typescript-eslint/no-restricted-types
+      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
 
       // Spy on console.log
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
@@ -435,7 +442,14 @@ describe('UsersService', () => {
     });
 
     it('should not log if no expired pending users are removed', async (): Promise<void> => {
-      mockQueryBuilder.execute.mockResolvedValue({affectedRows: 0});
+      const mockQueryBuilder = {
+        delete: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        execute: jest.fn().mockResolvedValue({affectedRows: 0}),
+      };
+
+      // eslint-disable-next-line @typescript-eslint/no-restricted-types
+      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
 
       // Spy on console.log
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();

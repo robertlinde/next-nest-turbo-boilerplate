@@ -1,20 +1,15 @@
+import {Buffer} from 'node:buffer';
 import {EntityManager} from '@mikro-orm/postgresql';
 import {GoneException, Injectable, NotFoundException} from '@nestjs/common';
-
 import {ConfigService} from '@nestjs/config';
 import {Cron} from '@nestjs/schedule';
-
 import {v4 as uuidv4} from 'uuid';
-
-import {ConfigKey} from '../config/config-key.enum';
-import {CryptoService} from '../crypto/crypto.service';
-
-import {EmailService} from '../email/email.service';
-
-import {oneDay, oneHour} from '../utils/time';
-
-import {User} from './entities/user.entity';
-import {UserStatus} from './types/user-status.enum';
+import {ConfigKey} from '../config/config-key.enum.ts';
+import {CryptoService} from '../crypto/crypto.service.ts';
+import {EmailService} from '../email/email.service.ts';
+import {oneDay, oneHour} from '../utils/time.ts';
+import {User} from './entities/user.entity.ts';
+import {UserStatus} from './types/user-status.enum.ts';
 
 @Injectable()
 export class UsersService {
@@ -25,7 +20,7 @@ export class UsersService {
     private readonly configService: ConfigService,
   ) {}
 
-  @Cron('0 * * * *') // every hour, on the hour
+  @Cron('0 * * * *') // Every hour, on the hour
   async removeExpiredPendingUsers(): Promise<void> {
     const threshold = new Date(Date.now() - oneDay);
 
@@ -93,7 +88,7 @@ export class UsersService {
   async confirmUser(confirmationCode: string): Promise<User> {
     const user = await this.em.findOne(User, {confirmationCode});
 
-    // if the user is not found, throw an error
+    // If the user is not found, throw an error
     if (!user) {
       throw new NotFoundException(`User with confirmation code ${confirmationCode} not found`);
     }
@@ -102,7 +97,7 @@ export class UsersService {
       return user;
     }
 
-    // if the confirmation code is older than 24 hours, delete the user and throw an error
+    // If the confirmation code is older than 24 hours, delete the user and throw an error
     if (new Date(user.createdAt).getTime() + oneDay < Date.now()) {
       await this.em.removeAndFlush(user);
       throw new GoneException(`Confirmation code ${confirmationCode} expired`);
@@ -125,7 +120,7 @@ export class UsersService {
     try {
       user = await this.getUserByEmail(email);
     } catch {
-      return; // don't leak user existence
+      return; // Don't leak user existence
     }
 
     const resetToken = Buffer.from(await this.cryptoService.hash(uuidv4())).toString('base64url');
@@ -141,12 +136,12 @@ export class UsersService {
   async confirmPasswordReset(resetToken: string, newPassword: string): Promise<void> {
     const user = await this.em.findOne(User, {passwordResetToken: resetToken});
 
-    // if the user is not found, throw an error
+    // If the user is not found, throw an error
     if (!user) {
       throw new NotFoundException(`User with reset token ${resetToken} not found`);
     }
 
-    // if the reset token is older than 1 hour, delete the user and throw an error
+    // If the reset token is older than 1 hour, delete the user and throw an error
     if (
       user.passwordResetTokenCreatedAt &&
       new Date(user.passwordResetTokenCreatedAt).getTime() + 2 * oneHour < Date.now()
@@ -154,7 +149,7 @@ export class UsersService {
       throw new GoneException(`Reset token ${resetToken} expired`);
     }
 
-    // reset tokens
+    // Reset tokens
     user.passwordResetToken = undefined;
     user.passwordResetTokenCreatedAt = undefined;
 

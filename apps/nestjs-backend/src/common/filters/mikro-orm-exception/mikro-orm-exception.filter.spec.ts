@@ -1,10 +1,9 @@
 import {DriverException} from '@mikro-orm/core';
 import {ArgumentsHost, HttpStatus} from '@nestjs/common';
-import {HttpArgumentsHost} from '@nestjs/common/interfaces';
 import {Request, Response} from 'express';
 import {mock, MockProxy} from 'jest-mock-extended';
-
-import {MikroOrmExceptionFilter} from './mikro-orm-exception.filter';
+import {HttpArgumentsHost} from '@nestjs/common/interfaces/index';
+import {MikroOrmExceptionFilter} from './mikro-orm-exception.filter.ts';
 
 describe('MikroOrmExceptionFilter', () => {
   let filter: MikroOrmExceptionFilter<DriverException>;
@@ -18,7 +17,7 @@ describe('MikroOrmExceptionFilter', () => {
 
     mockRequest = mock<Request>();
     mockResponse = mock<Response>();
-    mockResponse.status.mockReturnValue(mockResponse); // for chaining
+    mockResponse.status.mockReturnValue(mockResponse); // For chaining
 
     mockHttpArgumentsHost = mock<HttpArgumentsHost>();
     mockHttpArgumentsHost.getRequest.mockReturnValue(mockRequest);
@@ -66,7 +65,7 @@ describe('MikroOrmExceptionFilter', () => {
       message: 'Sample DB error',
     };
 
-    // eslint-disable-next-line promise/valid-params
+    // eslint-disable-next-line promise/prefer-await-to-then, promise/valid-params
     filter.catch(exception, mockArgumentsHost);
 
     expect(mockResponse.status).toHaveBeenCalledWith(expectedStatus);

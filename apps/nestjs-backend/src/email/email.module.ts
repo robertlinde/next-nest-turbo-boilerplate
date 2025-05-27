@@ -1,10 +1,12 @@
-import {join} from 'node:path';
-
+import {join, dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
 import {Module} from '@nestjs/common';
 import {MailerModule} from '@nestjs-modules/mailer';
 import {HandlebarsAdapter} from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import {EmailService} from './email.service.ts';
 
-import {EmailService} from './email.service';
+const __filename = fileURLToPath(import.meta.url);
+const __builtDirname = dirname(__filename);
 
 @Module({
   imports: [
@@ -18,7 +20,7 @@ import {EmailService} from './email.service';
         },
       },
       template: {
-        dir: join(__dirname, 'templates'),
+        dir: join(__builtDirname, 'templates'),
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true,

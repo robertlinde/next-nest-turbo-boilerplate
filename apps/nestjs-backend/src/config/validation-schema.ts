@@ -1,8 +1,7 @@
 /* eslint-disable unicorn/no-thenable */
 
 import * as Joi from 'joi';
-
-import {ConfigKey} from './config-key.enum';
+import {ConfigKey} from './config-key.enum.ts';
 
 const schemaMap: Record<ConfigKey, Joi.Schema> = {
   [ConfigKey.NODE_ENV]: Joi.string().valid('development', 'staging', 'production').required(),

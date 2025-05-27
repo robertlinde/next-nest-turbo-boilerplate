@@ -1,19 +1,14 @@
 import {type JSX} from 'react';
-
 import type {Metadata} from 'next';
-
-import './globals.css';
-
-import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
-
 import {ConfirmDialog} from 'primereact/confirmdialog';
-
-import {Header} from '@/components/Header/Header.component';
-import {ReactQueryProvider} from '@/providers/ReactQueryProvider';
-import {ToastProvider} from '@/providers/ToastProvider';
-import {UserProvider} from '@/providers/UserProvider';
+import 'primeicons/primeicons.css';
+import 'primereact/resources/primereact.min.css';
+import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
+import './globals.css';
+import {Header} from '@/components/Header/Header.component.tsx';
+import {ReactQueryProvider} from '@/providers/ReactQueryProvider.tsx';
+import {ToastProvider} from '@/providers/ToastProvider.tsx';
+import {UserProvider} from '@/providers/UserProvider.tsx';
 
 export const metadata: Metadata = {
   title: 'Next.js Frontend',

@@ -1,6 +1,5 @@
 import {Test, TestingModule} from '@nestjs/testing';
-
-import {Logger} from './logger.service'; // Adjust the import path as needed
+import {Logger} from './logger.service.ts'; // Adjust the import path as needed
 
 describe('Logger', () => {
   let logger: Logger;

@@ -1,6 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {IsString} from 'class-validator';
 
+// eslint-disable-next-line unicorn/prevent-abbreviations
 export class ConfirmUserParamDto {
   @IsString()
   @ApiProperty({

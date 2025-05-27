@@ -3,7 +3,7 @@ import type {Config} from 'jest';
 const config: Config = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: 'src',
-  testRegex: '(.*(controller|service|guard|interceptor|pipe|middleware|filter))\\.spec\\.ts$',
+  testRegex: String.raw`(.*(controller|service|guard|interceptor|pipe|middleware|filter))\.spec\.ts$`,
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest', // eslint-disable-line @typescript-eslint/naming-convention
   },
