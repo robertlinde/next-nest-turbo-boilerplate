@@ -1,4 +1,5 @@
 {
-  "*.{js,ts,tsx}": ["npm run format", "npm run lint:fix"],
-  "*.{json,md,css,html}": ["npm run format"]
+  "apps/nestjs-backend/**/*.{ts,tsx,js,jsx}": "npm --workspace nestjs-backend run lint:fix",
+  "apps/nextjs-frontend/**/*.{ts,tsx,js,jsx}": "npm --workspace nextjs-frontend run lint:fix",
+  "*.{json,md,css,html,ts,tsx,js,jsx}": ["npm run format"]
 }

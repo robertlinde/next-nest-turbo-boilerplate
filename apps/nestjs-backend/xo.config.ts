@@ -1,3 +1,9 @@
+// Since NestJS does not support ES modules yet, we need to use CommonJS modules. And since this is part of a turborepo, the xo package is installed at the root of the monorepo, so we can't access it here.
+
+// import {type FlatXoConfig} from 'xo';
+
+// const xoConfig: FlatXoConfig = [
+
 const xoConfig = [
   // Extend the base config by merging its properties with nestjs specific additions
   {
