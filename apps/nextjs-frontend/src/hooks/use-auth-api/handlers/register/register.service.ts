@@ -1,9 +1,9 @@
-import {type ResetPasswordParams} from '../types/reset-password-params.type.ts';
+import {type RegisterParams} from './types/register-params.type.ts';
 import {apiRequestHandler} from '@/utils/api/api-request-handler.util.ts';
 
-export const resetPassword = async (data: ResetPasswordParams): Promise<void> => {
+export const register = async (data: RegisterParams): Promise<void> => {
   // eslint-disable-next-line n/prefer-global/process
-  await apiRequestHandler(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/reset-password/confirm`, {
+  await apiRequestHandler(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`, {
     method: 'POST',
     credentials: 'include',
     headers: {

@@ -1,4 +1,4 @@
-import {type LoginTwoFactorParams} from '../types/login-two-factor-params.type';
+import {type LoginTwoFactorParams} from './types/login-two-factor-params.type';
 import {apiRequestHandler} from '@/utils/api/api-request-handler.util';
 
 export const loginTwoFactorAuth = async (data: LoginTwoFactorParams): Promise<void> => {

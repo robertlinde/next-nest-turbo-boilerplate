@@ -1,23 +1,19 @@
 'use client';
 
-import {type MutationFunction} from '@tanstack/react-query';
-import {useApi} from '../use-api/use-api.hook.tsx';
-import {forgotPassword as forgotPasswordRequest} from './services/forgot-password.service.ts';
-import {loginCredentials as loginCredentialsRequest} from './services/login-credentials.service.ts';
-import {loginTwoFactorAuth} from './services/login-two-factor.service.ts';
-import {logout as logoutRequest} from './services/logout.service.ts';
-import {register as registerRequest} from './services/register.service.ts';
-import {resetPassword as resetPasswordRequest} from './services/reset-password.service.ts';
 import {type ConfirmHandlerOptions} from './handlers/confirm/types/confirm-handler-options.type.ts';
-import {type ForgotPasswordHandlerOptions} from './types/forgot-password-handler-options.type.ts';
-import {type LoginCredentialsHandlerOptions} from './types/login-credentials-handler-options.type.ts';
-import {type LoginTwoFactorHandlerOptions} from './types/login-two-factor-handler-options.type.ts';
-import {type LogoutHandlerOptions} from './types/logout-handler-options.type.ts';
-import {type RegisterHandlerOptions} from './types/register-handler-options.type.ts';
-import {type ResetPasswordHandlerOptions} from './types/reset-password-handler-options.type.ts';
+import {type LoginTwoFactorHandlerOptions} from './handlers/login-two-factor/types/login-two-factor-handler-options.type.ts';
+import {type LogoutHandlerOptions} from './handlers/logout/types/logout-handler-options.type.ts';
+import {type RegisterHandlerOptions} from './handlers/register/types/register-handler-options.type.ts';
+import {type ResetPasswordHandlerOptions} from './handlers/reset-password/types/reset-password-handler-options.type.ts';
 import {useConfirm} from './handlers/confirm/use-confirm.hook.tsx';
-import {useUserStore} from '@/store/user.store.ts';
-import {handleMutation} from '@/utils/api/handle-mutation.util.ts';
+import {useForgotPassword} from './handlers/forgot-password/use-forgot-password.hook.tsx';
+import {useResetPassword} from './handlers/reset-password/use-reset-password.hook.tsx';
+import {useLoginCredentials} from './handlers/login-credentials/use-login-credentials.hook.tsx';
+import {type LoginCredentialsHandlerOptions} from './handlers/login-credentials/types/login-credentials-handler-options.type.ts';
+import {type ForgotPasswordHandlerOptions} from './handlers/forgot-password/types/forgot-password-handler-options.type.ts';
+import {useLoginTwoFactor} from './handlers/login-two-factor/use-login-two-factor.hook.tsx';
+import {useLogout} from './handlers/logout/use-logout.hook.tsx';
+import {useRegister} from './handlers/register/use-register.hook.tsx';
 
 /**
  * A custom hook that provides methods for various authentication-related actions such as login,
@@ -32,77 +28,13 @@ export function useAuthApi(): {
   resetPassword: (options: ResetPasswordHandlerOptions) => Promise<void>;
   logout: (options?: LogoutHandlerOptions) => Promise<void>;
 } {
-  const loadUser = useUserStore((state) => state.loadUser);
-  const logoutAuth = useUserStore((state) => state.logout);
-
-  const {useMutation} = useApi();
   const {confirm} = useConfirm();
-
-  const loginMutation = useMutation(loginCredentialsRequest as MutationFunction);
-  const loginTwoFactorMutation = useMutation(loginTwoFactorAuth as MutationFunction);
-  const registerMutation = useMutation(registerRequest as MutationFunction);
-  const forgotPasswordMutation = useMutation(forgotPasswordRequest as MutationFunction);
-  const resetPasswordMutation = useMutation(resetPasswordRequest as MutationFunction);
-  const logoutMutation = useMutation(logoutRequest);
-
-  /**
-   * Authenticates a user using credentials.
-   */
-  const loginCredentials = async ({data, onSuccess, onError}: LoginCredentialsHandlerOptions): Promise<void> => {
-    await handleMutation(
-      loginMutation,
-      data,
-      async () => {
-        await onSuccess?.();
-      },
-      onError,
-    );
-  };
-
-  /**
-   * Authenticates a user using two-factor authentication.
-   */
-  const loginTwoFactor = async ({data, onSuccess, onError}: LoginTwoFactorHandlerOptions): Promise<void> => {
-    await handleMutation(
-      loginTwoFactorMutation,
-      data,
-      async () => {
-        await loadUser();
-        await onSuccess?.();
-      },
-      onError,
-    );
-  };
-
-  /**
-   * Registers a new user.
-   */
-  const register = async ({data, onSuccess, onError}: RegisterHandlerOptions): Promise<void> => {
-    await handleMutation(registerMutation, data, onSuccess, onError);
-  };
-
-  /**
-   * Initiates a password reset email.
-   */
-  const forgotPassword = async ({data, onSuccess, onError}: ForgotPasswordHandlerOptions): Promise<void> => {
-    await handleMutation(forgotPasswordMutation, data, onSuccess, onError);
-  };
-
-  /**
-   * Resets a user's password using a token.
-   */
-  const resetPassword = async ({data, onSuccess, onError, token}: ResetPasswordHandlerOptions): Promise<void> => {
-    if (!token) throw new Error('Missing token');
-    await handleMutation(resetPasswordMutation, {...data, token}, onSuccess, onError);
-  };
-
-  /**
-   * Logs the user out and clears local auth state.
-   */
-  const logout = async ({onSuccess, onError}: LogoutHandlerOptions = {}): Promise<void> => {
-    logoutAuth();
-    await handleMutation(logoutMutation, undefined, onSuccess, onError);
-  };
+  const {forgotPassword} = useForgotPassword();
+  const {resetPassword} = useResetPassword();
+  const {loginCredentials} = useLoginCredentials();
+  const {loginTwoFactor} = useLoginTwoFactor();
+  const {logout} = useLogout();
+  const {register} = useRegister();
 
   return {
     loginCredentials,

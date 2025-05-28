@@ -1,9 +1,9 @@
-import {type ForgotPasswordParams} from '../types/forgot-password-params.type.ts';
+import {type LoginCredentialsParams} from './types/login-credentials-params.type.ts';
 import {apiRequestHandler} from '@/utils/api/api-request-handler.util.ts';
 
-export const forgotPassword = async (data: ForgotPasswordParams): Promise<void> => {
+export const loginCredentials = async (data: LoginCredentialsParams): Promise<void> => {
   // eslint-disable-next-line n/prefer-global/process
-  await apiRequestHandler(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/reset-password/request`, {
+  await apiRequestHandler(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login/credentials`, {
     method: 'POST',
     credentials: 'include',
     headers: {
