@@ -5,15 +5,16 @@ import {
 } from '@tanstack/react-query';
 import {type ApiError} from '@/utils/api/api-error.util.ts';
 
-export const useApi = (): {
-  useMutation: (mutationFn: MutationFunction) => UseMutationResult<unknown, ApiError>;
-  handleMutation: (
-  mutation: UseMutationResult<unknown, ApiError>,
-  data: unknown,
-  onSuccess?: () => void | Promise<void>,
-  onError?: (error: ApiError) => void | Promise<void>,
-  ) => Promise<void>;
-} => {
+export const useApi = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mutationFn: (...args: any[]) => any | Promise<any>,
+): {
+    sendRequest: (
+    data: unknown,
+    onSuccess?: () => void | Promise<void>,
+    onError?: (error: ApiError) => void | Promise<void>,
+    ) => Promise<void>;
+  } => {
   /**
    * A custom hook to create an API mutation using react-query.
    */
@@ -22,11 +23,12 @@ export const useApi = (): {
       mutationFn,
     });
 
+  const mutation = useMutation(mutationFn as MutationFunction);
+
   /**
    * Executes an API mutation and handles success and error callbacks.
    */
-  const handleMutation = async (
-    mutation: UseMutationResult<unknown, ApiError>,
+  const sendRequest = async (
     data: unknown,
     onSuccess?: () => void | Promise<void>,
     onError?: (error: ApiError) => void | Promise<void>,
@@ -42,7 +44,6 @@ export const useApi = (): {
   };
 
   return {
-    useMutation,
-    handleMutation,
+    sendRequest,
   };
 };
