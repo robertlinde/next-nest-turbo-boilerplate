@@ -110,7 +110,7 @@ export function useAuthApi(): {
    */
   const confirm = async ({onSuccess, onError, token}: BaseAuth & Confirm): Promise<void> => {
     if (!token) throw new Error('Missing token');
-    await handleMutation(confirmMutation, token, onSuccess, onError);
+    await handleMutation(confirmMutation, {token}, onSuccess, onError);
   };
 
   /**
