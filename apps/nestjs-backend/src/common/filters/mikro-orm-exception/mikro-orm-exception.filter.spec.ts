@@ -3,7 +3,6 @@ import {ArgumentsHost, HttpStatus} from '@nestjs/common';
 import {HttpArgumentsHost} from '@nestjs/common/interfaces';
 import {Request, Response} from 'express';
 import {mock, MockProxy} from 'jest-mock-extended';
-
 import {MikroOrmExceptionFilter} from './mikro-orm-exception.filter';
 
 describe('MikroOrmExceptionFilter', () => {
@@ -58,25 +57,29 @@ describe('MikroOrmExceptionFilter', () => {
     ['53300', HttpStatus.SERVICE_UNAVAILABLE, 'Too many connections'],
     ['40001', HttpStatus.CONFLICT, 'Serialization failure'],
     ['40003', HttpStatus.CONFLICT, 'Statement completion unknown'],
+    [undefined, HttpStatus.INTERNAL_SERVER_ERROR, 'An unexpected database error occurred'],
     ['unknown_code', HttpStatus.INTERNAL_SERVER_ERROR, 'An unexpected database error occurred'],
-  ])('handles exception with code %s correctly', (code: string, expectedStatus: number, expectedMessage: string) => {
-    const exception: DriverException = {
-      name: 'DriverException',
-      code,
-      message: 'Sample DB error',
-    };
+  ])(
+    'handles exception with code %s correctly',
+    (code: string | undefined, expectedStatus: number, expectedMessage: string) => {
+      const exception: DriverException = {
+        name: 'DriverException',
+        code,
+        message: 'Sample DB error',
+      };
 
-    // eslint-disable-next-line promise/valid-params
-    filter.catch(exception, mockArgumentsHost);
+      // eslint-disable-next-line promise/valid-params, promise/prefer-await-to-then
+      filter.catch(exception, mockArgumentsHost);
 
-    expect(mockResponse.status).toHaveBeenCalledWith(expectedStatus);
-    expect(mockResponse.json).toHaveBeenCalledWith(
-      expect.objectContaining({
-        statusCode: expectedStatus,
-        message: expectedMessage,
-        path: '/test-url',
-        detail: 'Sample DB error',
-      }),
-    );
-  });
+      expect(mockResponse.status).toHaveBeenCalledWith(expectedStatus);
+      expect(mockResponse.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          statusCode: expectedStatus,
+          message: expectedMessage,
+          path: '/test-url',
+          detail: 'Sample DB error',
+        }),
+      );
+    },
+  );
 });

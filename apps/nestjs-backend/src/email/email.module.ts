@@ -1,9 +1,7 @@
 import {join} from 'node:path';
-
 import {Module} from '@nestjs/common';
 import {MailerModule} from '@nestjs-modules/mailer';
 import {HandlebarsAdapter} from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-
 import {EmailService} from './email.service';
 
 @Module({
@@ -18,6 +16,7 @@ import {EmailService} from './email.service';
         },
       },
       template: {
+        // eslint-disable-next-line unicorn/prefer-module
         dir: join(__dirname, 'templates'),
         adapter: new HandlebarsAdapter(),
         options: {

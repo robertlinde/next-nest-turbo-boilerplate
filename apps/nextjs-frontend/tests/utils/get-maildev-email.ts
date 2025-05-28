@@ -1,4 +1,4 @@
-import {type MailDevEmail} from './register/types/mail-dev-mail.type';
+import {type MailDevEmail} from './register/types/mail-dev-mail.type.ts';
 
 // Get email
 export const getMaildevEmail = async (

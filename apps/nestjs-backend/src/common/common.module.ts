@@ -1,5 +1,4 @@
 import {Global, Logger, MiddlewareConsumer, Module, NestModule} from '@nestjs/common';
-
 import {LoggerMiddleware} from './logger/logger.middleware';
 import {LoggerModule} from './logger/logger.module';
 

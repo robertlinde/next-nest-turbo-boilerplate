@@ -1,18 +1,13 @@
+import {Buffer} from 'node:buffer';
 import {EntityManager} from '@mikro-orm/postgresql';
 import {GoneException, Injectable, NotFoundException} from '@nestjs/common';
-
 import {ConfigService} from '@nestjs/config';
 import {Cron} from '@nestjs/schedule';
-
 import {v4 as uuidv4} from 'uuid';
-
 import {ConfigKey} from '../config/config-key.enum';
 import {CryptoService} from '../crypto/crypto.service';
-
 import {EmailService} from '../email/email.service';
-
-import {oneDay, oneHour} from '../utils/time';
-
+import {oneDay, oneHour} from '../utils/time.util';
 import {User} from './entities/user.entity';
 import {UserStatus} from './types/user-status.enum';
 

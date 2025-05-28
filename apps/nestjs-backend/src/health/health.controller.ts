@@ -7,7 +7,6 @@ import {
   HealthIndicatorResult,
   HealthCheckResult,
 } from '@nestjs/terminus';
-
 import {Public} from '../auth/decorators/public.decorator';
 
 @Public()

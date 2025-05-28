@@ -1,6 +1,6 @@
 import {Migrator} from '@mikro-orm/migrations';
 import {defineConfig, PostgreSqlDriver} from '@mikro-orm/postgresql';
-// eslint-disable-next-line import/no-unassigned-import
+// eslint-disable-next-line import-x/no-unassigned-import
 import 'dotenv/config';
 
 const mikroOrmConfig = defineConfig({

@@ -1,8 +1,6 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import {mock} from 'jest-mock-extended';
-
 import {ActiveUserData} from '../auth/types/active-user-data.type';
-
 import {ConfirmUserParamDto} from './dto/confirm-user-param.dto';
 import {CreateUserBodyDto} from './dto/create-user-body.dto';
 import {MeDto} from './dto/me.dto';

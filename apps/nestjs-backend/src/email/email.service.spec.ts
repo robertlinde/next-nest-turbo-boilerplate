@@ -2,9 +2,7 @@ import {ConfigService} from '@nestjs/config';
 import {Test, TestingModule} from '@nestjs/testing';
 import {MailerService} from '@nestjs-modules/mailer';
 import {mock, MockProxy} from 'jest-mock-extended';
-
 import {ConfigKey} from '../config/config-key.enum';
-
 import {EmailService} from './email.service';
 
 describe('EmailService', () => {

@@ -1,5 +1,4 @@
 import {Suspense, type JSX} from 'react';
-
 import {Card} from 'primereact/card';
 
 export default function AuthLayout({

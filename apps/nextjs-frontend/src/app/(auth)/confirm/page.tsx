@@ -1,21 +1,19 @@
 'use client';
 
 import {type JSX, useEffect, useState} from 'react';
-
 import {useSearchParams} from 'next/navigation';
-
-import {useAuthApi} from '@/hooks/useAuthApi/useAuthApi';
-import {type ApiError} from '@/utils/api/api-error';
+import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
+import {type ApiError} from '@/utils/api/api-error.ts';
 
 export default function Confirm(): JSX.Element {
-  const searchParams = useSearchParams();
+  const searchParameters = useSearchParams();
 
   const [confirmStatus, setConfirmStatus] = useState<'pending' | 'success' | 'error'>('pending');
 
   const {confirm} = useAuthApi();
 
   useEffect(() => {
-    const token = searchParams.get('token');
+    const token = searchParameters.get('token');
 
     if (token) {
       void confirm({
@@ -34,7 +32,7 @@ export default function Confirm(): JSX.Element {
         },
       });
     }
-  }, [searchParams]);
+  }, [searchParameters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
