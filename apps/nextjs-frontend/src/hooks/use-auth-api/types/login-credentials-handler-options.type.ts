@@ -1,8 +1,4 @@
 import {type BaseAuthHandlerOptions} from './base-auth-handler-options.type.ts';
+import {type LoginCredentialsParams} from './login-credentials-params.type.ts';
 
-export type LoginCredentialsHandlerOptions = BaseAuthHandlerOptions & {
-  data: {
-    email: string;
-    password: string;
-  };
-};
+export type LoginCredentialsHandlerOptions = BaseAuthHandlerOptions & LoginCredentialsParams;

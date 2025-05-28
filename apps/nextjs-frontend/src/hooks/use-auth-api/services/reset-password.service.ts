@@ -1,7 +1,7 @@
-import {type ResetPasswordFormFields} from '../../../app/(auth)/reset-password/types/reset-password-form-fields.type.ts';
+import {type ResetPasswordParams} from '../types/reset-password-params.type.ts';
 import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
 
-export const resetPassword = async (data: ResetPasswordFormFields & {token: string}): Promise<void> => {
+export const resetPassword = async (data: ResetPasswordParams): Promise<void> => {
   // eslint-disable-next-line n/prefer-global/process
   await apiRequestHandler(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/reset-password/confirm`, {
     method: 'POST',

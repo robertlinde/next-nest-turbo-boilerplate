@@ -9,6 +9,9 @@ const xoConfig: FlatXoConfig = [
     prettier: 'compat',
     space: true,
     rules: {
+      // Disabled for flexibility in naming -> "component.props.ts" instead of "component.properties.ts"
+      'unicorn/prevent-abbreviations': 'off',
+
       // Since Next.js is used this can be disabled
       'react/react-in-jsx-scope': 'off',
 
