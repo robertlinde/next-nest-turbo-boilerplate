@@ -3,7 +3,7 @@ import {
   useMutation as useReactQueryMutation,
   type UseMutationResult,
 } from '@tanstack/react-query';
-import {type ApiError} from '@/utils/api/api-error.util';
+import {type ApiError} from '@/utils/api/api-error.util.ts';
 
 export const useApi = (): {
   useMutation: (mutationFn: MutationFunction) => UseMutationResult<unknown, ApiError>;

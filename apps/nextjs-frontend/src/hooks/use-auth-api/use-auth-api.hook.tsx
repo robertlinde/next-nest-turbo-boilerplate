@@ -2,20 +2,20 @@
 
 import {type MutationFunction} from '@tanstack/react-query';
 import {useApi} from '../use-api/use-api.hook.tsx';
-import {confirm as confirmRequest} from './services/confirm.service.ts';
 import {forgotPassword as forgotPasswordRequest} from './services/forgot-password.service.ts';
 import {loginCredentials as loginCredentialsRequest} from './services/login-credentials.service.ts';
 import {loginTwoFactorAuth} from './services/login-two-factor.service.ts';
 import {logout as logoutRequest} from './services/logout.service.ts';
 import {register as registerRequest} from './services/register.service.ts';
 import {resetPassword as resetPasswordRequest} from './services/reset-password.service.ts';
-import {type ConfirmHandlerOptions} from './types/confirm-handler-options.type.ts';
+import {type ConfirmHandlerOptions} from './handlers/confirm/types/confirm-handler-options.type.ts';
 import {type ForgotPasswordHandlerOptions} from './types/forgot-password-handler-options.type.ts';
 import {type LoginCredentialsHandlerOptions} from './types/login-credentials-handler-options.type.ts';
 import {type LoginTwoFactorHandlerOptions} from './types/login-two-factor-handler-options.type.ts';
 import {type LogoutHandlerOptions} from './types/logout-handler-options.type.ts';
 import {type RegisterHandlerOptions} from './types/register-handler-options.type.ts';
 import {type ResetPasswordHandlerOptions} from './types/reset-password-handler-options.type.ts';
+import {useConfirm} from './handlers/confirm/use-confirm.hook.tsx';
 import {useUserStore} from '@/store/user.store.ts';
 import {handleMutation} from '@/utils/api/handle-mutation.util.ts';
 
@@ -36,11 +36,11 @@ export function useAuthApi(): {
   const logoutAuth = useUserStore((state) => state.logout);
 
   const {useMutation} = useApi();
+  const {confirm} = useConfirm();
 
   const loginMutation = useMutation(loginCredentialsRequest as MutationFunction);
   const loginTwoFactorMutation = useMutation(loginTwoFactorAuth as MutationFunction);
   const registerMutation = useMutation(registerRequest as MutationFunction);
-  const confirmMutation = useMutation(confirmRequest as MutationFunction);
   const forgotPasswordMutation = useMutation(forgotPasswordRequest as MutationFunction);
   const resetPasswordMutation = useMutation(resetPasswordRequest as MutationFunction);
   const logoutMutation = useMutation(logoutRequest);
@@ -79,14 +79,6 @@ export function useAuthApi(): {
    */
   const register = async ({data, onSuccess, onError}: RegisterHandlerOptions): Promise<void> => {
     await handleMutation(registerMutation, data, onSuccess, onError);
-  };
-
-  /**
-   * Confirms a user's email using a token.
-   */
-  const confirm = async ({onSuccess, onError, token}: ConfirmHandlerOptions): Promise<void> => {
-    if (!token) throw new Error('Missing token');
-    await handleMutation(confirmMutation, token, onSuccess, onError);
   };
 
   /**
