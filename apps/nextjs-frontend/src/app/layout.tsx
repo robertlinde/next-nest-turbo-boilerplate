@@ -1,10 +1,11 @@
 import {type JSX} from 'react';
 import type {Metadata} from 'next';
 import {ConfirmDialog} from 'primereact/confirmdialog';
+// eslint-disable-next-line import-x/order
+import './globals.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
-import './globals.css';
 import {ReactQueryProvider} from '@/providers/react-query.provider.tsx';
 import {ToastProvider} from '@/providers/toast.provider.tsx';
 import {UserProvider} from '@/providers/user.provider.tsx';
