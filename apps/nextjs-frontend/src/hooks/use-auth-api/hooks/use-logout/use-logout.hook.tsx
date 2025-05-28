@@ -1,4 +1,3 @@
-import {logout as logoutRequest} from './logout.service';
 import {type LogoutHandlerOptions} from './types/logout-handler-options.type';
 import {useApi} from '@/hooks/use-api/use-api.hook';
 import {useUserStore} from '@/store/user.store.ts';
@@ -6,6 +5,17 @@ import {useUserStore} from '@/store/user.store.ts';
 export const useLogout = (): {
   logout: (options?: LogoutHandlerOptions) => Promise<void>;
 } => {
+  const logoutRequest = async (): Promise<void> => {
+    // eslint-disable-next-line n/prefer-global/process
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/logout`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  };
+
   const {sendRequest} = useApi(logoutRequest);
   const logoutAuth = useUserStore((state) => state.logout);
 

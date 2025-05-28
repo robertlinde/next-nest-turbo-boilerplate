@@ -1,10 +1,22 @@
 import {type ConfirmHandlerOptions} from './types/confirm-handler-options.type';
-import {confirm as confirmRequest} from './confirm.service';
+import {type ConfirmParams} from './types/confirm-params.type';
 import {useApi} from '@/hooks/use-api/use-api.hook.tsx';
+import {apiRequestHandler} from '@/utils/api/api-request-handler.util';
 
 export const useConfirm = (): {
   confirm: (options: ConfirmHandlerOptions) => Promise<void>;
 } => {
+  const confirmRequest = async (params: ConfirmParams): Promise<void> => {
+    // eslint-disable-next-line n/prefer-global/process
+    await apiRequestHandler(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/confirm/${params.token}`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  };
+
   const {sendRequest} = useApi(confirmRequest);
 
   /**
