@@ -1,6 +1,6 @@
 import {type MutationFunction} from '@tanstack/react-query';
 import {type ResetPasswordHandlerOptions} from './types/reset-password-handler-options.type';
-import {resetPassword as resetPasswordRequest} from './reset-password.service';
+import {resetPassword as resetPasswordRequest} from './reset-password.service.ts';
 import {handleMutation} from '@/utils/api/handle-mutation.util';
 import {useApi} from '@/hooks/use-api/use-api.hook.tsx';
 
