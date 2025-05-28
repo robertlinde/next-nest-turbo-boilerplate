@@ -1,12 +1,10 @@
 import {Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post} from '@nestjs/common';
 import {ApiResponse, ApiTags, ApiOperation} from '@nestjs/swagger';
 import {Throttle} from '@nestjs/throttler';
-
 import {Public} from '../auth/decorators/public.decorator';
 import {User} from '../auth/decorators/user.decorator';
-import {ActiveUserData} from '../auth/types/active-user-data.type';
-import {oneHour, oneMinute} from '../utils/time';
-
+import type {ActiveUserData} from '../auth/types/active-user-data.type';
+import {oneHour, oneMinute} from '../utils/time.util';
 import {ConfirmUserParamDto} from './dto/confirm-user-param.dto';
 import {CreateUserBodyDto} from './dto/create-user-body.dto';
 import {MeDto} from './dto/me.dto';

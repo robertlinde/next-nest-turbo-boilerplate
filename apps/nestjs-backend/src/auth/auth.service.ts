@@ -2,18 +2,14 @@ import {EntityManager} from '@mikro-orm/postgresql';
 import {Injectable, UnauthorizedException, ForbiddenException} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {JwtService} from '@nestjs/jwt';
-
 import {Cron} from '@nestjs/schedule';
-
 import {ConfigKey} from '../config/config-key.enum';
 import {CryptoService} from '../crypto/crypto.service';
 import {EmailService} from '../email/email.service';
 import {User} from '../users/entities/user.entity';
 import {UserStatus} from '../users/types/user-status.enum';
 import {UsersService} from '../users/users.service';
-
-import {oneDay, oneMinute} from '../utils/time';
-
+import {oneDay, oneMinute} from '../utils/time.util';
 import {RevokedRefreshToken} from './entities/revoked-refresh-token.entity';
 import {TwoFactorAuth} from './entities/two-factor-auth.entity';
 
@@ -116,14 +112,19 @@ export class AuthService {
       {populate: ['user']},
     );
 
-    const matching2FaEntry = await Promise.any(
-      entriesWithMatchingCode.map(async (entry) => {
-        const isEntry = await this.cryptoService.compare(entry.id, twoFactorAuthHashedId);
-        if (isEntry) return entry;
-        throw new Error('no-match');
-      }),
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-    ).catch(() => {});
+    let matching2FaEntry;
+    try {
+      matching2FaEntry = await Promise.any(
+        entriesWithMatchingCode.map(async (entry) => {
+          const isEntry = await this.cryptoService.compare(entry.id, twoFactorAuthHashedId);
+          if (isEntry) return entry;
+          throw new Error('no-match');
+        }),
+      );
+    } catch {
+      // Handle the case where Promise.any rejects (all promises rejected)
+      matching2FaEntry = undefined;
+    }
 
     if (!matching2FaEntry || !matching2FaEntry.user) {
       throw new UnauthorizedException('Invalid two-factor authentication code or id');

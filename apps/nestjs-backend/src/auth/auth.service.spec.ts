@@ -4,14 +4,12 @@ import {ConfigService} from '@nestjs/config';
 import {JwtService} from '@nestjs/jwt';
 import {Test, TestingModule} from '@nestjs/testing';
 import {mock, MockProxy} from 'jest-mock-extended';
-
 import {ConfigKey} from '../config/config-key.enum';
 import {CryptoService} from '../crypto/crypto.service';
 import {EmailService} from '../email/email.service';
 import {User} from '../users/entities/user.entity';
 import {UserStatus} from '../users/types/user-status.enum';
 import {UsersService} from '../users/users.service';
-
 import {AuthService} from './auth.service';
 import {RevokedRefreshToken} from './entities/revoked-refresh-token.entity';
 import {TwoFactorAuth} from './entities/two-factor-auth.entity';
@@ -42,8 +40,8 @@ describe('AuthService', () => {
       execute: jest.fn().mockResolvedValue({affectedRows: 3}),
     } as unknown as jest.Mocked<QueryBuilder<RevokedRefreshToken>>;
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object>);
+    // eslint-disable-next-line @typescript-eslint/no-restricted-types
+    em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
 
     jwtService.sign.mockReturnValue('mock-token');
     cryptoService.hash.mockResolvedValue('hashed-value');
@@ -361,8 +359,8 @@ describe('AuthService', () => {
         execute: jest.fn().mockResolvedValue(mockExecuteResult),
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object>);
+      // eslint-disable-next-line @typescript-eslint/no-restricted-types
+      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
 
       // Spy on console.log
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
@@ -389,8 +387,8 @@ describe('AuthService', () => {
         execute: jest.fn().mockResolvedValue(mockExecuteResult),
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object>);
+      // eslint-disable-next-line @typescript-eslint/no-restricted-types
+      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
 
       // Spy on console.log
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
@@ -413,8 +411,8 @@ describe('AuthService', () => {
         execute: jest.fn().mockResolvedValue(mockExecuteResult),
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object>);
+      // eslint-disable-next-line @typescript-eslint/no-restricted-types
+      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
 
       // Spy on console.log
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
@@ -441,8 +439,8 @@ describe('AuthService', () => {
         execute: jest.fn().mockResolvedValue(mockExecuteResult),
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object>);
+      // eslint-disable-next-line @typescript-eslint/no-restricted-types
+      em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
 
       // Spy on console.log
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();

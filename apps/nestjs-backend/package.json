@@ -11,6 +11,8 @@
     "db:start": "docker-compose up -d",
     "db:stop": "docker-compose down",
     "db:restart": "docker-compose down && docker-compose up -d",
+    "lint": "xo",
+    "lint:fix": "xo --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",

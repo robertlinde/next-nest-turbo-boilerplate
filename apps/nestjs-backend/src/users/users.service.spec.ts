@@ -3,12 +3,10 @@ import {ConflictException, GoneException, NotFoundException} from '@nestjs/commo
 import {ConfigService} from '@nestjs/config';
 import {Test, TestingModule} from '@nestjs/testing';
 import {mock, MockProxy} from 'jest-mock-extended';
-
 import {ConfigKey} from '../config/config-key.enum';
 import {CryptoService} from '../crypto/crypto.service';
 import {EmailService} from '../email/email.service';
-import {oneDay, oneHour, oneMinute} from '../utils/time';
-
+import {oneDay, oneHour, oneMinute} from '../utils/time.util';
 import {User} from './entities/user.entity';
 import {UserStatus} from './types/user-status.enum';
 import {UsersService} from './users.service';
@@ -36,8 +34,8 @@ describe('UsersService', () => {
     } as unknown as jest.Mocked<QueryBuilder<User>>;
 
     // Setup default behaviors
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object>);
+    // eslint-disable-next-line @typescript-eslint/no-restricted-types
+    em.createQueryBuilder.mockReturnValue(mockQueryBuilder as unknown as QueryBuilder<object, string>);
     cryptoService.hash.mockResolvedValue('hashed-value');
     configService.get.mockImplementation((key: ConfigKey) => {
       if (key === ConfigKey.FRONTEND_HOST) return 'http://localhost';

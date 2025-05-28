@@ -1,10 +1,9 @@
 /* eslint-disable unicorn/no-thenable */
 
 import * as Joi from 'joi';
-
 import {ConfigKey} from './config-key.enum';
 
-const schemaMap: Record<ConfigKey, Joi.Schema> = {
+const validationSchemaMap: Record<ConfigKey, Joi.Schema> = {
   [ConfigKey.NODE_ENV]: Joi.string().valid('development', 'staging', 'production').required(),
   [ConfigKey.FRONTEND_HOST]: Joi.string().default('localhost'),
   [ConfigKey.PORT]: Joi.number().min(0).max(65_535).default(4000),
@@ -36,4 +35,4 @@ const schemaMap: Record<ConfigKey, Joi.Schema> = {
   [ConfigKey.MAIL_PASS]: Joi.string().optional(),
 };
 
-export default Joi.object(schemaMap);
+export default Joi.object(validationSchemaMap);

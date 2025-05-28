@@ -6,7 +6,6 @@ import {PassportStrategy} from '@nestjs/passport';
 import {Request} from 'express';
 import {ExtractJwt, Strategy} from 'passport-jwt';
 import {ConfigKey} from 'src/config/config-key.enum';
-
 import {ActiveUserData} from './types/active-user-data.type';
 
 @Injectable()
