@@ -3,10 +3,6 @@ import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
 
 /**
  * Represents a user object.
- * @typedef {Object} User
- * @property {string} id - The user's unique identifier.
- * @property {string} email - The user's email address.
- * @property {string} username - The user's username.
  */
 type User = {
   id: string;
@@ -16,12 +12,6 @@ type User = {
 
 /**
  * Zustand store state for managing the authenticated user's state.
- * @typedef {Object} UserStoreState
- * @property {User | undefined} user - The current user object or undefined if not loaded.
- * @property {boolean} loading - Indicates whether the user is being loaded.
- * @property {boolean} error - Indicates whether there was an error loading the user.
- * @property {() => Promise<void>} loadUser - Function to fetch and set the current user.
- * @property {() => void} logout - Function to clear the current user and reset state.
  */
 type UserStoreState = {
   user: User | undefined;
@@ -45,8 +35,6 @@ export const useUserStore = create<UserStoreState>((set) => ({
   /**
    * Loads the current user from the backend API.
    * Sets `user`, `loading`, and `error` states based on the response.
-   *
-   * @returns {Promise<void>} A promise that resolves once the user is loaded.
    */
   async loadUser(): Promise<void> {
     try {
