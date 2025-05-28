@@ -9,11 +9,14 @@ import {JwtAuthGuard} from './jwt-auth.guard';
 // Properly mock the AuthGuard
 jest.mock('@nestjs/passport', () => ({
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  AuthGuard: jest.fn(() => class MockAuthGuard {
-    canActivate(): boolean | Promise<boolean> | Observable<boolean> {
-      return true;
-    }
-  }),
+  AuthGuard: jest.fn(
+    () =>
+      class MockAuthGuard {
+        canActivate(): boolean | Promise<boolean> | Observable<boolean> {
+          return true;
+        }
+      },
+  ),
 }));
 
 describe('JwtAuthGuard', () => {
