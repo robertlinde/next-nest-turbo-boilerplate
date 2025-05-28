@@ -1,4 +1,4 @@
-import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
+import {apiRequestHandler} from '@/utils/api/api-request-handler.util';
 
 export const deleteProfile = async (): Promise<void> => {
   // eslint-disable-next-line n/prefer-global/process

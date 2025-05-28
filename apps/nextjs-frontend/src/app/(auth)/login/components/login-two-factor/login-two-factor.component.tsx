@@ -10,7 +10,7 @@ import {loginTwoFactorSchema} from './types/login-two-factor.schema.ts';
 import {FloatLabelInputText} from '@/components/float-label-input-text/float-label-input-text.component.tsx';
 import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
 import {useToast} from '@/hooks/use-toast/use-toast.hook.tsx';
-import {type ApiError} from '@/utils/api/api-error.ts';
+import {type ApiError} from '@/utils/api/api-error.util.ts';
 
 export function LoginTwoFactor(): JSX.Element {
   const {showToast} = useToast();

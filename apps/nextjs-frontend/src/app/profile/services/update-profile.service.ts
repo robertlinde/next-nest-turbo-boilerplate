@@ -1,5 +1,5 @@
 import {type RegisterFormFields} from '@/app/(auth)/register/types/register-form-fields.type.ts';
-import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
+import {apiRequestHandler} from '@/utils/api/api-request-handler.util';
 
 export const updateProfile = async (data: Partial<RegisterFormFields>): Promise<void> => {
   // eslint-disable-next-line n/prefer-global/process

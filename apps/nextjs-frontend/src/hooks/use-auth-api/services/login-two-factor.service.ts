@@ -1,5 +1,5 @@
 import {type LoginTwoFactorParams} from '../types/login-two-factor-params.type';
-import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
+import {apiRequestHandler} from '@/utils/api/api-request-handler.util';
 
 export const loginTwoFactorAuth = async (data: LoginTwoFactorParams): Promise<void> => {
   // eslint-disable-next-line n/prefer-global/process

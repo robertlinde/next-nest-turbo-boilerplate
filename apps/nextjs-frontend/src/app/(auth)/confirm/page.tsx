@@ -3,7 +3,7 @@
 import {type JSX, useEffect, useState} from 'react';
 import {useSearchParams} from 'next/navigation';
 import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
-import {type ApiError} from '@/utils/api/api-error.ts';
+import {type ApiError} from '@/utils/api/api-error.util';
 
 export default function Confirm(): JSX.Element {
   const searchParameters = useSearchParams();

@@ -1,5 +1,5 @@
 import {type LoginCredentialsParams} from '../types/login-credentials-params.type.ts';
-import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
+import {apiRequestHandler} from '@/utils/api/api-request-handler.util.ts';
 
 export const loginCredentials = async (data: LoginCredentialsParams): Promise<void> => {
   // eslint-disable-next-line n/prefer-global/process

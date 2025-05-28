@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
+import {apiRequestHandler} from '@/utils/api/api-request-handler.util';
 
 /**
  * Represents a user object.
@@ -45,8 +45,6 @@ export const useUserStore = create<UserStoreState>((set) => ({
   /**
    * Loads the current user from the backend API.
    * Sets `user`, `loading`, and `error` states based on the response.
-   *
-   * @returns {Promise<void>} A promise that resolves once the user is loaded.
    */
   async loadUser(): Promise<void> {
     try {

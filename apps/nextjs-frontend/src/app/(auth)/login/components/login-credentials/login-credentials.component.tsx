@@ -10,7 +10,7 @@ import {type LoginCredentialsProps} from './types/login-credentials-props.type.t
 import {loginCredentialsSchema} from './types/login-credentials.schema.ts';
 import {FloatLabelInputText} from '@/components/float-label-input-text/float-label-input-text.component.tsx';
 import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
-import {type ApiError} from '@/utils/api/api-error.ts';
+import {type ApiError} from '@/utils/api/api-error.util.ts';
 
 export function LoginCredentials({handleLoginCredentialsSuccess}: LoginCredentialsProps): JSX.Element {
   const {loginCredentials} = useAuthApi();

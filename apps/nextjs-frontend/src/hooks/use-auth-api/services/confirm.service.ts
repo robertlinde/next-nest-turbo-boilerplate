@@ -1,5 +1,5 @@
 import {type ConfirmParams} from '../types/confirm-params.type';
-import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
+import {apiRequestHandler} from '@/utils/api/api-request-handler.util';
 
 export const confirm = async (params: ConfirmParams): Promise<void> => {
   // eslint-disable-next-line n/prefer-global/process

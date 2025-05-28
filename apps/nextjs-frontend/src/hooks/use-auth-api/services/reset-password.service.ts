@@ -1,5 +1,5 @@
 import {type ResetPasswordParams} from '../types/reset-password-params.type.ts';
-import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
+import {apiRequestHandler} from '@/utils/api/api-request-handler.util.ts';
 
 export const resetPassword = async (data: ResetPasswordParams): Promise<void> => {
   // eslint-disable-next-line n/prefer-global/process
