@@ -1,13 +1,12 @@
 import {type MutationFunction} from '@tanstack/react-query';
 import {type ConfirmHandlerOptions} from './types/confirm-handler-options.type';
 import {confirm as confirmRequest} from './confirm.service';
-import {handleMutation} from '@/utils/api/handle-mutation.util';
 import {useApi} from '@/hooks/use-api/use-api.hook.tsx';
 
 export const useConfirm = (): {
   confirm: (options: ConfirmHandlerOptions) => Promise<void>;
 } => {
-  const {useMutation} = useApi();
+  const {useMutation, handleMutation} = useApi();
 
   const confirmMutation = useMutation(confirmRequest as MutationFunction);
 

@@ -2,12 +2,11 @@ import {type MutationFunction} from '@tanstack/react-query';
 import {loginCredentials as loginCredentialsRequest} from './login-credentials.service';
 import {type LoginCredentialsHandlerOptions} from './types/login-credentials-handler-options.type';
 import {useApi} from '@/hooks/use-api/use-api.hook';
-import {handleMutation} from '@/utils/api/handle-mutation.util';
 
 export const useLoginCredentials = (): {
   loginCredentials: (options: LoginCredentialsHandlerOptions) => Promise<void>;
 } => {
-  const {useMutation} = useApi();
+  const {useMutation, handleMutation} = useApi();
 
   const loginCredentialsMutation = useMutation(loginCredentialsRequest as MutationFunction);
 

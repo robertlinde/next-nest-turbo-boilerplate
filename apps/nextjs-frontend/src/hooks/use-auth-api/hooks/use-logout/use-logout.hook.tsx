@@ -2,12 +2,11 @@ import {logout as logoutRequest} from './logout.service';
 import {type LogoutHandlerOptions} from './types/logout-handler-options.type';
 import {useApi} from '@/hooks/use-api/use-api.hook';
 import {useUserStore} from '@/store/user.store.ts';
-import {handleMutation} from '@/utils/api/handle-mutation.util';
 
 export const useLogout = (): {
   logout: (options?: LogoutHandlerOptions) => Promise<void>;
 } => {
-  const {useMutation} = useApi();
+  const {useMutation, handleMutation} = useApi();
   const logoutAuth = useUserStore((state) => state.logout);
 
   const logoutMutation = useMutation(logoutRequest);

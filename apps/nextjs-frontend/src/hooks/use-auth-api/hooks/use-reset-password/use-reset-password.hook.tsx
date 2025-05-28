@@ -1,13 +1,12 @@
 import {type MutationFunction} from '@tanstack/react-query';
 import {type ResetPasswordHandlerOptions} from './types/reset-password-handler-options.type';
 import {resetPassword as resetPasswordRequest} from './reset-password.service.ts';
-import {handleMutation} from '@/utils/api/handle-mutation.util';
 import {useApi} from '@/hooks/use-api/use-api.hook.tsx';
 
 export const useResetPassword = (): {
   resetPassword: (options: ResetPasswordHandlerOptions) => Promise<void>;
 } => {
-  const {useMutation} = useApi();
+  const {useMutation, handleMutation} = useApi();
 
   const resetPasswordMutation = useMutation(resetPasswordRequest as MutationFunction);
 
