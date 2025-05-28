@@ -21,7 +21,7 @@ import type {ApiError} from '@/utils/api/api-error';
 /**
  * A custom hook to create an API mutation using react-query.
  */
-const useApiMutation = (mutationFn: MutationFunction): UseMutationResult<unknown, ApiError> =>
+const useAuthApiMutation = (mutationFn: MutationFunction): UseMutationResult<unknown, ApiError> =>
   useMutation({
     mutationFn,
   });
@@ -42,18 +42,18 @@ export function useAuthApi(): {
   const loadUser = useUserStore((state) => state.loadUser);
   const logoutAuth = useUserStore((state) => state.logout);
 
-  const loginMutation = useApiMutation(loginCredentialsRequest as MutationFunction);
-  const loginTwoFactorMutation = useApiMutation(loginTwoFactorAuth as MutationFunction);
-  const registerMutation = useApiMutation(registerRequest as MutationFunction);
-  const confirmMutation = useApiMutation(confirmRequest as MutationFunction);
-  const forgotPasswordMutation = useApiMutation(forgotPasswordRequest as MutationFunction);
-  const resetPasswordMutation = useApiMutation(resetPasswordRequest as MutationFunction);
-  const logoutMutation = useApiMutation(logoutRequest);
+  const loginMutation = useAuthApiMutation(loginCredentialsRequest as MutationFunction);
+  const loginTwoFactorMutation = useAuthApiMutation(loginTwoFactorAuth as MutationFunction);
+  const registerMutation = useAuthApiMutation(registerRequest as MutationFunction);
+  const confirmMutation = useAuthApiMutation(confirmRequest as MutationFunction);
+  const forgotPasswordMutation = useAuthApiMutation(forgotPasswordRequest as MutationFunction);
+  const resetPasswordMutation = useAuthApiMutation(resetPasswordRequest as MutationFunction);
+  const logoutMutation = useAuthApiMutation(logoutRequest);
 
   /**
    * Executes an API mutation and handles success and error callbacks.
    */
-  const handleMutation = async (
+  const handleAuthMutation = async (
     mutation: UseMutationResult<unknown, unknown>,
     data: unknown,
     onSuccess?: () => void | Promise<void>,
@@ -73,7 +73,7 @@ export function useAuthApi(): {
    * Authenticates a user using credentials.
    */
   const loginCredentials = async ({data, onSuccess, onError}: BaseAuth & LoginCredentials): Promise<void> => {
-    await handleMutation(
+    await handleAuthMutation(
       loginMutation,
       data,
       async () => {
@@ -87,7 +87,7 @@ export function useAuthApi(): {
    * Authenticates a user using two-factor authentication.
    */
   const loginTwoFactor = async ({data, onSuccess, onError}: BaseAuth & LoginTwoFactor): Promise<void> => {
-    await handleMutation(
+    await handleAuthMutation(
       loginTwoFactorMutation,
       data,
       async () => {
@@ -102,7 +102,7 @@ export function useAuthApi(): {
    * Registers a new user.
    */
   const register = async ({data, onSuccess, onError}: BaseAuth & Register): Promise<void> => {
-    await handleMutation(registerMutation, data, onSuccess, onError);
+    await handleAuthMutation(registerMutation, data, onSuccess, onError);
   };
 
   /**
@@ -110,14 +110,14 @@ export function useAuthApi(): {
    */
   const confirm = async ({onSuccess, onError, token}: BaseAuth & Confirm): Promise<void> => {
     if (!token) throw new Error('Missing token');
-    await handleMutation(confirmMutation, {token}, onSuccess, onError);
+    await handleAuthMutation(confirmMutation, {token}, onSuccess, onError);
   };
 
   /**
    * Initiates a password reset email.
    */
   const forgotPassword = async ({data, onSuccess, onError}: BaseAuth & ForgotPassword): Promise<void> => {
-    await handleMutation(forgotPasswordMutation, data, onSuccess, onError);
+    await handleAuthMutation(forgotPasswordMutation, data, onSuccess, onError);
   };
 
   /**
@@ -125,7 +125,7 @@ export function useAuthApi(): {
    */
   const resetPassword = async ({data, onSuccess, onError, token}: BaseAuth & ResetPassword): Promise<void> => {
     if (!token) throw new Error('Missing token');
-    await handleMutation(resetPasswordMutation, {...data, token}, onSuccess, onError);
+    await handleAuthMutation(resetPasswordMutation, {...data, token}, onSuccess, onError);
   };
 
   /**
@@ -133,7 +133,7 @@ export function useAuthApi(): {
    */
   const logout = async ({onSuccess, onError}: BaseAuth = {}): Promise<void> => {
     logoutAuth();
-    await handleMutation(logoutMutation, undefined, onSuccess, onError);
+    await handleAuthMutation(logoutMutation, undefined, onSuccess, onError);
   };
 
   return {
