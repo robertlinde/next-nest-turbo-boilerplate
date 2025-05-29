@@ -15,19 +15,9 @@ import {type LoginTwoFactor} from './types/login-two-factor.type.ts';
 import {type Register} from './types/register.type.ts';
 import {type ResetPassword} from './types/reset-password.type.ts';
 import {type BaseAuth} from './types/base-auth.type.ts';
+import {type MutationState} from './types/mutation-state.type.ts';
 import {useUserStore} from '@/store/user.store.ts';
 import type {ApiError} from '@/utils/api/api-error.ts';
-
-/**
- * Mutation state properties exposed by the auth hook
- */
-type MutationState = {
-  isPending: boolean;
-  isError: boolean;
-  isSuccess: boolean;
-  isIdle: boolean;
-  error: ApiError | undefined;
-};
 
 /**
  * Enhanced authentication hook with cleaner implementation
