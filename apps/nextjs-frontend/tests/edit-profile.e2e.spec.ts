@@ -1,7 +1,15 @@
-import {expect} from '@playwright/test';
+import {expect, type Page} from '@playwright/test';
 import {login} from './utils/login/login.ts';
 import {register} from './utils/register/register.ts';
 import {test} from './utils/setup.ts';
+
+const navigateToProfilePage = async (page: Page): Promise<void> => {
+  await page.getByTestId('header-user-menu-button').click();
+  await page.getByText('Profile').click();
+
+  // Assert that we are redirected to the profile page
+  await expect(page).toHaveURL(/\/profile/);
+};
 
 test.describe('Edit profile', () => {
   test('should change username', async ({page}) => {
@@ -11,11 +19,7 @@ test.describe('Edit profile', () => {
       password: user.password,
     });
 
-    await page.getByTestId('header-user-menu-button').click();
-    await page.getByText('Profile').click();
-
-    // Assert that we are redirected to the profile page
-    await expect(page).toHaveURL(/\/profile/);
+    await navigateToProfilePage(page);
 
     const newUsername = `new-${Date.now().toString().slice(0, 8)}`;
 
@@ -36,11 +40,7 @@ test.describe('Edit profile', () => {
       password: user.password,
     });
 
-    await page.getByTestId('header-user-menu-button').click();
-    await page.getByText('Profile').click();
-
-    // Assert that we are redirected to the profile page
-    await expect(page).toHaveURL(/\/profile/);
+    await navigateToProfilePage(page);
 
     await page.getByTestId('profile-username-input').fill('');
     await page.getByTestId('profile-save-button').click();
@@ -56,11 +56,7 @@ test.describe('Edit profile', () => {
       password: user.password,
     });
 
-    await page.getByTestId('header-user-menu-button').click();
-    await page.getByText('Profile').click();
-
-    // Assert that we are redirected to the profile page
-    await expect(page).toHaveURL(/\/profile/);
+    await navigateToProfilePage(page);
 
     const newEmail = `new-${Date.now().toString().slice(0, 8)}@playwright.test`;
 
@@ -103,11 +99,7 @@ test.describe('Edit profile', () => {
       password: user.password,
     });
 
-    await page.getByTestId('header-user-menu-button').click();
-    await page.getByText('Profile').click();
-
-    // Assert that we are redirected to the profile page
-    await expect(page).toHaveURL(/\/profile/);
+    await navigateToProfilePage(page);
 
     await page.getByTestId('profile-email-input').fill('');
     await page.getByTestId('profile-save-button').click();
@@ -123,11 +115,7 @@ test.describe('Edit profile', () => {
       password: user.password,
     });
 
-    await page.getByTestId('header-user-menu-button').click();
-    await page.getByText('Profile').click();
-
-    // Assert that we are redirected to the profile page
-    await expect(page).toHaveURL(/\/profile/);
+    await navigateToProfilePage(page);
 
     const newPassword = 'NewStrongPassword123!';
 
@@ -177,11 +165,7 @@ test.describe('Edit profile', () => {
       password: user.password,
     });
 
-    await page.getByTestId('header-user-menu-button').click();
-    await page.getByText('Profile').click();
-
-    // Assert that we are redirected to the profile page
-    await expect(page).toHaveURL(/\/profile/);
+    await navigateToProfilePage(page);
 
     await page.getByTestId('profile-password-input').fill('');
     await page.getByTestId('profile-save-button').click();
@@ -197,11 +181,7 @@ test.describe('Edit profile', () => {
       password: user.password,
     });
 
-    await page.getByTestId('header-user-menu-button').click();
-    await page.getByText('Profile').click();
-
-    // Assert that we are redirected to the profile page
-    await expect(page).toHaveURL(/\/profile/);
+    await navigateToProfilePage(page);
 
     await page.getByTestId('profile-delete-button').click();
     await page.getByText('Yes').click();
