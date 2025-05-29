@@ -29,7 +29,7 @@ export default function Register(): JSX.Element {
 
   const onSubmit: SubmitHandler<RegisterFormFields> = async (data) => {
     await registerFunction({
-      data,
+      params: data,
       onSuccess() {
         reset();
         setDidRegisterSuccessfully(true);

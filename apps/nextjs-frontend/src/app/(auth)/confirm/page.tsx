@@ -17,7 +17,7 @@ export default function Confirm(): JSX.Element {
 
     if (token) {
       void confirm({
-        token,
+        params: {token},
         onSuccess() {
           setConfirmStatus('success');
         },

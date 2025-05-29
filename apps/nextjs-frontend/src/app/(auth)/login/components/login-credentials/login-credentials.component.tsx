@@ -25,7 +25,7 @@ export function LoginCredentials({handleLoginCredentialsSuccess}: LoginCredentia
 
   const onSubmitCredentials: SubmitHandler<LoginCredentialsFormFields> = async (data) => {
     await loginCredentials({
-      data,
+      params: data,
       onSuccess() {
         resetCredentials();
         handleLoginCredentialsSuccess();

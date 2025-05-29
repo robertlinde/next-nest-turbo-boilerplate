@@ -27,7 +27,7 @@ export function LoginTwoFactor(): JSX.Element {
 
   const onSubmit2fa: SubmitHandler<LoginTwoFactorFormFields> = async (data) => {
     await loginTwoFactor({
-      data,
+      params: data,
       onSuccess() {
         reset2fa();
         showToast({
