@@ -1,4 +1,4 @@
-export type Register = {
+export type RegisterParams = {
   data: {
     email: string;
     username: string;

@@ -1,4 +1,4 @@
-export type ResetPassword = {
+export type ResetPasswordParams = {
   token: string;
   data: {
     password: string;

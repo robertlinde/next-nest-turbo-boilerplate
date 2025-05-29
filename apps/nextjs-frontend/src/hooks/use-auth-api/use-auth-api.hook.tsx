@@ -8,12 +8,12 @@ import {loginTwoFactorAuth} from './services/login-two-factor.service.ts';
 import {logout as logoutRequest} from './services/logout.service.ts';
 import {register as registerRequest} from './services/register.service.ts';
 import {resetPassword as resetPasswordRequest} from './services/reset-password.service.ts';
-import {type Confirm} from './types/confirm.type.ts';
-import {type ForgotPassword} from './types/forgot-password.type.ts';
-import {type LoginCredentials} from './types/login-credentials.type.ts';
-import {type LoginTwoFactor} from './types/login-two-factor.type.ts';
-import {type Register} from './types/register.type.ts';
-import {type ResetPassword} from './types/reset-password.type.ts';
+import {type ConfirmParams} from './services/types/confirm.params.type.ts';
+import {type ForgotPasswordParams} from './services/types/forgot-password.params.type.ts';
+import {type LoginCredentialsParams} from './services/types/login-credentials.params.type.ts';
+import {type LoginTwoFactorParams} from './services/types/login-two-factor.params.type.ts';
+import {type RegisterParams} from './services/types/register.params.type.ts';
+import {type ResetPasswordParams} from './services/types/reset-password.params.type.ts';
 import {type BaseAuth} from './types/base-auth.type.ts';
 import {type MutationState} from './types/mutation-state.type.ts';
 import {useUserStore} from '@/store/user.store.ts';
@@ -23,12 +23,12 @@ import type {ApiError} from '@/utils/api/api-error.ts';
  * Enhanced authentication hook with cleaner implementation
  */
 export function useAuthApi(): {
-  loginCredentials: (parameters: BaseAuth & LoginCredentials) => Promise<void>;
-  loginTwoFactor: (parameters: BaseAuth & LoginTwoFactor) => Promise<void>;
-  register: (parameters: BaseAuth & Register) => Promise<void>;
-  confirm: (parameters: BaseAuth & Confirm) => Promise<void>;
-  forgotPassword: (parameters: BaseAuth & ForgotPassword) => Promise<void>;
-  resetPassword: (parameters: BaseAuth & ResetPassword) => Promise<void>;
+  loginCredentials: (parameters: BaseAuth & LoginCredentialsParams) => Promise<void>;
+  loginTwoFactor: (parameters: BaseAuth & LoginTwoFactorParams) => Promise<void>;
+  register: (parameters: BaseAuth & RegisterParams) => Promise<void>;
+  confirm: (parameters: BaseAuth & ConfirmParams) => Promise<void>;
+  forgotPassword: (parameters: BaseAuth & ForgotPasswordParams) => Promise<void>;
+  resetPassword: (parameters: BaseAuth & ResetPasswordParams) => Promise<void>;
   logout: (parameters?: BaseAuth) => Promise<void>;
   state: Record<string, MutationState>;
 } {
@@ -76,14 +76,14 @@ export function useAuthApi(): {
     /**
      * Authenticate user with credentials
      */
-    async loginCredentials({data, onSuccess, onError}: BaseAuth & LoginCredentials): Promise<void> {
+    async loginCredentials({data, onSuccess, onError}: BaseAuth & LoginCredentialsParams): Promise<void> {
       await executeMutation(mutations.loginCredentials, data, onSuccess, onError);
     },
 
     /**
      * Complete two-factor authentication and load user data
      */
-    async loginTwoFactor({data, onSuccess, onError}: BaseAuth & LoginTwoFactor): Promise<void> {
+    async loginTwoFactor({data, onSuccess, onError}: BaseAuth & LoginTwoFactorParams): Promise<void> {
       await executeMutation(
         mutations.loginTwoFactor,
         data,
@@ -98,14 +98,14 @@ export function useAuthApi(): {
     /**
      * Register new user
      */
-    async register({data, onSuccess, onError}: BaseAuth & Register): Promise<void> {
+    async register({data, onSuccess, onError}: BaseAuth & RegisterParams): Promise<void> {
       await executeMutation(mutations.register, data, onSuccess, onError);
     },
 
     /**
      * Confirm user email with token
      */
-    async confirm({token, onSuccess, onError}: BaseAuth & Confirm): Promise<void> {
+    async confirm({token, onSuccess, onError}: BaseAuth & ConfirmParams): Promise<void> {
       if (!token) {
         throw new Error('Token is required for email confirmation');
       }
@@ -116,14 +116,14 @@ export function useAuthApi(): {
     /**
      * Request password reset email
      */
-    async forgotPassword({data, onSuccess, onError}: BaseAuth & ForgotPassword): Promise<void> {
+    async forgotPassword({data, onSuccess, onError}: BaseAuth & ForgotPasswordParams): Promise<void> {
       await executeMutation(mutations.forgotPassword, data, onSuccess, onError);
     },
 
     /**
      * Reset password with token
      */
-    async resetPassword({data, token, onSuccess, onError}: BaseAuth & ResetPassword): Promise<void> {
+    async resetPassword({data, token, onSuccess, onError}: BaseAuth & ResetPasswordParams): Promise<void> {
       if (!token) {
         throw new Error('Token is required for password reset');
       }

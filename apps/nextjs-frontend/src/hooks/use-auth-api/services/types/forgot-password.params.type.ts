@@ -1,4 +1,4 @@
-export type ForgotPassword = {
+export type ForgotPasswordParams = {
   data: {
     email: string;
   };

@@ -1,4 +1,4 @@
-export type LoginCredentials = {
+export type LoginCredentialsParams = {
   data: {
     email: string;
     password: string;

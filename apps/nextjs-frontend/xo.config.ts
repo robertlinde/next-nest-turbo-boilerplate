@@ -21,6 +21,7 @@ const xoConfig: FlatXoConfig = [
       // Annoying
       '@typescript-eslint/capitalized-comments': 'off',
       'capitalized-comments': 'off',
+      'unicorn/prevent-abbreviations': 'off',
 
       // Typescript rules
       '@typescript-eslint/explicit-function-return-type': 'error',
