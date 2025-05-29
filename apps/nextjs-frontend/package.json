@@ -26,7 +26,7 @@
     "react-dom": "19.1.0",
     "react-hook-form": "7.56.4",
     "uuid": "11.1.0",
-    "zod": "3.25.33",
+    "zod": "3.25.34",
     "zustand": "5.0.5"
   },
   "devDependencies": {
