@@ -35,22 +35,22 @@ export function useAuthApi(): {
   const loadUser = useUserStore((state) => state.loadUser);
   const logoutAuth = useUserStore((state) => state.logout);
 
-  const useCreateMutation = (
-    mutationFn: (...args: any[]) => any | Promise<any>, // eslint-disable-line @typescript-eslint/no-explicit-any
-  ): UseMutationResult<unknown, ApiError> => useMutation({mutationFn});
+  const useCreateMutation = <ParamsType, ReturnType = void>(
+    mutationFn: (args: ParamsType) => Promise<ReturnType>,
+  ): UseMutationResult<ReturnType, ApiError, ParamsType> => useMutation({mutationFn});
 
   const mutations = {
-    loginCredentials: useCreateMutation(loginCredentialsRequest),
-    loginTwoFactor: useCreateMutation(loginTwoFactorAuth),
-    register: useCreateMutation(registerRequest),
-    confirm: useCreateMutation(confirmRequest),
-    forgotPassword: useCreateMutation(forgotPasswordRequest),
-    resetPassword: useCreateMutation(resetPasswordRequest),
+    loginCredentials: useCreateMutation<LoginCredentialsParams>(loginCredentialsRequest),
+    loginTwoFactor: useCreateMutation<LoginTwoFactorParams>(loginTwoFactorAuth),
+    register: useCreateMutation<RegisterParams>(registerRequest),
+    confirm: useCreateMutation<ConfirmParams>(confirmRequest),
+    forgotPassword: useCreateMutation<ForgotPasswordParams>(forgotPasswordRequest),
+    resetPassword: useCreateMutation<ResetPasswordParams>(resetPasswordRequest),
     logout: useCreateMutation(logoutRequest),
   };
 
   const executeMutation = async <T,>(
-    mutation: UseMutationResult<unknown, ApiError>,
+    mutation: UseMutationResult<unknown, ApiError, T>,
     data: T,
     onSuccess?: () => void | Promise<void>,
     onError?: (error: ApiError) => void | Promise<void>,
@@ -69,11 +69,11 @@ export function useAuthApi(): {
 
   return {
     async loginCredentials({params, onSuccess, onError}: AuthHookParams<LoginCredentialsParams>): Promise<void> {
-      await executeMutation<LoginCredentialsParams>(mutations.loginCredentials, params, onSuccess, onError);
+      await executeMutation(mutations.loginCredentials, params, onSuccess, onError);
     },
 
     async loginTwoFactor({params, onSuccess, onError}: AuthHookParams<LoginTwoFactorParams>): Promise<void> {
-      await executeMutation<LoginTwoFactorParams>(
+      await executeMutation(
         mutations.loginTwoFactor,
         params,
         async () => {
@@ -85,19 +85,19 @@ export function useAuthApi(): {
     },
 
     async register({params, onSuccess, onError}: AuthHookParams<RegisterParams>): Promise<void> {
-      await executeMutation<RegisterParams>(mutations.register, params, onSuccess, onError);
+      await executeMutation(mutations.register, params, onSuccess, onError);
     },
 
     async confirm({params, onSuccess, onError}: AuthHookParams<ConfirmParams>): Promise<void> {
-      await executeMutation<ConfirmParams>(mutations.confirm, params, onSuccess, onError);
+      await executeMutation(mutations.confirm, params, onSuccess, onError);
     },
 
     async forgotPassword({params, onSuccess, onError}: AuthHookParams<ForgotPasswordParams>): Promise<void> {
-      await executeMutation<ForgotPasswordParams>(mutations.forgotPassword, params, onSuccess, onError);
+      await executeMutation(mutations.forgotPassword, params, onSuccess, onError);
     },
 
     async resetPassword({params, onSuccess, onError}: AuthHookParams<ResetPasswordParams>): Promise<void> {
-      await executeMutation<ResetPasswordParams>(mutations.resetPassword, params, onSuccess, onError);
+      await executeMutation(mutations.resetPassword, params, onSuccess, onError);
     },
 
     async logout({onSuccess, onError}: AuthHookParams = {}): Promise<void> {
