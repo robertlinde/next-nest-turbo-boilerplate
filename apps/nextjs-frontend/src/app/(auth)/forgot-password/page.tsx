@@ -28,7 +28,7 @@ export default function ForgotPassword(): JSX.Element {
 
   const onSubmit: SubmitHandler<ForgotPasswordFormFields> = async (data) => {
     await forgotPassword({
-      data,
+      params: data,
       onSuccess() {
         reset();
         setDidSendPasswordReset(true);

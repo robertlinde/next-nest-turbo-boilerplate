@@ -1,5 +1,3 @@
 export type LoginTwoFactorParams = {
-  data: {
-    code: string;
-  };
+  code: string;
 };

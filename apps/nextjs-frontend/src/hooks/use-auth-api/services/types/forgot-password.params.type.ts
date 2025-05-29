@@ -1,5 +1,3 @@
 export type ForgotPasswordParams = {
-  data: {
-    email: string;
-  };
+  email: string;
 };
