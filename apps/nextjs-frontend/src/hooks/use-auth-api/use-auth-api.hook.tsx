@@ -49,9 +49,9 @@ export function useAuthApi(): {
     logout: useCreateMutation(logoutRequest),
   };
 
-  const executeMutation = async (
+  const executeMutation = async <T,>(
     mutation: UseMutationResult<unknown, ApiError>,
-    data: unknown,
+    data: T,
     onSuccess?: () => void | Promise<void>,
     onError?: (error: ApiError) => void | Promise<void>,
   ): Promise<void> => {
@@ -69,11 +69,11 @@ export function useAuthApi(): {
 
   return {
     async loginCredentials({params, onSuccess, onError}: AuthHookParams<LoginCredentialsParams>): Promise<void> {
-      await executeMutation(mutations.loginCredentials, params, onSuccess, onError);
+      await executeMutation<LoginCredentialsParams>(mutations.loginCredentials, params, onSuccess, onError);
     },
 
     async loginTwoFactor({params, onSuccess, onError}: AuthHookParams<LoginTwoFactorParams>): Promise<void> {
-      await executeMutation(
+      await executeMutation<LoginTwoFactorParams>(
         mutations.loginTwoFactor,
         params,
         async () => {
@@ -85,27 +85,19 @@ export function useAuthApi(): {
     },
 
     async register({params, onSuccess, onError}: AuthHookParams<RegisterParams>): Promise<void> {
-      await executeMutation(mutations.register, params, onSuccess, onError);
+      await executeMutation<RegisterParams>(mutations.register, params, onSuccess, onError);
     },
 
     async confirm({params, onSuccess, onError}: AuthHookParams<ConfirmParams>): Promise<void> {
-      if (!params?.token) {
-        throw new Error('Token is required for email confirmation');
-      }
-
-      await executeMutation(mutations.confirm, params, onSuccess, onError);
+      await executeMutation<ConfirmParams>(mutations.confirm, params, onSuccess, onError);
     },
 
     async forgotPassword({params, onSuccess, onError}: AuthHookParams<ForgotPasswordParams>): Promise<void> {
-      await executeMutation(mutations.forgotPassword, params, onSuccess, onError);
+      await executeMutation<ForgotPasswordParams>(mutations.forgotPassword, params, onSuccess, onError);
     },
 
     async resetPassword({params, onSuccess, onError}: AuthHookParams<ResetPasswordParams>): Promise<void> {
-      if (!params?.token) {
-        throw new Error('Token is required for password reset');
-      }
-
-      await executeMutation(mutations.resetPassword, params, onSuccess, onError);
+      await executeMutation<ResetPasswordParams>(mutations.resetPassword, params, onSuccess, onError);
     },
 
     async logout({onSuccess, onError}: AuthHookParams = {}): Promise<void> {

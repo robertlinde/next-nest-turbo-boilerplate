@@ -1,3 +1,12 @@
-import {type BaseAuth} from './base-auth.type.ts';
+import {type ApiError} from '@/utils/api/api-error.ts';
 
-export type AuthHookParams<T = unknown> = BaseAuth & {params?: T};
+export type AuthHookParams<T = undefined> = T extends undefined
+  ? {
+    onSuccess?: () => void | Promise<void>;
+    onError?: (error: ApiError) => void | Promise<void>;
+  }
+  : {
+    params: T;
+    onSuccess?: () => void | Promise<void>;
+    onError?: (error: ApiError) => void | Promise<void>;
+  };
