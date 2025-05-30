@@ -1,6 +1,7 @@
 'use client';
 
 import {useMutation, type UseMutationResult} from '@tanstack/react-query';
+import {useCallback} from 'react';
 import {confirm as confirmRequest} from './services/confirm.service.ts';
 import {forgotPassword as forgotPasswordRequest} from './services/forgot-password.service.ts';
 import {loginCredentials as loginCredentialsRequest} from './services/login-credentials.service.ts';
@@ -49,23 +50,26 @@ export function useAuthApi(): {
     logout: useCreateMutation(logoutRequest),
   };
 
-  const executeMutation = async <T,>(
-    mutation: UseMutationResult<unknown, ApiError, T>,
-    data: T,
-    onSuccess?: () => void | Promise<void>,
-    onError?: (error: ApiError) => void | Promise<void>,
-  ): Promise<void> => {
-    try {
-      await mutation.mutateAsync(data);
-      await onSuccess?.();
-    } catch (error) {
-      if (error instanceof Error) {
-        await onError?.(error as ApiError);
-      }
+  const executeMutation = useCallback(
+    async <T,>(
+      mutation: UseMutationResult<unknown, ApiError, T>,
+      data: T,
+      onSuccess?: () => void | Promise<void>,
+      onError?: (error: ApiError) => void | Promise<void>,
+    ): Promise<void> => {
+      try {
+        await mutation.mutateAsync(data);
+        await onSuccess?.();
+      } catch (error) {
+        if (error instanceof Error) {
+          await onError?.(error as ApiError);
+        }
 
-      throw error;
-    }
-  };
+        throw error;
+      }
+    },
+    [],
+  );
 
   return {
     async loginCredentials({params, onSuccess, onError}: AuthHookParams<LoginCredentialsParams>): Promise<void> {
