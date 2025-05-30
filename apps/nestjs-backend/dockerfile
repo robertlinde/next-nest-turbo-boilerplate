@@ -8,16 +8,16 @@ RUN npm install -g turbo
 
 # Copy package files first for better caching
 COPY package.json package-lock.json turbo.json ./
-COPY apps/nextjs-frontend/package.json ./apps/nextjs-frontend/
+COPY apps/nestjs-backend/package.json ./apps/nestjs-backend/
 
 # Install dependencies (only what's needed)
 RUN npm ci
 
 # Now copy application code
-COPY apps/nextjs-frontend/ ./apps/nextjs-frontend/
+COPY apps/nestjs-backend/ ./apps/nestjs-backend/
 
 # Build only the web app with all its dependencies
-RUN turbo run build --filter=nextjs-frontend
+RUN turbo run build --filter=nestjs-backend
 
 # Stage 2: Production image
 FROM node:24-alpine AS runner
@@ -26,18 +26,17 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Copy only necessary production files
-COPY --from=builder /app/apps/nextjs-frontend/package.json ./
-COPY --from=builder /app/apps/nextjs-frontend/.next ./.next
-COPY --from=builder /app/apps/nextjs-frontend/public ./public
-COPY --from=builder /app/apps/nextjs-frontend/next.config.ts ./
+# Copy package.json for production dependencies
+COPY --from=builder /app/apps/nestjs-backend/package.json ./
+
+# Copy the built application from builder stage
+COPY --from=builder /app/apps/nestjs-backend/dist ./dist
 
 # Only copy dependencies needed for production
-# This is more efficient than copying all node_modules
 RUN npm install --production
 
 # Default Port
-ENV PORT=3000
+ENV PORT=4000
 EXPOSE $PORT
 
-CMD ["node_modules/.bin/next", "start"]
+CMD ["node", "dist/src/main"]
