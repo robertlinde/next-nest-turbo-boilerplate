@@ -14,7 +14,7 @@ import {FloatLabelInputText} from '@/components/float-label-input-text/float-lab
 import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
 import {useConfirmDialog} from '@/hooks/use-confirm-dialog/use-confirm-dialog.hook.tsx';
 import {useToast} from '@/hooks/use-toast/use-toast.hook.tsx';
-import {useUserStore} from '@/store/user.store.ts';
+import {useUserStore} from '@/store/user/user.store.ts';
 import {type ApiError} from '@/utils/api/api-error.ts';
 
 export default function Profile(): JSX.Element {

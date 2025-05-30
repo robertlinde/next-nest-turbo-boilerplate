@@ -6,9 +6,9 @@ import './globals.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
-import {ReactQueryProvider} from '@/providers/react-query.provider.tsx';
-import {ToastProvider} from '@/providers/toast.provider.tsx';
-import {UserProvider} from '@/providers/user.provider.tsx';
+import {ReactQueryProvider} from '@/providers/react-query/react-query.provider';
+import {ToastProvider} from '@/providers/toast/toast.provider';
+import {UserProvider} from '@/providers/user/user.provider';
 import {Header} from '@/components/header/header.component.tsx';
 
 export const metadata: Metadata = {

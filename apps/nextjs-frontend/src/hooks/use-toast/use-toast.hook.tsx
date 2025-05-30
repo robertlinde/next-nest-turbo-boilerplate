@@ -1,5 +1,5 @@
 import {use} from 'react';
-import {type ShowToastFunction, ToastContext} from '@/providers/toast.provider.tsx';
+import {type ShowToastFunction, ToastContext} from '@/providers/toast/toast.provider';
 
 /**
  * Wrapper for PrimeReact Toast.

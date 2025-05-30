@@ -1,6 +1,7 @@
 'use client';
 
 import {useMutation, type UseMutationResult} from '@tanstack/react-query';
+import {useCallback} from 'react';
 import {confirm as confirmRequest} from './services/confirm.service.ts';
 import {forgotPassword as forgotPasswordRequest} from './services/forgot-password.service.ts';
 import {loginCredentials as loginCredentialsRequest} from './services/login-credentials.service.ts';
@@ -16,12 +17,9 @@ import {type RegisterParams} from './services/types/register.params.type.ts';
 import {type ResetPasswordParams} from './services/types/reset-password.params.type.ts';
 import {type MutationState} from './types/mutation-state.type.ts';
 import {type AuthHookParams} from './types/auth-hook.params.ts';
-import {useUserStore} from '@/store/user.store.ts';
+import {useUserStore} from '@/store/user/user.store.ts';
 import type {ApiError} from '@/utils/api/api-error.ts';
 
-/**
- * Enhanced authentication hook with cleaner implementation
- */
 export function useAuthApi(): {
   loginCredentials: (params: AuthHookParams<LoginCredentialsParams>) => Promise<void>;
   loginTwoFactor: (params: AuthHookParams<LoginTwoFactorParams>) => Promise<void>;
@@ -33,7 +31,7 @@ export function useAuthApi(): {
   state: Record<string, MutationState>;
 } {
   const loadUser = useUserStore((state) => state.loadUser);
-  const logoutAuth = useUserStore((state) => state.logout);
+  const clearUser = useUserStore((state) => state.clearUser);
 
   const useCreateMutation = <ParamsType, ReturnType = void>(
     mutationFn: (args: ParamsType) => Promise<ReturnType>,
@@ -49,60 +47,101 @@ export function useAuthApi(): {
     logout: useCreateMutation(logoutRequest),
   };
 
-  const executeMutation = async <T,>(
-    mutation: UseMutationResult<unknown, ApiError, T>,
-    data: T,
-    onSuccess?: () => void | Promise<void>,
-    onError?: (error: ApiError) => void | Promise<void>,
-  ): Promise<void> => {
-    try {
-      await mutation.mutateAsync(data);
-      await onSuccess?.();
-    } catch (error) {
-      if (error instanceof Error) {
-        await onError?.(error as ApiError);
+  const executeMutation = useCallback(
+    async <T,>(
+      args: AuthHookParams<T> & {
+        mutation: UseMutationResult<unknown, ApiError, T>;
+      },
+    ): Promise<void> => {
+      const {mutation, onSuccess, onError, onSettled} = args;
+      const params = 'params' in args ? args.params : undefined;
+      try {
+        await mutation.mutateAsync(params as T);
+        await onSuccess?.();
+      } catch (error) {
+        if (error instanceof Error) {
+          await onError?.(error as ApiError);
+        }
+      } finally {
+        await onSettled?.();
       }
-
-      throw error;
-    }
-  };
+    },
+    [],
+  );
 
   return {
-    async loginCredentials({params, onSuccess, onError}: AuthHookParams<LoginCredentialsParams>): Promise<void> {
-      await executeMutation(mutations.loginCredentials, params, onSuccess, onError);
+    async loginCredentials({params, onSuccess, onError, onSettled}): Promise<void> {
+      await executeMutation<LoginCredentialsParams>({
+        mutation: mutations.loginCredentials,
+        params,
+        onSuccess,
+        onError,
+        onSettled,
+      });
     },
 
-    async loginTwoFactor({params, onSuccess, onError}: AuthHookParams<LoginTwoFactorParams>): Promise<void> {
-      await executeMutation(
-        mutations.loginTwoFactor,
+    async loginTwoFactor({params, onSuccess, onError, onSettled}): Promise<void> {
+      await executeMutation<LoginTwoFactorParams>({
+        mutation: mutations.loginTwoFactor,
         params,
-        async () => {
+        async onSuccess() {
           await loadUser();
           await onSuccess?.();
         },
         onError,
-      );
+        onSettled,
+      });
     },
 
-    async register({params, onSuccess, onError}: AuthHookParams<RegisterParams>): Promise<void> {
-      await executeMutation(mutations.register, params, onSuccess, onError);
+    async register({params, onSuccess, onError, onSettled}): Promise<void> {
+      await executeMutation<RegisterParams>({
+        mutation: mutations.register,
+        params,
+        onSuccess,
+        onError,
+        onSettled,
+      });
     },
 
-    async confirm({params, onSuccess, onError}: AuthHookParams<ConfirmParams>): Promise<void> {
-      await executeMutation(mutations.confirm, params, onSuccess, onError);
+    async confirm({params, onSuccess, onError, onSettled}): Promise<void> {
+      await executeMutation<ConfirmParams>({
+        mutation: mutations.confirm,
+        params,
+        onSuccess,
+        onError,
+        onSettled,
+      });
     },
 
-    async forgotPassword({params, onSuccess, onError}: AuthHookParams<ForgotPasswordParams>): Promise<void> {
-      await executeMutation(mutations.forgotPassword, params, onSuccess, onError);
+    async forgotPassword({params, onSuccess, onError, onSettled}): Promise<void> {
+      await executeMutation<ForgotPasswordParams>({
+        mutation: mutations.forgotPassword,
+        params,
+        onSuccess,
+        onError,
+        onSettled,
+      });
     },
 
-    async resetPassword({params, onSuccess, onError}: AuthHookParams<ResetPasswordParams>): Promise<void> {
-      await executeMutation(mutations.resetPassword, params, onSuccess, onError);
+    async resetPassword({params, onSuccess, onError, onSettled}): Promise<void> {
+      await executeMutation<ResetPasswordParams>({
+        mutation: mutations.resetPassword,
+        params,
+        onSuccess,
+        onError,
+        onSettled,
+      });
     },
 
-    async logout({onSuccess, onError}: AuthHookParams = {}): Promise<void> {
-      logoutAuth();
-      await executeMutation(mutations.logout, undefined, onSuccess, onError);
+    async logout({onSuccess, onError, onSettled} = {}): Promise<void> {
+      await executeMutation({
+        mutation: mutations.logout,
+        params: undefined,
+        onSuccess,
+        onError,
+        onSettled,
+      });
+      clearUser();
     },
 
     state: Object.fromEntries(

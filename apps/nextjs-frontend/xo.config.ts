@@ -30,6 +30,9 @@ const xoConfig: FlatXoConfig = [
       '@typescript-eslint/no-var-requires': 'error',
       '@typescript-eslint/no-unused-vars': 'error',
 
+      // Code rules
+      'max-params': 'error',
+
       // Import rules
       'import-x/extensions': 'error',
       'n/file-extension-in-import': 'error',
