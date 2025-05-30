@@ -38,8 +38,8 @@
     "docker:build": {
       "dependsOn": ["^docker:build"]
     },
-    "docker:run": {
-      "dependsOn": ["^docker:run"],
+    "docker:run:local": {
+      "dependsOn": ["^docker:run:local"],
       "cache": false,
       "persistent": true
     }

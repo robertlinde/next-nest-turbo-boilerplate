@@ -11,7 +11,7 @@
     "test:e2e": "playwright test",
     "test:e2e:debug": "playwright test --debug",
     "docker:build": "cd ../.. && docker build -t nextjs-frontend -f apps/nextjs-frontend/dockerfile .",
-    "docker:run": "docker run -p 3000:3000 --env-file .env nextjs-frontend"
+    "docker:run:local": "docker run -p 3000:3000 --env-file .env nextjs-frontend"
   },
   "dependencies": {
     "@hookform/resolvers": "5.0.1",
