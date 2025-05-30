@@ -1,37 +1,40 @@
 # Stage 1: Build stage
-FROM node:20-alpine AS builder
+FROM node:24-alpine AS builder
 
 WORKDIR /app
 
 # Install turbo globally
 RUN npm install -g turbo
 
-# Copy root monorepo files for dependencies
-COPY package.json package-lock.json ./
+# Copy package files first for better caching
+COPY package.json package-lock.json turbo.json ./
 COPY apps/nextjs-frontend/package.json ./apps/nextjs-frontend/
 
-# Copy the entire repo
-COPY . .
-
-# Install dependencies
+# Install dependencies (only what's needed)
 RUN npm ci
+
+# Now copy application code
+COPY apps/nextjs-frontend/ ./apps/nextjs-frontend/
 
 # Build only the web app with all its dependencies
 RUN turbo run build --filter=nextjs-frontend
 
 # Stage 2: Production image
-FROM node:20-alpine AS runner
+FROM node:24-alpine AS runner
 
 WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Copy production files from builder
-COPY --from=builder /app/apps/nextjs-frontend/package.json ./package.json
+# Copy only necessary production files
+COPY --from=builder /app/apps/nextjs-frontend/package.json ./
 COPY --from=builder /app/apps/nextjs-frontend/.next ./.next
 COPY --from=builder /app/apps/nextjs-frontend/public ./public
-COPY --from=builder /app/apps/nextjs-frontend/next.config.ts ./next.config.ts
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/apps/nextjs-frontend/next.config.ts ./
+
+# Only copy dependencies needed for production
+# This is more efficient than copying all node_modules
+RUN npm install --production
 
 EXPOSE 3000
 

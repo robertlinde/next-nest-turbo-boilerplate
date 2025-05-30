@@ -1,47 +1,25 @@
-# Node dependencies
-node_modules
-npm-debug.log
-yarn-debug.log
-yarn-error.log
-.pnpm-debug.log
+# Exclude everything by default
+*
 
-# Next.js build output
-.next
-out
+# Include only necessary files for the build
+!package.json
+!package-lock.json
+!turbo.json
+!apps/nextjs-frontend/
+!packages/
 
-# Environment variables
-.env
-.env.*
-!.env.example
+# Exclude node_modules everywhere
+**/node_modules
 
-# Version control
-.git
-.gitignore
+# Exclude build artifacts
+**/.next
+**/out
+**/dist
+**/build
 
-# Editor directories and files
-.idea
-.vscode
-*.swp
-*.swo
-.DS_Store
-
-# Testing
-coverage
-__tests__
-test
-jest.config.js
-
-# Docker files
-Dockerfile
-.dockerignore
-
-# Misc
-README.md
-LICENSE
-*.md
-.github
-.husky
-.eslintrc
-.eslintignore
-.prettierrc
-.prettierignore
+# Other files to exclude
+**/.git
+**/.env*
+!**/.env.example
+**/.DS_Store
+**/coverage
