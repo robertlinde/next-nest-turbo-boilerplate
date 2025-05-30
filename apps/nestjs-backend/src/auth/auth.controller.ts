@@ -7,8 +7,8 @@ import {ConfigKey} from '../config/config-key.enum';
 import {oneMinute, oneWeek} from '../utils/time.util';
 import {AuthService} from './auth.service';
 import {Public} from './decorators/public.decorator';
-import {LoginCredentialsBodyDto} from './dto/login-credentials-body.dto';
-import {LoginTwoFactorAuthBodyDto} from './dto/login-two-factor-auth-body.dto';
+import {LoginCredentialsBodyDto} from './dto/login-credentials.body.dto';
+import {LoginTwoFactorAuthBodyDto} from './dto/login-two-factor-auth.body.dto';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ACCESS_TOKEN_COOKIE_KEY = 'access_token';
