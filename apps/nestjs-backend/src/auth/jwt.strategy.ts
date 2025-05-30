@@ -6,7 +6,7 @@ import {PassportStrategy} from '@nestjs/passport';
 import {Request} from 'express';
 import {ExtractJwt, Strategy} from 'passport-jwt';
 import {ConfigKey} from 'src/config/config-key.enum';
-import {ActiveUserData} from './types/active-user-data.type';
+import {ActiveUser} from './types/active-user.type';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -26,7 +26,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
    * This method is called if the JWT is valid.
    * The returned value becomes `req.user`.
    */
-  async validate(payload: {sub: string}): Promise<ActiveUserData> {
+  async validate(payload: {sub: string}): Promise<ActiveUser> {
     return {
       userId: payload.sub,
     };
