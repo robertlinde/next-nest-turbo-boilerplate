@@ -1,25 +1,7 @@
 import {create} from 'zustand';
+import {type User} from './types/user.type';
+import {type UserStoreState} from './types/user-store.state.type';
 import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
-
-/**
- * Represents a user object.
- */
-type User = {
-  id: string;
-  email: string;
-  username: string;
-};
-
-/**
- * Zustand store state for managing the authenticated user's state.
- */
-type UserStoreState = {
-  user: User | undefined;
-  loading: boolean;
-  error: boolean;
-  loadUser: () => Promise<void>;
-  logout: () => void;
-};
 
 /**
  * Zustand store to manage user authentication state.
@@ -59,7 +41,7 @@ export const useUserStore = create<UserStoreState>((set) => ({
   /**
    * Logs the user out by clearing the user state and resetting loading and error flags.
    */
-  logout(): void {
+  clearUser(): void {
     set({user: undefined, loading: true, error: false});
   },
 }));

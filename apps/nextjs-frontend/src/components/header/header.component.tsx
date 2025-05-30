@@ -7,7 +7,7 @@ import {Button} from 'primereact/button';
 import {Menu} from 'primereact/menu';
 import {Menubar} from 'primereact/menubar';
 import {type MenuItem} from 'primereact/menuitem';
-import {useUserStore} from '@/store/user.store.ts';
+import {useUserStore} from '@/store/user/user.store';
 import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
 
 export function Header(): JSX.Element {

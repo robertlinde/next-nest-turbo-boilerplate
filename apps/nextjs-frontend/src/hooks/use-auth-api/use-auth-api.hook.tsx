@@ -17,7 +17,7 @@ import {type RegisterParams} from './services/types/register.params.type.ts';
 import {type ResetPasswordParams} from './services/types/reset-password.params.type.ts';
 import {type MutationState} from './types/mutation-state.type.ts';
 import {type AuthHookParams} from './types/auth-hook.params.ts';
-import {useUserStore} from '@/store/user.store.ts';
+import {useUserStore} from '@/store/user/user.store.ts';
 import type {ApiError} from '@/utils/api/api-error.ts';
 
 /**
@@ -34,7 +34,7 @@ export function useAuthApi(): {
   state: Record<string, MutationState>;
 } {
   const loadUser = useUserStore((state) => state.loadUser);
-  const logoutAuth = useUserStore((state) => state.logout);
+  const clearUser = useUserStore((state) => state.clearUser);
 
   const useCreateMutation = <ParamsType, ReturnType = void>(
     mutationFn: (args: ParamsType) => Promise<ReturnType>,
@@ -114,7 +114,7 @@ export function useAuthApi(): {
     },
 
     async logout({onSuccess, onError, onSettled}: AuthHookParams = {}): Promise<void> {
-      logoutAuth();
+      clearUser();
       await executeMutation(mutations.logout, undefined, onSuccess, onError, onSettled);
     },
 
