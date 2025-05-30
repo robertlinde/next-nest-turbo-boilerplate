@@ -1,12 +1,12 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import {mock} from 'jest-mock-extended';
-import {ActiveUserData} from '../auth/types/active-user-data.type';
-import {ConfirmUserParamDto} from './dto/confirm-user-param.dto';
-import {CreateUserBodyDto} from './dto/create-user-body.dto';
+import {ActiveUser} from '../auth/types/active-user.type';
+import {ConfirmUserParamDto} from './dto/confirm-user.param.dto';
+import {CreateUserBodyDto} from './dto/create-user.body.dto';
 import {MeDto} from './dto/me.dto';
-import {ResetPasswordConfirmBodyDto} from './dto/reset-password-confirm-body.dto';
-import {ResetPasswordRequestBodyDto} from './dto/reset-password-request-body.dto';
-import {UpdateUserBodyDto} from './dto/update-user-body.dto';
+import {ResetPasswordConfirmBodyDto} from './dto/reset-password-confirm.body.dto';
+import {ResetPasswordRequestBodyDto} from './dto/reset-password-request.body.dto';
+import {UpdateUserBodyDto} from './dto/update-user.body.dto';
 import {UserDto} from './dto/user.dto';
 import {User} from './entities/user.entity';
 import {UsersController} from './users.controller';
@@ -48,7 +48,7 @@ describe('UsersController', () => {
 
   describe('getMe', () => {
     it('should return the current user details', async () => {
-      const mockActiveUser: ActiveUserData = {
+      const mockActiveUser: ActiveUser = {
         userId: '1',
       };
 
@@ -102,7 +102,7 @@ describe('UsersController', () => {
 
   describe('deleteUser', () => {
     it('should delete the current user', async () => {
-      const mockActiveUser: ActiveUserData = {
+      const mockActiveUser: ActiveUser = {
         userId: '1',
       };
 
@@ -145,7 +145,7 @@ describe('UsersController', () => {
 
   describe('updateUser', () => {
     it('should update email only', async () => {
-      const mockActiveUser: ActiveUserData = {
+      const mockActiveUser: ActiveUser = {
         userId: '1',
       };
 
@@ -171,7 +171,7 @@ describe('UsersController', () => {
     });
 
     it('should update username only', async () => {
-      const mockActiveUser: ActiveUserData = {
+      const mockActiveUser: ActiveUser = {
         userId: '1',
       };
 
@@ -197,7 +197,7 @@ describe('UsersController', () => {
     });
 
     it('should update password only', async () => {
-      const mockActiveUser: ActiveUserData = {
+      const mockActiveUser: ActiveUser = {
         userId: '1',
       };
 
@@ -214,7 +214,7 @@ describe('UsersController', () => {
     });
 
     it('should update multiple fields', async () => {
-      const mockActiveUser: ActiveUserData = {
+      const mockActiveUser: ActiveUser = {
         userId: '1',
       };
 

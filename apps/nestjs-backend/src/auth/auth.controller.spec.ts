@@ -7,8 +7,8 @@ import {User} from '../users/entities/user.entity';
 import {oneMinute, oneWeek} from '../utils/time.util';
 import {AuthController} from './auth.controller';
 import {AuthService} from './auth.service';
-import {LoginCredentialsBodyDto} from './dto/login-credentials-body.dto';
-import {LoginTwoFactorAuthBodyDto} from './dto/login-two-factor-auth-body.dto';
+import {LoginCredentialsBodyDto} from './dto/login-credentials.body.dto';
+import {LoginTwoFactorAuthBodyDto} from './dto/login-two-factor-auth.body.dto';
 
 describe('AuthController', () => {
   let controller: AuthController;

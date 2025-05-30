@@ -3,14 +3,14 @@ import {ApiResponse, ApiTags, ApiOperation} from '@nestjs/swagger';
 import {Throttle} from '@nestjs/throttler';
 import {Public} from '../auth/decorators/public.decorator';
 import {User} from '../auth/decorators/user.decorator';
-import type {ActiveUserData} from '../auth/types/active-user-data.type';
+import type {ActiveUser} from '../auth/types/active-user.type';
 import {oneHour, oneMinute} from '../utils/time.util';
-import {ConfirmUserParamDto} from './dto/confirm-user-param.dto';
-import {CreateUserBodyDto} from './dto/create-user-body.dto';
+import {ConfirmUserParamDto} from './dto/confirm-user.param.dto';
+import {CreateUserBodyDto} from './dto/create-user.body.dto';
 import {MeDto} from './dto/me.dto';
-import {ResetPasswordConfirmBodyDto} from './dto/reset-password-confirm-body.dto';
-import {ResetPasswordRequestBodyDto} from './dto/reset-password-request-body.dto';
-import {UpdateUserBodyDto} from './dto/update-user-body.dto';
+import {ResetPasswordConfirmBodyDto} from './dto/reset-password-confirm.body.dto';
+import {ResetPasswordRequestBodyDto} from './dto/reset-password-request.body.dto';
+import {UpdateUserBodyDto} from './dto/update-user.body.dto';
 import {UserDto} from './dto/user.dto';
 import {UsersService} from './users.service';
 
@@ -29,7 +29,7 @@ export class UsersController {
     description: 'Successfully retrieved user details.',
     type: MeDto,
   })
-  async getMe(@User() user: ActiveUserData): Promise<MeDto> {
+  async getMe(@User() user: ActiveUser): Promise<MeDto> {
     const {userId} = user;
     const userEntity = await this.usersService.getUserById(userId);
     return new MeDto(userEntity);
@@ -84,7 +84,7 @@ export class UsersController {
     status: HttpStatus.OK,
     description: 'User successfully deleted.',
   })
-  async deleteUser(@User() user: ActiveUserData): Promise<void> {
+  async deleteUser(@User() user: ActiveUser): Promise<void> {
     const {userId} = user;
     await this.usersService.deleteUser(userId);
   }
@@ -136,7 +136,7 @@ export class UsersController {
     description: 'User details successfully updated.',
     type: UserDto,
   })
-  async updateUser(@User() user: ActiveUserData, @Body() body: UpdateUserBodyDto): Promise<UserDto> {
+  async updateUser(@User() user: ActiveUser, @Body() body: UpdateUserBodyDto): Promise<UserDto> {
     const {userId} = user;
     const {email, password, username} = body;
     const userEntity = await this.usersService.updateUser(userId, email, username, password);
