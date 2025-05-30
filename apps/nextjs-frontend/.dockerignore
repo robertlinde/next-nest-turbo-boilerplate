@@ -1,0 +1,47 @@
+# Node dependencies
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.pnpm-debug.log
+
+# Next.js build output
+.next
+out
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Version control
+.git
+.gitignore
+
+# Editor directories and files
+.idea
+.vscode
+*.swp
+*.swo
+.DS_Store
+
+# Testing
+coverage
+__tests__
+test
+jest.config.js
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# Misc
+README.md
+LICENSE
+*.md
+.github
+.husky
+.eslintrc
+.eslintignore
+.prettierrc
+.prettierignore

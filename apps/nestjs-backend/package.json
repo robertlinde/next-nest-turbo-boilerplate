@@ -1,7 +1,6 @@
 {
   "name": "nestjs-backend",
   "version": "0.0.1",
-  "private": true,
   "scripts": {
     "build": "nest build",
     "start": "nest start",
@@ -80,5 +79,6 @@
     "typescript": "5.8.3",
     "eslint": "9.27.0",
     "xo": "1.0.1"
-  }
+  },
+  "packageManager": "npm@11.4.1"
 }
