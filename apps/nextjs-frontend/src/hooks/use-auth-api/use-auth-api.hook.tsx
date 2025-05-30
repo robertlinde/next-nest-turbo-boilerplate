@@ -50,6 +50,7 @@ export function useAuthApi(): {
     logout: useCreateMutation(logoutRequest),
   };
 
+  /* eslint-disable max-params */
   const executeMutation = useCallback(
     async <T,>(
       mutation: UseMutationResult<unknown, ApiError, T>,
@@ -58,6 +59,7 @@ export function useAuthApi(): {
       onError?: (error: ApiError) => void | Promise<void>,
       onSettled?: () => void | Promise<void>,
     ): Promise<void> => {
+      /* eslint-enable max-params */
       try {
         await mutation.mutateAsync(data);
         await onSuccess?.();

@@ -17,6 +17,9 @@ const xoConfig = [
       // Does not work with decorators
       'new-cap': 'off',
 
+      // Code rules
+      'max-params': 'error',
+
       // Annoying
       '@typescript-eslint/capitalized-comments': 'off',
       'capitalized-comments': 'off',
