@@ -17,7 +17,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky",
     "docker:build": "turbo run docker:build",
-    "docker:run": "turbo run docker:run"
+    "docker:run:local": "turbo run docker:run:local"
   },
   "devDependencies": {
     "@commitlint/cli": "19.8.1",
