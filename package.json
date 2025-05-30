@@ -15,7 +15,9 @@
     "test:e2e": "turbo run test:e2e",
     "test:cov": "turbo run test:cov",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "docker:build": "turbo run docker:build",
+    "docker:run": "turbo run docker:run"
   },
   "devDependencies": {
     "@commitlint/cli": "19.8.1",
