@@ -56,6 +56,7 @@ export function useAuthApi(): {
       data: T,
       onSuccess?: () => void | Promise<void>,
       onError?: (error: ApiError) => void | Promise<void>,
+      onSettled?: () => void | Promise<void>,
     ): Promise<void> => {
       try {
         await mutation.mutateAsync(data);
@@ -66,17 +67,24 @@ export function useAuthApi(): {
         }
 
         throw error;
+      } finally {
+        await onSettled?.();
       }
     },
     [],
   );
 
   return {
-    async loginCredentials({params, onSuccess, onError}: AuthHookParams<LoginCredentialsParams>): Promise<void> {
-      await executeMutation(mutations.loginCredentials, params, onSuccess, onError);
+    async loginCredentials({
+      params,
+      onSuccess,
+      onError,
+      onSettled,
+    }: AuthHookParams<LoginCredentialsParams>): Promise<void> {
+      await executeMutation(mutations.loginCredentials, params, onSuccess, onError, onSettled);
     },
 
-    async loginTwoFactor({params, onSuccess, onError}: AuthHookParams<LoginTwoFactorParams>): Promise<void> {
+    async loginTwoFactor({params, onSuccess, onError, onSettled}: AuthHookParams<LoginTwoFactorParams>): Promise<void> {
       await executeMutation(
         mutations.loginTwoFactor,
         params,
@@ -85,28 +93,29 @@ export function useAuthApi(): {
           await onSuccess?.();
         },
         onError,
+        onSettled,
       );
     },
 
-    async register({params, onSuccess, onError}: AuthHookParams<RegisterParams>): Promise<void> {
-      await executeMutation(mutations.register, params, onSuccess, onError);
+    async register({params, onSuccess, onError, onSettled}: AuthHookParams<RegisterParams>): Promise<void> {
+      await executeMutation(mutations.register, params, onSuccess, onError, onSettled);
     },
 
-    async confirm({params, onSuccess, onError}: AuthHookParams<ConfirmParams>): Promise<void> {
-      await executeMutation(mutations.confirm, params, onSuccess, onError);
+    async confirm({params, onSuccess, onError, onSettled}: AuthHookParams<ConfirmParams>): Promise<void> {
+      await executeMutation(mutations.confirm, params, onSuccess, onError, onSettled);
     },
 
-    async forgotPassword({params, onSuccess, onError}: AuthHookParams<ForgotPasswordParams>): Promise<void> {
-      await executeMutation(mutations.forgotPassword, params, onSuccess, onError);
+    async forgotPassword({params, onSuccess, onError, onSettled}: AuthHookParams<ForgotPasswordParams>): Promise<void> {
+      await executeMutation(mutations.forgotPassword, params, onSuccess, onError, onSettled);
     },
 
-    async resetPassword({params, onSuccess, onError}: AuthHookParams<ResetPasswordParams>): Promise<void> {
-      await executeMutation(mutations.resetPassword, params, onSuccess, onError);
+    async resetPassword({params, onSuccess, onError, onSettled}: AuthHookParams<ResetPasswordParams>): Promise<void> {
+      await executeMutation(mutations.resetPassword, params, onSuccess, onError, onSettled);
     },
 
-    async logout({onSuccess, onError}: AuthHookParams = {}): Promise<void> {
+    async logout({onSuccess, onError, onSettled}: AuthHookParams = {}): Promise<void> {
       logoutAuth();
-      await executeMutation(mutations.logout, undefined, onSuccess, onError);
+      await executeMutation(mutations.logout, undefined, onSuccess, onError, onSettled);
     },
 
     state: Object.fromEntries(
