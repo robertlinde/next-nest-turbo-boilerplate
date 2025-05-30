@@ -65,8 +65,6 @@ export function useAuthApi(): {
         if (error instanceof Error) {
           await onError?.(error as ApiError);
         }
-
-        throw error;
       } finally {
         await onSettled?.();
       }
@@ -114,8 +112,8 @@ export function useAuthApi(): {
     },
 
     async logout({onSuccess, onError, onSettled}: AuthHookParams = {}): Promise<void> {
-      clearUser();
       await executeMutation(mutations.logout, undefined, onSuccess, onError, onSettled);
+      clearUser();
     },
 
     state: Object.fromEntries(
