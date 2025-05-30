@@ -1,0 +1,42 @@
+# Stage 1: Build stage
+FROM node:24-alpine AS builder
+
+WORKDIR /app
+
+# Install turbo globally
+RUN npm install -g turbo
+
+# Copy package files first for better caching
+COPY package.json package-lock.json turbo.json ./
+COPY apps/nestjs-backend/package.json ./apps/nestjs-backend/
+
+# Install dependencies (only what's needed)
+RUN npm ci
+
+# Now copy application code
+COPY apps/nestjs-backend/ ./apps/nestjs-backend/
+
+# Build only the web app with all its dependencies
+RUN turbo run build --filter=nestjs-backend
+
+# Stage 2: Production image
+FROM node:24-alpine AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+# Copy package.json for production dependencies
+COPY --from=builder /app/apps/nestjs-backend/package.json ./
+
+# Copy the built application from builder stage
+COPY --from=builder /app/apps/nestjs-backend/dist ./dist
+
+# Only copy dependencies needed for production
+RUN npm install --production
+
+# Default Port
+ENV PORT=4000
+EXPOSE $PORT
+
+CMD ["node", "dist/src/main"]

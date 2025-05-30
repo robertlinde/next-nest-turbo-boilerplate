@@ -1,0 +1,25 @@
+# Exclude everything by default
+*
+
+# Include only necessary files for the build
+!package.json
+!package-lock.json
+!turbo.json
+!apps/nextjs-frontend/
+!packages/
+
+# Exclude node_modules everywhere
+**/node_modules
+
+# Exclude build artifacts
+**/.next
+**/out
+**/dist
+**/build
+
+# Other files to exclude
+**/.git
+**/.env*
+!**/.env.example
+**/.DS_Store
+**/coverage

@@ -1,7 +1,6 @@
 {
   "name": "nestjs-backend",
   "version": "0.0.1",
-  "private": true,
   "scripts": {
     "build": "nest build",
     "start": "nest start",
@@ -20,7 +19,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json --passWithNoTests",
     "migration:create": "npx mikro-orm migration:create",
     "migration:up": "npx mikro-orm migration:up",
-    "migration:down": "npx mikro-orm migration:down"
+    "migration:down": "npx mikro-orm migration:down",
+    "docker:build": "cd ../.. && docker build -t nestjs-backend -f apps/nestjs-backend/dockerfile .",
+    "docker:run": "docker run -p 4000:4000 --env-file .env -e POSTGRES_HOST=host.docker.internal -e MAIL_HOST=host.docker.internal nestjs-backend"
   },
   "dependencies": {
     "@mikro-orm/core": "6.4.16",
@@ -80,5 +81,6 @@
     "typescript": "5.8.3",
     "eslint": "9.27.0",
     "xo": "1.0.1"
-  }
+  },
+  "packageManager": "npm@11.4.1"
 }
