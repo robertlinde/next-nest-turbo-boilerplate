@@ -7,9 +7,9 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main",
-    "db:start": "docker-compose up -d",
-    "db:stop": "docker-compose down",
-    "db:restart": "docker-compose down && docker-compose up -d",
+    "start:dev:infra": "docker-compose up -d",
+    "stop:dev:infra": "docker-compose down",
+    "restart:dev:infra": "docker-compose down && docker-compose up -d",
     "lint": "xo",
     "lint:fix": "xo --fix",
     "test": "jest",
@@ -21,7 +21,7 @@
     "migration:up": "npx mikro-orm migration:up",
     "migration:down": "npx mikro-orm migration:down",
     "docker:build": "cd ../.. && docker build -t nestjs-backend -f apps/nestjs-backend/dockerfile .",
-    "docker:run:local": "docker run -p 4000:4000 --env-file .env -e POSTGRES_HOST=host.docker.internal -e MAIL_HOST=host.docker.internal nestjs-backend"
+    "docker:start:dev": "docker run -p 4000:4000 --env-file .env -e POSTGRES_HOST=host.docker.internal -e MAIL_HOST=host.docker.internal nestjs-backend"
   },
   "dependencies": {
     "@mikro-orm/core": "6.4.16",
