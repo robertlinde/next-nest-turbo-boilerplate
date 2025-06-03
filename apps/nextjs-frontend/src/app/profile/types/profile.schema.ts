@@ -1,11 +1,20 @@
 import {z} from 'zod';
 
 export const profileSchema = z.object({
-  email: z.string().email().max(100, 'Email must be at most 100 characters long').optional(),
+  email: z
+    .string()
+    .transform((val) => val.trim())
+    .pipe(z.string().email().max(100, 'Email must be at most 100 characters long'))
+    .optional(),
   username: z
     .string()
-    .min(4, 'Username must be at least 4 characters long')
-    .max(20, 'Username must be at most 20 characters long')
+    .transform((val) => val.trim())
+    .pipe(
+      z
+        .string()
+        .min(4, 'Username must be at least 4 characters long')
+        .max(20, 'Username must be at most 20 characters long'),
+    )
     .optional(),
   password: z
     .string()
