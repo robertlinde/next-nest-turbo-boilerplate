@@ -14,7 +14,7 @@
     "docker:start:dev": "docker run -p 3000:3000 --env-file .env nextjs-frontend"
   },
   "dependencies": {
-    "@hookform/resolvers": "5.0.1",
+    "@hookform/resolvers": "5.1.0",
     "@tailwindcss/postcss": "4.1.8",
     "@tanstack/react-query": "5.80.6",
     "@tanstack/react-query-devtools": "5.80.6",
@@ -40,7 +40,7 @@
     "tailwindcss": "4.1.8",
     "typescript": "5.8.3",
     "eslint": "9.28.0",
-    "xo": "1.0.5"
+    "xo": "1.1.0"
   },
   "packageManager": "npm@11.4.1"
 }
