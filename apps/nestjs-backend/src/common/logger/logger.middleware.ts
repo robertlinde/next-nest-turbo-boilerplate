@@ -16,16 +16,8 @@ export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, response: Response, next: () => void): void {
     const {ip, method, originalUrl} = req;
     const startTime = Date.now();
-    let requestHeader = '';
-    let requestBody = '';
-
-    if (req.headers) {
-      requestHeader = JSON.stringify(req.headers);
-    }
-
-    if (req.body) {
-      requestBody = JSON.stringify(req.body);
-    }
+    const requestHeader = JSON.stringify(req.headers);
+    const requestBody = JSON.stringify(req.body);
 
     response.on('finish', () => {
       const duration = Date.now() - startTime;
