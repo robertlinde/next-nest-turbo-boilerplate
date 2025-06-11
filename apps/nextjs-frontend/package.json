@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "5.1.1",
-    "@tailwindcss/postcss": "4.1.9",
+    "@tailwindcss/postcss": "4.1.10",
     "@tanstack/react-query": "5.80.6",
     "@tanstack/react-query-devtools": "5.80.6",
     "dotenv": "16.5.0",
@@ -27,7 +27,7 @@
     "react-dom": "19.1.0",
     "react-hook-form": "7.57.0",
     "uuid": "11.1.0",
-    "zod": "3.25.61",
+    "zod": "3.25.62",
     "zustand": "5.0.5"
   },
   "devDependencies": {
@@ -37,7 +37,7 @@
     "@types/react": "19.1.8",
     "@types/react-dom": "19.1.6",
     "postcss": "8.5.5",
-    "tailwindcss": "4.1.9",
+    "tailwindcss": "4.1.10",
     "typescript": "5.8.3",
     "eslint": "9.28.0",
     "xo": "1.1.0"
