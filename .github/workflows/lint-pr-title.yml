@@ -8,11 +8,11 @@ on:
 
 jobs:
   lint-pr-title:
-    name: Lint PR Title
+    name: Run Lint PR Title
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run Lint PR Title
+      - name: Lint PR Title
         uses: amannn/action-semantic-pull-request@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
