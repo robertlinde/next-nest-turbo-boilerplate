@@ -1,6 +1,6 @@
 'use client';
 
-import {useRef, type JSX} from 'react';
+import {useMemo, useRef, type JSX} from 'react';
 import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 import {Button} from 'primereact/button';
@@ -19,32 +19,35 @@ export function Header(): JSX.Element {
 
   const {logout} = useAuthApi();
 
-  const items: MenuItem[] = [];
+  const items: MenuItem[] = useMemo(() => [], []);
 
-  const endMenuItems: MenuItem[] = [
-    {
-      label: `Hey, ${user?.username ?? 'User'}`,
-      items: [
-        {
-          label: 'Profile',
-          icon: 'pi pi-cog',
-          command(): void {
-            router.push('/profile');
+  const endMenuItems: MenuItem[] = useMemo(
+    () => [
+      {
+        label: `Hey, ${user?.username ?? 'User'}`,
+        items: [
+          {
+            label: 'Profile',
+            icon: 'pi pi-cog',
+            command(): void {
+              router.push('/profile');
+            },
           },
-        },
-        {
-          label: 'Logout',
-          icon: 'pi pi-sign-out',
-          command: async (): Promise<void> =>
-            logout({
-              onSuccess() {
-                router.push('/login');
-              },
-            }),
-        },
-      ],
-    },
-  ];
+          {
+            label: 'Logout',
+            icon: 'pi pi-sign-out',
+            command: async (): Promise<void> =>
+              logout({
+                onSuccess() {
+                  router.push('/login');
+                },
+              }),
+          },
+        ],
+      },
+    ],
+    [logout, router, user?.username],
+  );
 
   const signedInItem: JSX.Element = (
     <div className="flex gap-2">
