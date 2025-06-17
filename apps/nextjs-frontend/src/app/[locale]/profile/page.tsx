@@ -3,7 +3,6 @@
 import {type JSX, useEffect} from 'react';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useMutation} from '@tanstack/react-query';
-import {useRouter} from 'next/navigation';
 import {Button} from 'primereact/button';
 import {type SubmitHandler, useForm} from 'react-hook-form';
 import {useTranslations} from 'next-intl';
@@ -17,6 +16,7 @@ import {useConfirmDialog} from '@/hooks/use-confirm-dialog/use-confirm-dialog.ho
 import {useToast} from '@/hooks/use-toast/use-toast.hook.tsx';
 import {useUserStore} from '@/store/user/user.store.ts';
 import {type ApiError} from '@/utils/api/api-error.ts';
+import {useRouter} from '@/i18n/navigation.ts';
 
 export default function Profile(): JSX.Element {
   const {user, loading, error, loadUser} = useUserStore();

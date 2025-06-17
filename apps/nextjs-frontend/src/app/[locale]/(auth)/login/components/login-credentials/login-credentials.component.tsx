@@ -2,7 +2,6 @@
 
 import {type JSX} from 'react';
 import {zodResolver} from '@hookform/resolvers/zod';
-import Link from 'next/link';
 import {Button} from 'primereact/button';
 import {useForm, type SubmitHandler} from 'react-hook-form';
 import {type LoginCredentialsFormFields} from './types/login-credentials-form-fields.type.ts';
@@ -11,6 +10,7 @@ import {loginCredentialsSchema} from './types/login-credentials.schema.ts';
 import {FloatLabelInputText} from '@/components/float-label-input-text/float-label-input-text.component.tsx';
 import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
 import {type ApiError} from '@/utils/api/api-error.ts';
+import {Link} from '@/i18n/navigation.ts';
 
 export function LoginCredentials({handleLoginCredentialsSuccess}: LoginCredentialsProps): JSX.Element {
   const {loginCredentials} = useAuthApi();

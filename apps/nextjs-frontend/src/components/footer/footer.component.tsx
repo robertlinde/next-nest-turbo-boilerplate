@@ -1,8 +1,8 @@
 'use server';
 
 import {getTranslations} from 'next-intl/server';
-import Link from 'next/link';
 import {type JSX} from 'react';
+import {Link} from '@/i18n/navigation.ts';
 
 type FooterItem = {
   label: string;

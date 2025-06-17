@@ -2,7 +2,6 @@
 
 import {type JSX} from 'react';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {useRouter} from 'next/navigation';
 import {Button} from 'primereact/button';
 import {useForm, type SubmitHandler} from 'react-hook-form';
 import {type LoginTwoFactorFormFields} from './types/login-two-factor-form-fields.type.ts';
@@ -11,6 +10,7 @@ import {FloatLabelInputText} from '@/components/float-label-input-text/float-lab
 import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
 import {useToast} from '@/hooks/use-toast/use-toast.hook.tsx';
 import {type ApiError} from '@/utils/api/api-error.ts';
+import {useRouter} from '@/i18n/navigation.ts';
 
 export function LoginTwoFactor(): JSX.Element {
   const {showToast} = useToast();

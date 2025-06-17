@@ -2,7 +2,6 @@
 
 import {useState, type JSX} from 'react';
 import {zodResolver} from '@hookform/resolvers/zod';
-import Link from 'next/link';
 import {Button} from 'primereact/button';
 import {type SubmitHandler, useForm} from 'react-hook-form';
 import {type RegisterFormFields} from './types/register-form-fields.type.ts';
@@ -11,6 +10,7 @@ import {FloatLabelInputText} from '@/components/float-label-input-text/float-lab
 import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
 import {useToast} from '@/hooks/use-toast/use-toast.hook.tsx';
 import {type ApiError} from '@/utils/api/api-error.ts';
+import {Link} from '@/i18n/navigation.ts';
 
 export default function Register(): JSX.Element {
   const {showToast} = useToast();

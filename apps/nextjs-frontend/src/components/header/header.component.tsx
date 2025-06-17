@@ -1,8 +1,6 @@
 'use client';
 
 import {useMemo, useRef, type JSX} from 'react';
-import Link from 'next/link';
-import {useRouter} from 'next/navigation';
 import {Button} from 'primereact/button';
 import {Menu} from 'primereact/menu';
 import {Menubar} from 'primereact/menubar';
@@ -10,6 +8,7 @@ import {type MenuItem} from 'primereact/menuitem';
 import {useTranslations} from 'next-intl';
 import {useUserStore} from '@/store/user/user.store';
 import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
+import {Link, useRouter} from '@/i18n/navigation.ts';
 
 export function Header(): JSX.Element {
   const user = useUserStore((s) => s.user);
