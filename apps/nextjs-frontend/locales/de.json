@@ -104,5 +104,28 @@
     "success-toast-header": "Passwort erfolgreich festgelegt",
     "success-toast-message": "Dein Passwort wurde erfolgreich festgelegt. Du kannst dich jetzt mit deinem neuen Passwort einloggen.",
     "success-login-link": "Hier anmelden"
+  },
+  "Page-Register": {
+    "title": "Willkommen",
+    "email-input-label": "E-Mail",
+    "email-input-info": "Deine E-Mail-Adresse wird nicht öffentlich sichtbar sein.",
+    "username-input-label": "Benutzername",
+    "username-input-info": "Dein Benutzername wird öffentlich sichtbar sein.",
+    "password-input-label": "Passwort",
+    "submit-button-label": "Registrieren",
+    "submit-button-loading-label": "Registrierung läuft ...",
+    "login-question": "Du hast bereits ein Konto?",
+    "login-link": "Hier einloggen",
+    "error-409": "E-Mail oder Benutzername existiert bereits. Bitte wähle einen anderen.",
+    "error-500": "Bei der Registrierung ist ein unerwarteter Fehler aufgetreten. Bitte versuche es später erneut.",
+    "error-default": "Bei der Registrierung ist ein unbekannter Fehler aufgetreten. Bitte versuche es später erneut.",
+    "success-header": "Registrierung erfolgreich!",
+    "success-message": "Du hast dich erfolgreich registriert. Bitte überprüfe deine E-Mails, um dein Konto zu verifizieren."
+  },
+  "Page-Confirm": {
+    "status-confirming": "Dein Konto wird bestätigt ...",
+    "status-confirmed": "Dein Konto wurde erfolgreich bestätigt.",
+    "status-confirmed-login-link": "Du kannst dich jetzt hier einloggen",
+    "status-error": "Beim Bestätigen deines Kontos ist ein Fehler aufgetreten. Bitte versuche es später erneut."
   }
 }

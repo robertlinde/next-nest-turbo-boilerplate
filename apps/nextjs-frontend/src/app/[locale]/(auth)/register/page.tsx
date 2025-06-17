@@ -4,16 +4,16 @@ import {useState, type JSX} from 'react';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Button} from 'primereact/button';
 import {type SubmitHandler, useForm} from 'react-hook-form';
+import {useTranslations} from 'next-intl';
 import {type RegisterFormFields} from './types/register-form-fields.type.ts';
 import {registerSchema} from './types/register.schema.ts';
 import {FloatLabelInputText} from '@/components/float-label-input-text/float-label-input-text.component.tsx';
 import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
-import {useToast} from '@/hooks/use-toast/use-toast.hook.tsx';
 import {type ApiError} from '@/utils/api/api-error.ts';
 import {Link} from '@/i18n/navigation.ts';
 
 export default function Register(): JSX.Element {
-  const {showToast} = useToast();
+  const t = useTranslations('Page-Register');
 
   const [didRegisterSuccessfully, setDidRegisterSuccessfully] = useState(false);
 
@@ -33,11 +33,6 @@ export default function Register(): JSX.Element {
       onSuccess() {
         reset();
         setDidRegisterSuccessfully(true);
-        showToast({
-          severity: 'success',
-          summary: 'Registration successful',
-          detail: 'You have registered. We will send you a confirmation email.',
-        });
       },
       async onError(error: ApiError) {
         switch (error.response.status) {
@@ -45,26 +40,26 @@ export default function Register(): JSX.Element {
             const errorResponse = (await error.response.json()) as {message?: string[]};
             const message: string = errorResponse?.message
               ? errorResponse.message.map((message_) => message_.charAt(0).toUpperCase() + message_.slice(1)).join(', ')
-              : 'An unexpected error occurred.';
+              : t('error-default');
             setError('root', {message});
 
             break;
           }
 
           case 409: {
-            setError('root', {message: 'Email or username already exists'});
+            setError('root', {message: t('error-409')});
 
             break;
           }
 
           case 500: {
-            setError('root', {message: 'Something went wrong'});
+            setError('root', {message: t('error-500')});
 
             break;
           }
 
           default: {
-            setError('root', {message: 'An unknown error occurred'});
+            setError('root', {message: t('error-default')});
           }
         }
       },
@@ -74,40 +69,42 @@ export default function Register(): JSX.Element {
   if (didRegisterSuccessfully) {
     return (
       <div className="flex flex-col items-center">
-        <h2>Registration successful!</h2>
-        <p className="mt-4 md:mt-6 lg:mt-8">We have sent you a confirmation email. Please check your inbox.</p>
-        <Link className="underline" href="/login">
-          Login here
-        </Link>
+        <h2>{t('success-header')}</h2>
+        <p className="mt-4 md:mt-6 lg:mt-8">{t('success-message')}</p>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col items-center">
-      <h2>Welcome!</h2>
+      <h2>{t('title')}</h2>
       <form
         className="mt-6 flex w-full max-w-sm flex-col items-center gap-4 md:mt-10 md:gap-6 lg:mt-12 lg:gap-8"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex w-full flex-col flex-wrap items-center gap-1">
-          <FloatLabelInputText label="Email" {...register('email')} data-testid="register-email-input" type="email" />
-          <small>Your email won&apos;t be publicly visible.</small>
+          <FloatLabelInputText
+            label={t('email-input-label')}
+            {...register('email')}
+            data-testid="register-email-input"
+            type="email"
+          />
+          <small>{t('email-input-info')}</small>
           {errors.email ? <p className="text-red-700">{errors.email.message}</p> : null}
         </div>
         <div className="flex w-full flex-col flex-wrap items-center gap-1">
           <FloatLabelInputText
-            label="Username"
+            label={t('username-input-label')}
             {...register('username')}
             data-testid="register-username-input"
             type="text"
           />
-          <small>Your username will be publicly visible. It can be changed later.</small>
+          <small>{t('username-input-info')}</small>
           {errors.username ? <p className="text-red-700">{errors.username.message}</p> : null}
         </div>
         <div className="flex w-full flex-col flex-wrap items-center gap-1">
           <FloatLabelInputText
-            label="Password"
+            label={t('password-input-label')}
             {...register('password')}
             data-testid="register-password-input"
             type="password"
@@ -116,7 +113,7 @@ export default function Register(): JSX.Element {
         </div>
         <div>
           <Button
-            label={isSubmitting ? 'Loading ...' : 'Register'}
+            label={isSubmitting ? t('submit-button-loading-label') : t('submit-button-label')}
             type="submit"
             data-testid="register-submit-button"
             disabled={isSubmitting}
@@ -125,9 +122,9 @@ export default function Register(): JSX.Element {
         {errors.root ? <p className="text-red-700">{errors.root.message}</p> : null}
       </form>
       <p className="mt-4 md:mt-6 lg:mt-8">
-        Already registered?{' '}
+        {t('login-question')}{' '}
         <Link className="underline" href="/login">
-          Login here
+          {t('login-link')}
         </Link>
       </p>
     </div>

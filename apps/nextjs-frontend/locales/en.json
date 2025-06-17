@@ -104,5 +104,28 @@
     "success-header": "Password Set Successfully",
     "success-message": "Your password has been successfully set. You can now log in with your new password.",
     "success-login-link": "Login here"
+  },
+  "Page-Register": {
+    "title": "Welcome",
+    "email-input-label": "E-Mail",
+    "email-input-info": "Your e-mail address won't be publicly visible.",
+    "username-input-label": "Username",
+    "username-input-info": "Your username will be publicly visible.",
+    "password-input-label": "Password",
+    "submit-button-label": "Register",
+    "submit-button-loading-label": "Registering ...",
+    "login-question": "Already have an account?",
+    "login-link": "Login here",
+    "error-409": "Email or username already exists. Please choose a different one.",
+    "error-500": "An unexpected error occurred while registering. Please try again later.",
+    "error-default": "An unknown error occurred while registering. Please try again later.",
+    "success-header": "Registration successful!",
+    "success-message": "You have successfully registered. Please check your email to verify your account."
+  },
+  "Page-Confirm": {
+    "status-confirming": "Confirming your account ...",
+    "status-confirmed": "Your account has been successfully confirmed.",
+    "status-confirmed-login-link": "You can now log in here",
+    "status-error": "An error occurred while confirming your account. Please try again later."
   }
 }
