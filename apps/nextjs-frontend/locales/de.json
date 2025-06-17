@@ -16,6 +16,10 @@
     "terms-of-service-link": "Nutzungsbedingungen",
     "copyright-notice": "Next.js - NestJS - Turbo - Auth Kesselplatte. Alle Rechte vorbehalten."
   },
+  "Component-Footer-LocaleSelect": {
+    "de": "Deutsch",
+    "en": "Englisch"
+  },
   "Page-Home": {
     "title": "Willkommen bei Next.js - NestJS - Turbo - Auth Kesselplatte"
   },

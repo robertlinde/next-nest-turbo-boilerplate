@@ -2,6 +2,7 @@
 
 import {getTranslations} from 'next-intl/server';
 import {type JSX} from 'react';
+import {LocaleSelect} from './components/LocaleSelect/locale-select.component';
 import {Link} from '@/i18n/navigation.ts';
 
 type FooterItem = {
@@ -59,9 +60,14 @@ export async function Footer(): Promise<JSX.Element> {
             ))}
           </ul>
         </nav>
-        <p className="text-sm text-gray-400">
-          &copy; {new Date().getFullYear()} {t('copyright-notice')}
-        </p>
+        <div className="flex flex-col items-center gap-4 w-full">
+          <div className="flex justify-end w-full">
+            <LocaleSelect />
+          </div>
+          <p className="text-sm text-gray-400">
+            &copy; {new Date().getFullYear()} {t('copyright-notice')}
+          </p>
+        </div>
       </div>
     </footer>
   );

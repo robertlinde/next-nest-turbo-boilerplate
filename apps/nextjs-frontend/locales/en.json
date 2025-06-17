@@ -16,6 +16,10 @@
     "terms-of-service-link": "Terms of Service",
     "copyright-notice": "Next.js - NestJS - Turbo - Auth Boilerplate. All rights reserved."
   },
+  "Component-Footer-LocaleSelect": {
+    "de": "German",
+    "en": "English"
+  },
   "Page-Home": {
     "title": "Welcome to Next.js - NestJS - Turbo - Auth Boilerplate"
   },
