@@ -1,5 +1,54 @@
 {
-  "Home": {
+  "Component-Header": {
+    "login-button-label": "Login",
+    "register-button-label": "Register",
+    "logout-button-label": "Logout",
+    "profile-button-label": "Profile",
+    "greeting": "Hello"
+  },
+  "Component-Footer": {
+    "group-company": "Company",
+    "group-legal": "Legal",
+    "about-us-link": "About Us",
+    "contact-link": "Contact",
+    "imprint-link": "Imprint",
+    "privacy-policy-link": "Privacy Policy",
+    "terms-of-service-link": "Terms of Service",
+    "copyright-notice": "Next.js - NestJS - Turbo - Auth Boilerplate. All rights reserved."
+  },
+  "Page-Home": {
     "title": "Welcome to Next.js - NestJS - Turbo - Auth Boilerplate"
+  },
+  "Page-Profile": {
+    "greeting": "Hello",
+    "loading": "Loading ...",
+    "email-input-label": "E-Mail",
+    "username-input-label": "Username",
+    "password-input-label": "Password",
+    "submit-update-button-label": "Update Profile",
+    "loading-update-button-label": "Saving ...",
+    "delete-account-button-label": "Delete Account",
+    "logout-button-label": "Logout",
+    "delete-profile-confirm-dialog-header": "Delete Profile",
+    "delete-profile-confirm-dialog-message": "Are you sure you want to delete your profile?",
+    "delete-profile-confirm-dialog-cancel-button-label": "Cancel",
+    "delete-profile-confirm-dialog-confirm-button-label": "Delete",
+    "update-profile-confirm-dialog-header": "Update Profile",
+    "update-profile-confirm-dialog-message": "Are you sure you want to update your profile?",
+    "update-profile-confirm-dialog-cancel-button-label": "Cancel",
+    "update-profile-confirm-dialog-confirm-button-label": "Update",
+    "update-profile-no-changes-toast-summary": "No Changes",
+    "update-profile-no-changes-toast-detail": "No changes were made to your profile.",
+    "loading-profile-error-toast-summary": "Error Loading Profile",
+    "loading-profile-error-toast-detail": "There was an error loading your profile. Please try again later.",
+    "update-error-409": "Email or username already exists. Please choose a different one.",
+    "update-error-500": "An unexpected error occurred while updating your profile. Please try again later.",
+    "update-error-default": "An unknown error occurred while updating your profile. Please try again later.",
+    "delete-profile-success-toast-summary": "Profile Deleted",
+    "delete-profile-success-toast-detail": "Your profile has been successfully deleted.",
+    "update-profile-success-toast-summary": "Profile Updated",
+    "update-profile-success-toast-detail": "Your profile has been successfully updated.",
+    "delete-profile-error-toast-summary": "Error Deleting Profile",
+    "delete-profile-error-default-toast-detail": "There was an error deleting your profile. Please try again later."
   }
 }

@@ -1,5 +1,54 @@
 {
-  "Home": {
+  "Component-Header": {
+    "login-button-label": "Anmelden",
+    "register-button-label": "Registrieren",
+    "logout-button-label": "Abmelden",
+    "profile-button-label": "Profil",
+    "greeting": "Hallo"
+  },
+  "Component-Footer": {
+    "group-company": "Unternehmen",
+    "group-legal": "Rechtliches",
+    "about-us-link": "Über uns",
+    "contact-link": "Kontakt",
+    "imprint-link": "Impressum",
+    "privacy-policy-link": "Datenschutz",
+    "terms-of-service-link": "Nutzungsbedingungen",
+    "copyright-notice": "Next.js - NestJS - Turbo - Auth Kesselplatte. Alle Rechte vorbehalten."
+  },
+  "Page-Home": {
     "title": "Willkommen bei Next.js - NestJS - Turbo - Auth Kesselplatte"
+  },
+  "Page-Profile": {
+    "greeting": "Hallo",
+    "loading": "Lädt ...",
+    "email-input-label": "E-Mail",
+    "username-input-label": "Benutzername",
+    "password-input-label": "Passwort",
+    "submit-update-button-label": "Profil aktualisieren",
+    "loading-update-button-label": "Speichert ...",
+    "delete-account-button-label": "Profil löschen",
+    "logout-button-label": "Abmelden",
+    "delete-profile-confirm-dialog-header": "Profil löschen",
+    "delete-profile-confirm-dialog-message": "Sind Sie sicher, dass Sie Ihr Profil löschen möchten?",
+    "delete-profile-confirm-dialog-cancel-button-label": "Abbrechen",
+    "delete-profile-confirm-dialog-confirm-button-label": "Löschen",
+    "update-profile-confirm-dialog-header": "Profil aktualisieren",
+    "update-profile-confirm-dialog-message": "Sind Sie sicher, dass Sie Ihr Profil aktualisieren möchten?",
+    "update-profile-confirm-dialog-cancel-button-label": "Abbrechen",
+    "update-profile-confirm-dialog-confirm-button-label": "Aktualisieren",
+    "update-profile-no-changes-toast-summary": "Keine Änderungen",
+    "update-profile-no-changes-toast-detail": "Es wurden keine Änderungen an Ihrem Profil vorgenommen.",
+    "loading-profile-error-toast-summary": "Fehler beim Laden des Profils",
+    "loading-profile-error-toast-detail": "Es gab einen Fehler beim Laden Ihres Profils. Bitte versuchen Sie es später erneut.",
+    "update-error-409": "E-Mail oder Benutzername existiert bereits. Bitte wählen Sie einen anderen.",
+    "update-error-500": "Ein unerwarteter Fehler ist beim Aktualisieren Ihres Profils aufgetreten. Bitte versuchen Sie es später erneut.",
+    "update-error-default": "Ein unbekannter Fehler ist beim Aktualisieren Ihres Profils aufgetreten. Bitte versuchen Sie es später erneut.",
+    "delete-profile-success-toast-summary": "Profil gelöscht",
+    "delete-profile-success-toast-detail": "Ihr Profil wurde erfolgreich gelöscht.",
+    "update-profile-success-toast-summary": "Profil aktualisiert",
+    "update-profile-success-toast-detail": "Ihr Profil wurde erfolgreich aktualisiert.",
+    "delete-profile-error-toast-summary": "Fehler beim Löschen des Profils",
+    "delete-profile-error-default-toast-detail": "Es gab einen Fehler beim Löschen Ihres Profils. Bitte versuchen Sie es später erneut."
   }
 }

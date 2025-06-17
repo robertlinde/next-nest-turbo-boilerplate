@@ -6,6 +6,7 @@ import {useMutation} from '@tanstack/react-query';
 import {useRouter} from 'next/navigation';
 import {Button} from 'primereact/button';
 import {type SubmitHandler, useForm} from 'react-hook-form';
+import {useTranslations} from 'next-intl';
 import {deleteProfile} from './services/delete-profile.service.ts';
 import {updateProfile} from './services/update-profile.service.ts';
 import {type ProfileFormFields} from './types/profile-form-fields.type.ts';
@@ -19,6 +20,8 @@ import {type ApiError} from '@/utils/api/api-error.ts';
 
 export default function Profile(): JSX.Element {
   const {user, loading, error, loadUser} = useUserStore();
+
+  const t = useTranslations('Page-Profile');
 
   const router = useRouter();
 
@@ -42,8 +45,8 @@ export default function Profile(): JSX.Element {
     if (error || (!user && !loading)) {
       showToast({
         severity: 'error',
-        summary: 'Error loading profile',
-        detail: 'Please log in to access your profile.',
+        summary: t('loading-profile-error-toast-summary'),
+        detail: t('loading-profile-error-toast-detail'),
       });
       router.push('/login');
     }
@@ -62,8 +65,8 @@ export default function Profile(): JSX.Element {
       await loadUser();
       showToast({
         severity: 'success',
-        summary: 'Profile update successful',
-        detail: 'Your profile has been updated successfully.',
+        summary: t('update-profile-success-toast-summary'),
+        detail: t('update-profile-success-toast-detail'),
       });
     },
     async onError(error: ApiError) {
@@ -77,19 +80,19 @@ export default function Profile(): JSX.Element {
         }
 
         case 409: {
-          setError('root', {message: 'Email or username already exists'});
+          setError('root', {message: t('update-error-409')});
 
           break;
         }
 
         case 500: {
-          setError('root', {message: 'Something went wrong'});
+          setError('root', {message: t('update-error-500')});
 
           break;
         }
 
         default: {
-          setError('root', {message: 'An unknown error occurred'});
+          setError('root', {message: t('update-error-default')});
         }
       }
     },
@@ -101,15 +104,17 @@ export default function Profile(): JSX.Element {
     if (keysChanged.length === 0) {
       showToast({
         severity: 'info',
-        summary: 'No changes detected',
-        detail: 'Please make some changes before updating your profile.',
+        summary: t('update-profile-no-changes-toast-summary'),
+        detail: t('update-profile-no-changes-toast-detail'),
       });
       return;
     }
 
     confirmDialog({
-      message: 'Are you sure you want to update your profile?',
-      header: 'Confirm profile update',
+      message: t('update-profile-confirm-dialog-message'),
+      header: t('update-profile-confirm-dialog-header'),
+      acceptLabel: t('update-profile-confirm-dialog-confirm-button-label'),
+      rejectLabel: t('update-profile-confirm-dialog-cancel-button-label'),
       accept() {
         const changedData: ProfileFormFields = {};
 
@@ -131,8 +136,8 @@ export default function Profile(): JSX.Element {
       await logout();
       showToast({
         severity: 'success',
-        summary: 'Deleted profile successfully',
-        detail: 'Hope to see you again!',
+        summary: t('delete-profile-success-toast-summary'),
+        detail: t('delete-profile-success-toast-detail'),
       });
       router.push('/');
     },
@@ -143,7 +148,7 @@ export default function Profile(): JSX.Element {
           const errorMessage: string = response.message.join(', ');
           showToast({
             severity: 'error',
-            summary: 'Error deleting profile',
+            summary: t('delete-profile-error-toast-summary'),
             detail: errorMessage,
           });
           break;
@@ -152,8 +157,8 @@ export default function Profile(): JSX.Element {
         default: {
           showToast({
             severity: 'error',
-            summary: 'Error deleting profile',
-            detail: 'An unknown error occurred. Please try again later.',
+            summary: t('delete-profile-error-toast-summary'),
+            detail: t('delete-profile-error-default-toast-detail'),
           });
         }
       }
@@ -162,8 +167,10 @@ export default function Profile(): JSX.Element {
 
   const onDelete = (): void => {
     confirmDialog({
-      message: 'Are you sure you want to delete your profile?',
-      header: 'Confirm profile deletion',
+      message: t('delete-profile-confirm-dialog-message'),
+      header: t('delete-profile-confirm-dialog-header'),
+      acceptLabel: t('delete-profile-confirm-dialog-confirm-button-label'),
+      rejectLabel: t('delete-profile-confirm-dialog-cancel-button-label'),
       accept() {
         deleteProfileMutation.mutate();
       },
@@ -173,19 +180,21 @@ export default function Profile(): JSX.Element {
   if (loading) {
     return (
       <div className="flex flex-col items-center">
-        <h2>Loading...</h2>
+        <h2>{t('loading')}</h2>
       </div>
     );
   }
 
   return (
     <>
-      <h1>Hey, {user?.username}!</h1>
+      <h1>
+        {t('greeting')}, {user?.username}!
+      </h1>
       <div className="flex max-w-3xl flex-col gap-4 divide-y-2 divide-slate-300 md:gap-6 lg:gap-8">
         <form className="mt-6 flex flex-col gap-8 md:mt-10 lg:mt-12" onSubmit={handleSubmit(onSubmitUpdate)}>
           <div className="flex flex-col flex-wrap items-center gap-1">
             <FloatLabelInputText
-              label="Email"
+              label={t('email-input-label')}
               {...register('email')}
               type="email"
               className="w-full"
@@ -195,7 +204,7 @@ export default function Profile(): JSX.Element {
           </div>
           <div className="flex flex-col flex-wrap items-center gap-1">
             <FloatLabelInputText
-              label="Username"
+              label={t('username-input-label')}
               {...register('username')}
               type="text"
               className="w-full"
@@ -205,7 +214,7 @@ export default function Profile(): JSX.Element {
           </div>
           <div className="flex flex-col flex-wrap items-center gap-1">
             <FloatLabelInputText
-              label="Password"
+              label={t('password-input-label')}
               {...register('password')}
               type="password"
               className="w-full"
@@ -218,7 +227,7 @@ export default function Profile(): JSX.Element {
             <Button
               type="submit"
               disabled={isSubmitting}
-              label={isSubmitting ? 'Saving ...' : 'Update profile'}
+              label={isSubmitting ? t('loading-update-button-label') : t('submit-update-button-label')}
               className="w-fit"
               data-testid="profile-save-button"
             />
@@ -226,7 +235,7 @@ export default function Profile(): JSX.Element {
         </form>
         <div className="flex flex-row flex-wrap justify-between gap-2 pt-4 md:pt-6 lg:pt-8">
           <Button
-            label="Logout"
+            label={t('logout-button-label')}
             icon="pi pi-sign-out"
             data-testid="profile-logout-button"
             onClick={async () =>
@@ -238,7 +247,7 @@ export default function Profile(): JSX.Element {
             }
           />
           <Button
-            label="Delete account"
+            label={t('delete-account-button-label')}
             icon="pi pi-trash"
             className="!bg-red-700 text-white hover:bg-red-600"
             data-testid="profile-delete-button"

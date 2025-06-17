@@ -1,5 +1,8 @@
+'use server';
+
+import {getTranslations} from 'next-intl/server';
 import Link from 'next/link';
-import {type JSX, useMemo} from 'react';
+import {type JSX} from 'react';
 
 type FooterItem = {
   label: string;
@@ -11,27 +14,26 @@ type FooterItemsGroup = {
   items: FooterItem[];
 };
 
-export function Footer(): JSX.Element {
-  const footerItemsGroups: FooterItemsGroup[] = useMemo(
-    () => [
-      {
-        label: 'Company',
-        items: [
-          {label: 'About Us', href: '/about'},
-          {label: 'Contact', href: '/contact'},
-        ],
-      },
-      {
-        label: 'Support',
-        items: [
-          {label: 'Imprint', href: '/imprint'},
-          {label: 'Privacy Policy', href: '/privacy'},
-          {label: 'Terms of Service', href: '/terms'},
-        ],
-      },
-    ],
-    [],
-  );
+export async function Footer(): Promise<JSX.Element> {
+  const t = await getTranslations('Component-Footer');
+
+  const footerItemsGroups: FooterItemsGroup[] = [
+    {
+      label: t('group-company'),
+      items: [
+        {label: t('about-us-link'), href: '/about'},
+        {label: t('contact-link'), href: '/contact'},
+      ],
+    },
+    {
+      label: t('group-legal'),
+      items: [
+        {label: t('imprint-link'), href: '/imprint'},
+        {label: t('privacy-policy-link'), href: '/privacy'},
+        {label: t('terms-of-service-link'), href: '/terms'},
+      ],
+    },
+  ];
 
   return (
     <footer className="px-2 md:px-4 py-4 bg-gray-200 text-gray-700 max-w-full">
@@ -57,7 +59,9 @@ export function Footer(): JSX.Element {
             ))}
           </ul>
         </nav>
-        <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} My Company. All rights reserved.</p>
+        <p className="text-sm text-gray-400">
+          &copy; {new Date().getFullYear()} {t('copyright-notice')}
+        </p>
       </div>
     </footer>
   );
