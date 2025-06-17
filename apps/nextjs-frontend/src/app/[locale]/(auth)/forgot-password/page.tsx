@@ -4,15 +4,15 @@ import {useState, type JSX} from 'react';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Button} from 'primereact/button';
 import {type SubmitHandler, useForm} from 'react-hook-form';
+import {useTranslations} from 'next-intl';
 import {type ForgotPasswordFormFields} from './types/forgot-password-form-fields.type.ts';
 import {forgotPasswordSchema} from './types/forgot-password.schema.ts';
 import {FloatLabelInputText} from '@/components/float-label-input-text/float-label-input-text.component.tsx';
 import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
-import {useToast} from '@/hooks/use-toast/use-toast.hook.tsx';
 import {type ApiError} from '@/utils/api/api-error.ts';
 
 export default function ForgotPassword(): JSX.Element {
-  const {showToast} = useToast();
+  const t = useTranslations('Page-Forgot-Password');
 
   const [didSendPasswordReset, setDidSendPasswordReset] = useState(false);
 
@@ -32,18 +32,14 @@ export default function ForgotPassword(): JSX.Element {
       onSuccess() {
         reset();
         setDidSendPasswordReset(true);
-        showToast({
-          severity: 'success',
-          summary: 'Password reset successful',
-        });
       },
       onError(error: ApiError) {
-        if (error.response.status === 401) {
-          setError('root', {message: 'Invalid email or password'});
+        if (error.response.status === 401 || error.response.status === 403) {
+          setError('root', {message: t('error-401-403')});
         } else if (error.response.status === 500) {
-          setError('root', {message: 'Something went wrong'});
+          setError('root', {message: t('error-500')});
         } else {
-          setError('root', {message: 'An unknown error occurred'});
+          setError('root', {message: t('error-default')});
         }
       },
     });
@@ -52,24 +48,22 @@ export default function ForgotPassword(): JSX.Element {
   if (didSendPasswordReset) {
     return (
       <div className="flex flex-col items-center">
-        <h2>Check your email</h2>
-        <p className="text-center">
-          If the email is registered, we have sent you an email with instructions to reset your password.
-        </p>
+        <h2>{t('success-header')}</h2>
+        <p className="text-center">{t('success-message')}</p>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col items-center">
-      <h2>Reset your password</h2>
+      <h2>{t('title')}</h2>
       <form
         className="mt-6 flex flex-col items-center gap-4 md:mt-10 md:gap-6 lg:mt-12 lg:gap-8"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex flex-col flex-wrap items-center gap-1">
           <FloatLabelInputText
-            label="Email"
+            label={t('email-input-label')}
             {...register('email')}
             type="email"
             data-testid="forgot-password-email-input"
@@ -78,7 +72,7 @@ export default function ForgotPassword(): JSX.Element {
         </div>
         <div>
           <Button
-            label={isSubmitting ? 'Loading ...' : 'Reset password'}
+            label={isSubmitting ? t('submit-button-loading-label') : t('submit-button-label')}
             type="submit"
             disabled={isSubmitting}
             data-testid="forgot-password-submit-button"

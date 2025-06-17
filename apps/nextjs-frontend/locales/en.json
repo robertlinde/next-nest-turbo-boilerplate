@@ -79,5 +79,30 @@
     "error-500": "An unexpected error occurred while verifying your 2FA code. Please try again later.",
     "error-default": "An unknown error occurred while verifying your 2FA code. Please try again later.",
     "login-success-toast-summary": "Login successful"
+  },
+  "Page-Forgot-Password": {
+    "title": "Reset your password",
+    "email-input-label": "E-Mail",
+    "submit-button-label": "Reset Password",
+    "submit-button-loading-label": "Loading ...",
+    "error-401-403": "Invalid email address. Please try again.",
+    "error-500": "An unexpected error occurred while resetting your password. Please try again later.",
+    "error-default": "An unknown error occurred while resetting your password. Please try again later.",
+    "success-header": "Password Reset Successful",
+    "success-message": "A password reset link has been sent to your email address. Please check your inbox and follow the instructions to reset your password."
+  },
+  "Page-Reset-Password": {
+    "title": "Set a new password",
+    "password-input-label": "New Password",
+    "submit-button-label": "Set new password",
+    "submit-button-loading-label": "Setting new password ...",
+    "error-no-token": "Token is expired or can't be found. Please request the password reset again.",
+    "error-410": "Token expired. Please request the password reset again.",
+    "error-404": "Token not found. Please request the password reset again.",
+    "error-500": "An unexpected error occurred while setting your new password. Please try again later.",
+    "error-default": "An unknown error occurred while setting your new password. Please try again later.",
+    "success-header": "Password Set Successfully",
+    "success-message": "Your password has been successfully set. You can now log in with your new password.",
+    "success-login-link": "Login here"
   }
 }

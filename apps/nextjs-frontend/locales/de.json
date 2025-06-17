@@ -79,5 +79,30 @@
     "error-500": "Ein unerwarteter Fehler ist bei der Verifizierung Ihres 2FA-Codes aufgetreten. Bitte versuchen Sie es später erneut.",
     "error-default": "Ein unbekannter Fehler ist bei der Verifizierung Ihres 2FA-Codes aufgetreten. Bitte versuchen Sie es später erneut.",
     "login-success-toast-summary": "Login erfolgreich"
+  },
+  "Page-Forgot-Password": {
+    "title": "Passwort zurücksetzen",
+    "email-input-label": "E-Mail",
+    "submit-button-label": "Passwort zurücksetzen",
+    "submit-button-loading-label": "Laden ...",
+    "error-401-403": "Ungültige E-Mail-Adresse. Bitte versuchen Sie es erneut.",
+    "error-500": "Ein unerwarteter Fehler ist beim Zurücksetzen des Passworts aufgetreten. Bitte versuchen Sie es später erneut.",
+    "error-default": "Ein unbekannter Fehler ist beim Zurücksetzen des Passworts aufgetreten. Bitte versuchen Sie es später erneut.",
+    "success-header": "Passwort zurücksetzen erfolgreich",
+    "success-message": "Ein Link zum Zurücksetzen Ihres Passworts wurde an Ihre E-Mail-Adresse gesendet. Bitte überprüfen Sie Ihren Posteingang."
+  },
+  "Page-Reset-Password": {
+    "title": "Neues Passwort festlegen",
+    "password-input-label": "Neues Passwort",
+    "submit-button-label": "Neues Passwort festlegen",
+    "submit-button-loading-label": "Neues Passwort wird festgelegt ...",
+    "error-no-token": "Token ist abgelaufen oder kann nicht gefunden werden. Bitte fordere das Zurücksetzen des Passworts erneut an.",
+    "error-410": "Token ist abgelaufen. Bitte fordere das Zurücksetzen des Passworts erneut an.",
+    "error-404": "Token wurde nicht gefunden. Bitte fordere das Zurücksetzen des Passworts erneut an.",
+    "error-500": "Beim Festlegen deines neuen Passworts ist ein unerwarteter Fehler aufgetreten. Bitte versuche es später erneut.",
+    "error-default": "Beim Festlegen deines neuen Passworts ist ein unbekannter Fehler aufgetreten. Bitte versuche es später erneut.",
+    "success-toast-header": "Passwort erfolgreich festgelegt",
+    "success-toast-message": "Dein Passwort wurde erfolgreich festgelegt. Du kannst dich jetzt mit deinem neuen Passwort einloggen.",
+    "success-login-link": "Hier anmelden"
   }
 }

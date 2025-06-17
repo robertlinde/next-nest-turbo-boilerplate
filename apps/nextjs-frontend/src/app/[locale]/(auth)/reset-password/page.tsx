@@ -5,16 +5,16 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {useSearchParams} from 'next/navigation';
 import {Button} from 'primereact/button';
 import {type SubmitHandler, useForm} from 'react-hook-form';
+import {useTranslations} from 'next-intl';
 import {type ResetPasswordFormFields} from './types/reset-password-form-fields.type.ts';
 import {resetPasswordSchema} from './types/reset-password.schema.ts';
 import {FloatLabelInputText} from '@/components/float-label-input-text/float-label-input-text.component.tsx';
 import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
-import {useToast} from '@/hooks/use-toast/use-toast.hook.tsx';
 import {type ApiError} from '@/utils/api/api-error.ts';
 import {Link} from '@/i18n/navigation.ts';
 
 export default function ResetPassword(): JSX.Element {
-  const {showToast} = useToast();
+  const t = useTranslations('Page-Reset-Password');
 
   const [didResetPasswordSuccessfully, setDidResetPasswordSuccessfully] = useState(false);
 
@@ -34,7 +34,7 @@ export default function ResetPassword(): JSX.Element {
     const token = searchParameters.get('token');
 
     if (!token) {
-      setError('root', {message: 'Token is required'});
+      setError('root', {message: t('error-no-token')});
       return;
     }
 
@@ -43,33 +43,29 @@ export default function ResetPassword(): JSX.Element {
       onSuccess() {
         reset();
         setDidResetPasswordSuccessfully(true);
-        showToast({
-          severity: 'success',
-          summary: 'Password reset successful',
-        });
       },
       onError(error: ApiError) {
         switch (error.response.status) {
           case 410: {
-            setError('root', {message: 'Token expired. Please request the password reset again'});
+            setError('root', {message: t('error-410')});
 
             break;
           }
 
           case 404: {
-            setError('root', {message: 'Token not found. Please request the password reset again'});
+            setError('root', {message: t('error-404')});
 
             break;
           }
 
           case 500: {
-            setError('root', {message: 'Something went wrong'});
+            setError('root', {message: t('error-500')});
 
             break;
           }
 
           default: {
-            setError('root', {message: 'An unknown error occurred'});
+            setError('root', {message: t('error-default')});
           }
         }
       },
@@ -79,10 +75,10 @@ export default function ResetPassword(): JSX.Element {
   if (didResetPasswordSuccessfully) {
     return (
       <div className="flex flex-col items-center">
-        <h2>Password reset successful!</h2>
-        <p className="mt-4 md:mt-6 lg:mt-8">You can now log in with your new password.</p>
+        <h2>{t('success-header')}</h2>
+        <p className="mt-4 md:mt-6 lg:mt-8">{t('success-message')}</p>
         <Link className="underline" href="/login">
-          Login here
+          {t('success-login-link')}
         </Link>
       </div>
     );
@@ -90,14 +86,14 @@ export default function ResetPassword(): JSX.Element {
 
   return (
     <div className="flex flex-col items-center">
-      <h2>Reset your password</h2>
+      <h2>{t('title')}</h2>
       <form
         className="mt-6 flex flex-col items-center gap-4 md:mt-10 md:gap-6 lg:mt-12 lg:gap-8"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex flex-col flex-wrap items-center gap-1">
           <FloatLabelInputText
-            label="Password"
+            label={t('password-input-label')}
             {...register('password')}
             type="password"
             data-testid="reset-password-password-input"
@@ -106,7 +102,7 @@ export default function ResetPassword(): JSX.Element {
         </div>
         <div>
           <Button
-            label={isSubmitting ? 'Loading ...' : 'Reset password'}
+            label={isSubmitting ? t('submit-button-loading-label') : t('submit-button-label')}
             type="submit"
             disabled={isSubmitting}
             data-testid="reset-password-submit-button"
