@@ -1,4 +1,21 @@
 {
+  "validation": {
+    "required": "Dieses Feld ist erforderlich",
+    "invalid-email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "invalid-url": "Bitte geben Sie eine gültige URL ein",
+    "invalid-string": "Ungültiges Textformat",
+    "invalid-type": "{expected} erwartet, aber {received} erhalten",
+    "too-small": "Muss mindestens {minimum} Zeichen lang sein",
+    "too-big": "Darf höchstens {maximum} Zeichen lang sein",
+    "number-too-small": "Muss mindestens {minimum} sein",
+    "number-too-big": "Darf höchstens {maximum} sein",
+    "invalid-literal": "Genau '{expected}' erwartet",
+    "unrecognized-keys": "Unbekannte Felder: {keys}",
+    "invalid-union": "Ungültige Eingabe - keine passende Option",
+    "invalid-enum": "Ungültige Option. Wählen Sie aus: {options}",
+    "invalid-date": "Bitte geben Sie ein gültiges Datum ein",
+    "custom-error": "Ungültige Eingabe"
+  },
   "Component-Header": {
     "login-button-label": "Anmelden",
     "register-button-label": "Registrieren",

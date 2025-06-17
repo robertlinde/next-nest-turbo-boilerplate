@@ -1,4 +1,21 @@
 {
+  "validation": {
+    "required": "This field is required",
+    "invalid-email": "Please enter a valid email address",
+    "invalid-url": "Please enter a valid URL",
+    "invalid-string": "Invalid text format",
+    "invalid-type": "Expected {expected}, but received {received}",
+    "too-small": "Must be at least {minimum} characters long",
+    "too-big": "Must be no more than {maximum} characters long",
+    "number-too-small": "Must be at least {minimum}",
+    "number-too-big": "Must be no more than {maximum}",
+    "invalid-literal": "Expected exactly '{expected}'",
+    "unrecognized-keys": "Unrecognized field(s): {keys}",
+    "invalid-union": "Invalid input - no matching option",
+    "invalid-enum": "Invalid option. Choose from: {options}",
+    "invalid-date": "Please enter a valid date",
+    "custom-error": "Invalid input"
+  },
   "Component-Header": {
     "login-button-label": "Login",
     "register-button-label": "Register",

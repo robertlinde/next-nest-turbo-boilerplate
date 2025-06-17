@@ -5,5 +5,5 @@ export const loginCredentialsSchema = z.object({
     .string()
     .transform((val) => val.trim())
     .pipe(z.string().email()),
-  password: z.string(),
+  password: z.string().min(4).max(128),
 });
