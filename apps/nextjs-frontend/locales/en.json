@@ -54,5 +54,30 @@
     "update-profile-success-toast-detail": "Your profile has been successfully updated.",
     "delete-profile-error-toast-summary": "Error Deleting Profile",
     "delete-profile-error-default-toast-detail": "There was an error deleting your profile. Please try again later."
+  },
+  "Component-Login-Credentials": {
+    "title": "Welcome back!",
+    "email-input-label": "E-Mail",
+    "password-input-label": "Password",
+    "submit-button-label": "Login",
+    "submit-button-loading-label": "Logging in ...",
+    "forgot-password-question": "Forgot your password?",
+    "forgot-password-link-label": "Reset it here",
+    "register-question": "Don't have an account?",
+    "register-link-label": "Register here",
+    "error-401-403": "Invalid email or password. Please try again.",
+    "error-500": "An unexpected error occurred while logging in. Please try again later.",
+    "error-default": "An unknown error occurred while logging in. Please try again later."
+  },
+  "Component-Login-2FA": {
+    "title": "Please enter your 2FA code",
+    "description": "We have sent a 2FA code to your email. Please enter it below to continue. If you can't find the email, please check your spam folder.",
+    "code-input-label": "Code",
+    "submit-button-label": "Verify Code",
+    "submit-button-loading-label": "Verifying ...",
+    "error-401-403": "Invalid two-factor authentication code or code expired.",
+    "error-500": "An unexpected error occurred while verifying your 2FA code. Please try again later.",
+    "error-default": "An unknown error occurred while verifying your 2FA code. Please try again later.",
+    "login-success-toast-summary": "Login successful"
   }
 }

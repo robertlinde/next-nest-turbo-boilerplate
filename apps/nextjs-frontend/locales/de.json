@@ -54,5 +54,30 @@
     "update-profile-success-toast-detail": "Ihr Profil wurde erfolgreich aktualisiert.",
     "delete-profile-error-toast-summary": "Fehler beim Löschen des Profils",
     "delete-profile-error-default-toast-detail": "Es gab einen Fehler beim Löschen Ihres Profils. Bitte versuchen Sie es später erneut."
+  },
+  "Component-Login-Credentials": {
+    "title": "Willkommen zurück!",
+    "email-input-label": "E-Mail",
+    "password-input-label": "Passwort",
+    "submit-button-label": "Anmelden",
+    "submit-button-loading-label": "Laden ...",
+    "forgot-password-question": "Passwort vergessen?",
+    "forgot-password-link-label": "Hier zurücksetzen",
+    "register-question": "Noch kein Konto?",
+    "register-link-label": "Hier registrieren",
+    "error-401-403": "Ungültige E-Mail oder Passwort. Bitte versuchen Sie es erneut.",
+    "error-500": "Ein unerwarteter Fehler ist beim Anmelden aufgetreten. Bitte versuchen Sie es später erneut.",
+    "error-default": "Ein unbekannter Fehler ist beim Anmelden aufgetreten. Bitte versuchen Sie es später erneut."
+  },
+  "Component-Login-2FA": {
+    "title": "Zwei-Faktor-Authentifizierung",
+    "description": "Wir haben einen Zwei-Faktor-Authentifizierungscode an Ihre E-Mail-Adresse gesendet. Bitte geben Sie den Code unten ein, um fortzufahren.",
+    "code-input-label": "Code",
+    "submit-button-label": "Code verifizieren",
+    "submit-button-loading-label": "Verifizieren ...",
+    "error-401-403": "Ungültiger 2FA-Code. Bitte versuchen Sie es erneut.",
+    "error-500": "Ein unerwarteter Fehler ist bei der Verifizierung Ihres 2FA-Codes aufgetreten. Bitte versuchen Sie es später erneut.",
+    "error-default": "Ein unbekannter Fehler ist bei der Verifizierung Ihres 2FA-Codes aufgetreten. Bitte versuchen Sie es später erneut.",
+    "login-success-toast-summary": "Login erfolgreich"
   }
 }

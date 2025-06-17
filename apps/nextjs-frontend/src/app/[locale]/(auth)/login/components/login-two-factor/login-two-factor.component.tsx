@@ -4,6 +4,7 @@ import {type JSX} from 'react';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Button} from 'primereact/button';
 import {useForm, type SubmitHandler} from 'react-hook-form';
+import {useTranslations} from 'next-intl';
 import {type LoginTwoFactorFormFields} from './types/login-two-factor-form-fields.type.ts';
 import {loginTwoFactorSchema} from './types/login-two-factor.schema.ts';
 import {FloatLabelInputText} from '@/components/float-label-input-text/float-label-input-text.component.tsx';
@@ -14,6 +15,8 @@ import {useRouter} from '@/i18n/navigation.ts';
 
 export function LoginTwoFactor(): JSX.Element {
   const {showToast} = useToast();
+
+  const t = useTranslations('Component-Login-2FA');
 
   const router = useRouter();
   const {loginTwoFactor} = useAuthApi();
@@ -32,17 +35,17 @@ export function LoginTwoFactor(): JSX.Element {
         reset2fa();
         showToast({
           severity: 'success',
-          summary: 'Login successful',
+          summary: t('login-success-toast-summary'),
         });
         router.push('/');
       },
       onError(error: ApiError) {
         if (error.response.status === 401 || error.response.status === 403) {
-          setError2fa('root', {message: 'Invalid two-factor authentication code or code expired'});
+          setError2fa('root', {message: t('error-401-403')});
         } else if (error.response.status === 500) {
-          setError2fa('root', {message: 'Something went wrong'});
+          setError2fa('root', {message: t('error-500')});
         } else {
-          setError2fa('root', {message: 'An unknown error occurred'});
+          setError2fa('root', {message: t('error-default')});
         }
       },
     });
@@ -50,19 +53,21 @@ export function LoginTwoFactor(): JSX.Element {
 
   return (
     <div className="flex flex-col items-center">
-      <h2>Please enter your 2FA code</h2>
-      <p className="mt-6 md:mt-10 lg:mt-12">
-        We have sent a 2FA code to your email. Please enter it below to continue. If you can&apos;t find the email,
-        please check your spam folder.
-      </p>
+      <h2>{t('title')}</h2>
+      <p className="mt-6 md:mt-10 lg:mt-12">{t('description')}</p>
       <form
         className="mt-4 flex flex-col items-center gap-4 md:mt-6 md:gap-6 lg:mt-8 lg:gap-8"
         onSubmit={handleSubmit2fa(onSubmit2fa)}
       >
-        <FloatLabelInputText {...register2fa('code')} maxLength={6} label="Code" data-testid="login-2fa" />
+        <FloatLabelInputText
+          {...register2fa('code')}
+          maxLength={6}
+          label={t('code-input-label')}
+          data-testid="login-2fa"
+        />
         {errors2fa.code ? <p className="text-red-700">{errors2fa.code.message}</p> : null}
         <Button
-          label={isSubmitting2fa ? 'Loading ...' : 'Confirm'}
+          label={isSubmitting2fa ? t('submit-button-loading-label') : t('submit-button-label')}
           type="submit"
           disabled={isSubmitting2fa}
           data-testid="login-submit-2fa"
