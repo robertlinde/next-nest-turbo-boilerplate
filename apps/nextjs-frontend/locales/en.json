@@ -12,8 +12,14 @@
     "invalid-literal": "Expected exactly '{expected}'",
     "unrecognized-keys": "Unrecognized field(s): {keys}",
     "invalid-union": "Invalid input - no matching option",
+    "invalid-union-discriminator": "Invalid discriminator value. Expected: {options}",
     "invalid-enum": "Invalid option. Choose from: {options}",
+    "invalid-arguments": "Invalid function arguments provided",
+    "invalid-return-type": "Function returned an invalid type",
     "invalid-date": "Please enter a valid date",
+    "invalid-intersection-types": "Value does not satisfy all required conditions",
+    "not-multiple-of": "Must be a multiple of {multipleOf}",
+    "not-finite": "Must be a finite number",
     "custom-error": "Invalid input"
   },
   "Component-Header": {

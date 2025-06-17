@@ -12,8 +12,14 @@
     "invalid-literal": "Genau '{expected}' erwartet",
     "unrecognized-keys": "Unbekannte Felder: {keys}",
     "invalid-union": "Ungültige Eingabe - keine passende Option",
+    "invalid-union-discriminator": "Ungültiger Diskriminator-Wert. Erwartet: {options}",
     "invalid-enum": "Ungültige Option. Wählen Sie aus: {options}",
+    "invalid-arguments": "Ungültige Funktionsargumente angegeben",
+    "invalid-return-type": "Funktion hat einen ungültigen Typ zurückgegeben",
     "invalid-date": "Bitte geben Sie ein gültiges Datum ein",
+    "invalid-intersection-types": "Wert erfüllt nicht alle erforderlichen Bedingungen",
+    "not-multiple-of": "Muss ein Vielfaches von {multipleOf} sein",
+    "not-finite": "Muss eine endliche Zahl sein",
     "custom-error": "Ungültige Eingabe"
   },
   "Component-Header": {
