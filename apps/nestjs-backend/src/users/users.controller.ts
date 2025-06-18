@@ -53,7 +53,7 @@ export class UsersController {
     @RequiredHeader('Accept-Language') language: string,
   ): Promise<UserDto> {
     const {email, password, username} = body;
-    const userEntity = await this.usersService.createUser(language, email, password, username);
+    const userEntity = await this.usersService.createUser(email, password, username, language);
     return new UserDto(userEntity);
   }
 
