@@ -188,7 +188,7 @@ export default function Profile(): JSX.Element {
   return (
     <>
       <h1>
-        {t('greeting')}, {user?.username}!
+        {t('greeting', {username: user?.username ?? t('user')})}, {user?.username}!
       </h1>
       <div className="flex max-w-3xl flex-col gap-4 divide-y-2 divide-slate-300 md:gap-6 lg:gap-8">
         <form className="mt-6 flex flex-col gap-8 md:mt-10 lg:mt-12" onSubmit={handleSubmit(onSubmitUpdate)}>

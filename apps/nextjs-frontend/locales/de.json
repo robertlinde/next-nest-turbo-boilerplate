@@ -27,7 +27,8 @@
     "register-button-label": "Registrieren",
     "logout-button-label": "Abmelden",
     "profile-button-label": "Profil",
-    "greeting": "Hallo"
+    "greeting": "Hallo, {username}",
+    "user": "Benutzer"
   },
   "Component-Footer": {
     "group-company": "Unternehmen",
@@ -48,6 +49,7 @@
   },
   "Page-Profile": {
     "greeting": "Hallo",
+    "user": "Benutzer",
     "loading": "Lädt ...",
     "email-input-label": "E-Mail",
     "username-input-label": "Benutzername",

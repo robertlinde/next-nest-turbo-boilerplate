@@ -27,7 +27,8 @@
     "register-button-label": "Register",
     "logout-button-label": "Logout",
     "profile-button-label": "Profile",
-    "greeting": "Hello"
+    "greeting": "Hello, {username}",
+    "user": "User"
   },
   "Component-Footer": {
     "group-company": "Company",
@@ -47,7 +48,8 @@
     "title": "Welcome to Next.js - NestJS - Turbo - Auth Boilerplate"
   },
   "Page-Profile": {
-    "greeting": "Hello",
+    "greeting": "Hello, {username}!",
+    "user": "User",
     "loading": "Loading ...",
     "email-input-label": "E-Mail",
     "username-input-label": "Username",

@@ -26,7 +26,7 @@ export function Header(): JSX.Element {
   const endMenuItems: MenuItem[] = useMemo(
     () => [
       {
-        label: `${t('greeting')}, ${user?.username ?? 'User'}`,
+        label: `${t('greeting', {username: user?.username ?? t('user')})}`,
         items: [
           {
             label: t('profile-button-label'),
