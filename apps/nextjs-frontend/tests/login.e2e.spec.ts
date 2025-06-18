@@ -39,7 +39,7 @@ test.describe('Login', () => {
     );
 
     // Assert that we reached the 2FA step
-    await expect(page.getByText('Please enter your 2FA code')).toBeVisible();
+    await expect(page.getByRole('heading', {name: 'Two-Factor Authentication'})).toBeVisible();
   });
 
   test('should decline login with invalid 2FA code', async ({page}) => {
@@ -58,7 +58,7 @@ test.describe('Login', () => {
     );
 
     // Expect error message for invalid 2FA code
-    await expect(page.getByText('Invalid two-factor authentication code or code expired')).toBeVisible();
+    await expect(page.getByText('Invalid 2FA code. Please try again.')).toBeVisible();
   });
 
   test('should succeed login with valid 2FA code', async ({page}) => {

@@ -42,11 +42,17 @@ const verifyEmail = async (page: Page, emailAddress: string): Promise<void> => {
     throw new Error('Verification link not found in email');
   }
 
-  const navigationPromise = page.waitForURL(hrefValue, {
-    waitUntil: 'networkidle',
-  });
+  // Navigate to the verification link
   await page.goto(hrefValue);
-  await navigationPromise;
+
+  // Wait for navigation to complete and check if we're on a confirmation page
+  // This handles the localization redirect automatically
+  await page.waitForLoadState('networkidle');
+
+  // Additional check: wait for URL to contain 'confirm' to ensure we're on the right page
+  await page.waitForURL((url) => url.pathname.includes('confirm'), {
+    timeout: 5000, // Short timeout since navigation should already be complete
+  });
 };
 
 // Complete registration flow with option to skip verification
@@ -69,7 +75,7 @@ export const register = async (
 
     if (!skipEmailRegistrationConfirm) {
       await verifyEmail(page, userData.email);
-      await expect(page.getByText('Confirmation successful!')).toBeVisible();
+      await expect(page.getByText('Your account has been successfully confirmed.')).toBeVisible();
     }
   }
 

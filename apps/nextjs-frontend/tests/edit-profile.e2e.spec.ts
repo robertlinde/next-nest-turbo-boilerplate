@@ -26,11 +26,11 @@ test.describe('Edit profile', () => {
     await page.getByTestId('profile-username-input').fill(newUsername);
     await page.getByTestId('profile-save-button').click();
 
-    await page.getByText('Yes').click();
+    await page.getByRole('button', {name: 'Update', exact: true}).click();
 
     // Assert that the username has been changed
-    await expect(page.getByText('Profile update successful')).toBeVisible();
-    await expect(page.getByText(`Hey, ${newUsername}`)).toBeVisible();
+    await expect(page.getByText('Your profile has been successfully updated.')).toBeVisible();
+    await expect(page.getByText(`Hello, ${newUsername}`)).toBeVisible();
   });
 
   test('should show error when username is empty', async ({page}) => {
@@ -46,7 +46,7 @@ test.describe('Edit profile', () => {
     await page.getByTestId('profile-save-button').click();
 
     // Assert that the error message is shown
-    await expect(page.getByText('Username must be at least 4 characters long')).toBeVisible();
+    await expect(page.getByText('The input is too short. It must be at least 4 characters long.')).toBeVisible();
   });
 
   test('should change email', async ({page}) => {
@@ -63,7 +63,7 @@ test.describe('Edit profile', () => {
     await page.getByTestId('profile-email-input').fill(newEmail);
     await page.getByTestId('profile-save-button').click();
 
-    await page.getByText('Yes').click();
+    await page.getByRole('button', {name: 'Update', exact: true}).click();
 
     await page.getByTestId('profile-logout-button').click();
 
@@ -105,7 +105,7 @@ test.describe('Edit profile', () => {
     await page.getByTestId('profile-save-button').click();
 
     // Assert that the error message is shown
-    await expect(page.getByText('Invalid email')).toBeVisible();
+    await expect(page.getByText('The email address entered is not valid. Please check and try again.')).toBeVisible();
   });
 
   test('should change password', async ({page}) => {
@@ -122,10 +122,10 @@ test.describe('Edit profile', () => {
     await page.getByTestId('profile-password-input').fill(newPassword);
     await page.getByTestId('profile-save-button').click();
 
-    await page.getByText('Yes').click();
+    await page.getByRole('button', {name: 'Update', exact: true}).click();
 
     // Assert that the password has been changed
-    await expect(page.getByText('Profile update successful')).toBeVisible();
+    await expect(page.getByText('Your profile has been successfully updated.')).toBeVisible();
 
     // Wait for any updates to complete
     await page.waitForLoadState('networkidle');
@@ -171,7 +171,7 @@ test.describe('Edit profile', () => {
     await page.getByTestId('profile-save-button').click();
 
     // Assert that the error message is shown
-    await expect(page.getByText('Password must be at least 4 characters long')).toBeVisible();
+    await expect(page.getByText('The input is too short. It must be at least 4 characters long.')).toBeVisible();
   });
 
   test('should delete account', async ({page}) => {
@@ -184,10 +184,10 @@ test.describe('Edit profile', () => {
     await navigateToProfilePage(page);
 
     await page.getByTestId('profile-delete-button').click();
-    await page.getByText('Yes').click();
+    await page.getByRole('button', {name: 'Delete', exact: true}).click();
 
     // Assert that the account has been deleted
-    await expect(page.getByText('Deleted profile successfully')).toBeVisible();
+    await expect(page.getByText('Your profile has been successfully deleted.')).toBeVisible();
 
     // Wait for deletion to complete
     await page.waitForLoadState('networkidle');
