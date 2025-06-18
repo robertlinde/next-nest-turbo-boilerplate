@@ -5,7 +5,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {useSearchParams} from 'next/navigation';
 import {Button} from 'primereact/button';
 import {type SubmitHandler, useForm} from 'react-hook-form';
-import {useTranslations} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 import {type ResetPasswordFormFields} from './types/reset-password-form-fields.type.ts';
 import {resetPasswordSchema} from './types/reset-password.schema.ts';
 import {FloatLabelInputText} from '@/components/float-label-input-text/float-label-input-text.component.tsx';
@@ -30,6 +30,8 @@ export default function ResetPassword(): JSX.Element {
 
   const {resetPassword} = useAuthApi();
 
+  const locale = useLocale();
+
   const onSubmit: SubmitHandler<ResetPasswordFormFields> = async (data) => {
     const token = searchParameters.get('token');
 
@@ -39,7 +41,7 @@ export default function ResetPassword(): JSX.Element {
     }
 
     await resetPassword({
-      params: {...data, token},
+      params: {...data, token, language: locale},
       onSuccess() {
         reset();
         setDidResetPasswordSuccessfully(true);

@@ -3,6 +3,7 @@ import {ConfigService} from '@nestjs/config';
 import {ApiResponse, ApiTags, ApiOperation} from '@nestjs/swagger';
 import {Throttle} from '@nestjs/throttler';
 import type {Response, Request} from 'express';
+import {RequiredHeader} from 'src/common/decorators/required-header.decorator';
 import {ConfigKey} from '../config/config-key.enum';
 import {oneMinute, oneWeek} from '../utils/time.util';
 import {AuthService} from './auth.service';
@@ -42,8 +43,16 @@ export class AuthController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Invalid credentials.',
   })
-  async login(@Body() loginDto: LoginCredentialsBodyDto, @Res({passthrough: true}) response: Response): Promise<void> {
-    const twoFactorAuthHashedId = await this.authService.validateUserCredentials(loginDto.email, loginDto.password);
+  async login(
+    @Body() loginDto: LoginCredentialsBodyDto,
+    @Res({passthrough: true}) response: Response,
+    @RequiredHeader('Accept-Language') language: string,
+  ): Promise<void> {
+    const twoFactorAuthHashedId = await this.authService.validateUserCredentials(
+      loginDto.email,
+      loginDto.password,
+      language,
+    );
 
     response.cookie(TWO_FACTOR_AUTH_COOKIE_KEY, twoFactorAuthHashedId, {
       httpOnly: true,

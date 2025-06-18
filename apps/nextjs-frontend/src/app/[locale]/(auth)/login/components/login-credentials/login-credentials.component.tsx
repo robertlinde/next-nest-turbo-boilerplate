@@ -4,7 +4,7 @@ import {type JSX} from 'react';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Button} from 'primereact/button';
 import {useForm, type SubmitHandler} from 'react-hook-form';
-import {useTranslations} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 import {type LoginCredentialsFormFields} from './types/login-credentials-form-fields.type.ts';
 import {type LoginCredentialsProps} from './types/login-credentials-props.type.ts';
 import {loginCredentialsSchema} from './types/login-credentials.schema.ts';
@@ -26,9 +26,11 @@ export function LoginCredentials({handleLoginCredentialsSuccess}: LoginCredentia
     formState: {errors: errorsCredentials, isSubmitting: isSubmittingCredentials},
   } = useForm<LoginCredentialsFormFields>({resolver: zodResolver(loginCredentialsSchema)});
 
+  const locale = useLocale();
+
   const onSubmitCredentials: SubmitHandler<LoginCredentialsFormFields> = async (data) => {
     await loginCredentials({
-      params: data,
+      params: {...data, language: locale},
       onSuccess() {
         resetCredentials();
         handleLoginCredentialsSuccess();

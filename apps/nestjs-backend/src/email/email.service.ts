@@ -1,15 +1,27 @@
-import {Injectable} from '@nestjs/common';
+import {BadRequestException, Injectable} from '@nestjs/common';
 import {MailerService} from '@nestjs-modules/mailer';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const ALLOWED_LANGUAGES = ['en', 'de'];
 
 @Injectable()
 export class EmailService {
   constructor(private readonly mailerService: MailerService) {}
 
-  async sendConfirmEmail(username: string, email: string, confirmationLink: string): Promise<void> {
+  async sendConfirmEmail(language: string, username: string, email: string, confirmationLink: string): Promise<void> {
+    this.validateLanguage(language);
+
+    let subject = '';
+    if (language === 'de') {
+      subject = 'Willkommen bei unserem Service';
+    } else if (language === 'en') {
+      subject = 'Welcome to Our Service';
+    }
+
     await this.mailerService.sendMail({
       to: email,
-      subject: 'Welcome to Our Service',
-      template: 'confirm-user',
+      subject,
+      template: `confirm-user_${language}`,
       context: {
         username,
         confirmationLink,
@@ -17,11 +29,25 @@ export class EmailService {
     });
   }
 
-  async sendRequestPasswordResetEmail(email: string, username: string, passwordResetLink: string): Promise<void> {
+  async sendRequestPasswordResetEmail(
+    language: string,
+    email: string,
+    username: string,
+    passwordResetLink: string,
+  ): Promise<void> {
+    this.validateLanguage(language);
+
+    let subject = '';
+    if (language === 'de') {
+      subject = 'Passwort zurücksetzen';
+    } else if (language === 'en') {
+      subject = 'Password Reset Request';
+    }
+
     await this.mailerService.sendMail({
       to: email,
-      subject: 'Password Reset Request',
-      template: 'request-password-reset',
+      subject,
+      template: `request-password-reset_${language}`,
       context: {
         username,
         passwordResetLink,
@@ -29,14 +55,31 @@ export class EmailService {
     });
   }
 
-  async sendTwoFactorAuthCodeEmail(email: string, code: string): Promise<void> {
+  async sendTwoFactorAuthCodeEmail(language: string, email: string, code: string): Promise<void> {
+    this.validateLanguage(language);
+
+    let subject = '';
+    if (language === 'de') {
+      subject = 'Ihr 2FA Code';
+    } else if (language === 'en') {
+      subject = 'Your 2FA Code';
+    }
+
     await this.mailerService.sendMail({
       to: email,
-      subject: 'Your 2FA Code',
-      template: 'two-factor-auth-code',
+      subject,
+      template: `two-factor-auth-code_${language}`,
       context: {
         code,
       },
     });
+  }
+
+  private validateLanguage(language: string): void {
+    if (!ALLOWED_LANGUAGES.includes(language)) {
+      throw new BadRequestException(
+        `Language ${language} is not supported. Allowed languages are: ${ALLOWED_LANGUAGES.join(', ')}`,
+      );
+    }
   }
 }

@@ -4,7 +4,7 @@ import {useState, type JSX} from 'react';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Button} from 'primereact/button';
 import {type SubmitHandler, useForm} from 'react-hook-form';
-import {useTranslations} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 import {type ForgotPasswordFormFields} from './types/forgot-password-form-fields.type.ts';
 import {forgotPasswordSchema} from './types/forgot-password.schema.ts';
 import {FloatLabelInputText} from '@/components/float-label-input-text/float-label-input-text.component.tsx';
@@ -26,9 +26,11 @@ export default function ForgotPassword(): JSX.Element {
     formState: {errors, isSubmitting},
   } = useForm<ForgotPasswordFormFields>({resolver: zodResolver(forgotPasswordSchema)});
 
+  const locale = useLocale();
+
   const onSubmit: SubmitHandler<ForgotPasswordFormFields> = async (data) => {
     await forgotPassword({
-      params: data,
+      params: {...data, language: locale},
       onSuccess() {
         reset();
         setDidSendPasswordReset(true);

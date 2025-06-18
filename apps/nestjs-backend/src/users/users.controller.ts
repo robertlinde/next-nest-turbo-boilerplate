@@ -1,6 +1,7 @@
 import {Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post} from '@nestjs/common';
 import {ApiResponse, ApiTags, ApiOperation} from '@nestjs/swagger';
 import {Throttle} from '@nestjs/throttler';
+import {RequiredHeader} from 'src/common/decorators/required-header.decorator';
 import {Public} from '../auth/decorators/public.decorator';
 import {User} from '../auth/decorators/user.decorator';
 import type {ActiveUser} from '../auth/types/active-user.type';
@@ -47,9 +48,12 @@ export class UsersController {
     description: 'User successfully created.',
     type: UserDto,
   })
-  async createUser(@Body() body: CreateUserBodyDto): Promise<UserDto> {
+  async createUser(
+    @Body() body: CreateUserBodyDto,
+    @RequiredHeader('Accept-Language') language: string,
+  ): Promise<UserDto> {
     const {email, password, username} = body;
-    const userEntity = await this.usersService.createUser(email, password, username);
+    const userEntity = await this.usersService.createUser(language, email, password, username);
     return new UserDto(userEntity);
   }
 
@@ -100,9 +104,12 @@ export class UsersController {
     status: HttpStatus.OK,
     description: 'Password reset request successfully sent.',
   })
-  async requestPasswordReset(@Body() body: ResetPasswordRequestBodyDto): Promise<void> {
+  async requestPasswordReset(
+    @Body() body: ResetPasswordRequestBodyDto,
+    @RequiredHeader('Accept-Language') language: string,
+  ): Promise<void> {
     const {email} = body;
-    await this.usersService.requestPasswordReset(email);
+    await this.usersService.requestPasswordReset(email, language);
   }
 
   @Post('reset-password/confirm')

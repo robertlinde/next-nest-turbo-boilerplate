@@ -59,7 +59,7 @@ export class AuthService {
     }
   }
 
-  async validateUserCredentials(email: string, password: string): Promise<string> {
+  async validateUserCredentials(email: string, password: string, language: string): Promise<string> {
     let user: User | undefined;
 
     try {
@@ -89,7 +89,7 @@ export class AuthService {
 
     await this.em.persistAndFlush(twoFactorAuth);
 
-    await this.emailService.sendTwoFactorAuthCodeEmail(user.email, twoFactorAuth.code);
+    await this.emailService.sendTwoFactorAuthCodeEmail(language, user.email, twoFactorAuth.code);
 
     const twoFactorAuthCode = await this.cryptoService.hash(twoFactorAuth.id);
 

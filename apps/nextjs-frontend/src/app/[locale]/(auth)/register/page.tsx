@@ -4,7 +4,7 @@ import {useState, type JSX} from 'react';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Button} from 'primereact/button';
 import {type SubmitHandler, useForm} from 'react-hook-form';
-import {useTranslations} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 import {type RegisterFormFields} from './types/register-form-fields.type.ts';
 import {registerSchema} from './types/register.schema.ts';
 import {FloatLabelInputText} from '@/components/float-label-input-text/float-label-input-text.component.tsx';
@@ -27,9 +27,11 @@ export default function Register(): JSX.Element {
     formState: {errors, isSubmitting},
   } = useForm<RegisterFormFields>({resolver: zodResolver(registerSchema)});
 
+  const locale = useLocale();
+
   const onSubmit: SubmitHandler<RegisterFormFields> = async (data) => {
     await registerFunction({
-      params: data,
+      params: {...data, language: locale},
       onSuccess() {
         reset();
         setDidRegisterSuccessfully(true);
