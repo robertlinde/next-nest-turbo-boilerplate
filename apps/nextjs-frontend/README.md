@@ -2,7 +2,7 @@
 
 A modern, fully-typed, and scalable authentication boilerplate built with:
 
-- Next.js
+- Next.js (App Router)
 - TypeScript
 - PrimeReact
 - Tailwind CSS
@@ -10,6 +10,7 @@ A modern, fully-typed, and scalable authentication boilerplate built with:
 - React Hook Form
 - Joi
 - React Query
+- next-intl (i18n)
 
 ---
 
@@ -34,6 +35,12 @@ A modern, fully-typed, and scalable authentication boilerplate built with:
 ✅ Strong typing throughout
 
 ✅ Tailwind + PrimeReact UI components ready to go
+
+✅ Localization with next-intl (i18n):
+
+- Easily add and manage static translations
+- Language switching feature
+- Supports dynamic localization
 
 ---
 
