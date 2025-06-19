@@ -4,6 +4,7 @@ import {GoneException, Injectable, NotFoundException} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {Cron} from '@nestjs/schedule';
 import {v4 as uuidv4} from 'uuid';
+import {AcceptedLanguages} from 'src/email/types/accepted-languages.enum';
 import {ConfigKey} from '../config/config-key.enum';
 import {CryptoService} from '../crypto/crypto.service';
 import {EmailService} from '../email/email.service';
@@ -65,7 +66,7 @@ export class UsersService {
     return user;
   }
 
-  async createUser(email: string, password: string, username: string, language: string): Promise<User> {
+  async createUser(email: string, password: string, username: string, language: AcceptedLanguages): Promise<User> {
     // Base64url encode the confirmation code -> this will prevent problems with special characters in the URL, e.g. + and /
     const confirmationCode = Buffer.from(await this.cryptoService.hash(uuidv4())).toString('base64url');
     const hashedPassword = await this.cryptoService.hash(password);
@@ -114,7 +115,7 @@ export class UsersService {
     await this.em.removeAndFlush(user);
   }
 
-  async requestPasswordReset(email: string, language: string): Promise<void> {
+  async requestPasswordReset(email: string, language: AcceptedLanguages): Promise<void> {
     let user: User | undefined;
 
     try {

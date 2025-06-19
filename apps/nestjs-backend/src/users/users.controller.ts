@@ -1,7 +1,8 @@
 import {Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post} from '@nestjs/common';
 import {ApiResponse, ApiTags, ApiOperation} from '@nestjs/swagger';
 import {Throttle} from '@nestjs/throttler';
-import {RequiredHeader} from 'src/common/decorators/required-header.decorator';
+import {ValidateHeader} from 'src/common/decorators/validate-header/validate-header.decorator';
+import {AcceptedLanguages} from 'src/email/types/accepted-languages.enum';
 import {Public} from '../auth/decorators/public.decorator';
 import {User} from '../auth/decorators/user.decorator';
 import type {ActiveUser} from '../auth/types/active-user.type';
@@ -50,7 +51,8 @@ export class UsersController {
   })
   async createUser(
     @Body() body: CreateUserBodyDto,
-    @RequiredHeader('Accept-Language') language: string,
+    @ValidateHeader({headerName: 'Accept-Language', options: {expectedValue: AcceptedLanguages}})
+    language: AcceptedLanguages,
   ): Promise<UserDto> {
     const {email, password, username} = body;
     const userEntity = await this.usersService.createUser(email, password, username, language);
@@ -106,7 +108,13 @@ export class UsersController {
   })
   async requestPasswordReset(
     @Body() body: ResetPasswordRequestBodyDto,
-    @RequiredHeader('Accept-Language') language: string,
+    @ValidateHeader({
+      headerName: 'Accept-Language',
+      options: {
+        expectedValue: AcceptedLanguages,
+      },
+    })
+    language: AcceptedLanguages,
   ): Promise<void> {
     const {email} = body;
     await this.usersService.requestPasswordReset(email, language);

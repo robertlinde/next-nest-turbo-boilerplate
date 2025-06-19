@@ -8,7 +8,7 @@ export const forgotPassword = async ({email, language}: ForgotPasswordParams): P
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
-      'Accept-Language': language,
+      'Accept-Language': language ?? 'en',
     },
     body: JSON.stringify({
       email,

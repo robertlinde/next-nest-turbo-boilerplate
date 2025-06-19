@@ -1,21 +1,28 @@
-import {Injectable, NotAcceptableException} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {MailerService} from '@nestjs-modules/mailer';
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const ALLOWED_LANGUAGES = ['en', 'de'];
+import {AcceptedLanguages} from './types/accepted-languages.enum';
 
 @Injectable()
 export class EmailService {
   constructor(private readonly mailerService: MailerService) {}
 
-  async sendConfirmEmail(language: string, username: string, email: string, confirmationLink: string): Promise<void> {
-    this.validateLanguage(language);
-
+  async sendConfirmEmail(
+    language: AcceptedLanguages,
+    username: string,
+    email: string,
+    confirmationLink: string,
+  ): Promise<void> {
     let subject = '';
-    if (language === 'de') {
-      subject = 'Willkommen bei unserem Service';
-    } else if (language === 'en') {
-      subject = 'Welcome to Our Service';
+    switch (language) {
+      case AcceptedLanguages.DE: {
+        subject = 'Bitte bestätigen Sie Ihre E-Mail-Adresse';
+        break;
+      }
+
+      case AcceptedLanguages.EN: {
+        subject = 'Please confirm your email address';
+        break;
+      }
     }
 
     await this.mailerService.sendMail({
@@ -30,18 +37,22 @@ export class EmailService {
   }
 
   async sendRequestPasswordResetEmail(
-    language: string,
+    language: AcceptedLanguages,
     email: string,
     username: string,
     passwordResetLink: string,
   ): Promise<void> {
-    this.validateLanguage(language);
-
     let subject = '';
-    if (language === 'de') {
-      subject = 'Passwort zurücksetzen';
-    } else if (language === 'en') {
-      subject = 'Password Reset Request';
+    switch (language) {
+      case AcceptedLanguages.DE: {
+        subject = 'Passwort zurücksetzen';
+        break;
+      }
+
+      case AcceptedLanguages.EN: {
+        subject = 'Reset Your Password';
+        break;
+      }
     }
 
     await this.mailerService.sendMail({
@@ -55,14 +66,18 @@ export class EmailService {
     });
   }
 
-  async sendTwoFactorAuthCodeEmail(language: string, email: string, code: string): Promise<void> {
-    this.validateLanguage(language);
-
+  async sendTwoFactorAuthCodeEmail(language: AcceptedLanguages, email: string, code: string): Promise<void> {
     let subject = '';
-    if (language === 'de') {
-      subject = 'Ihr 2FA Code';
-    } else if (language === 'en') {
-      subject = 'Your 2FA Code';
+    switch (language) {
+      case AcceptedLanguages.DE: {
+        subject = 'Ihr 2FA Code';
+        break;
+      }
+
+      case AcceptedLanguages.EN: {
+        subject = 'Your 2FA Code';
+        break;
+      }
     }
 
     await this.mailerService.sendMail({
@@ -73,13 +88,5 @@ export class EmailService {
         code,
       },
     });
-  }
-
-  private validateLanguage(language: string): void {
-    if (!ALLOWED_LANGUAGES.includes(language)) {
-      throw new NotAcceptableException(
-        `Language ${language} is not supported. Allowed languages are: ${ALLOWED_LANGUAGES.join(', ')}`,
-      );
-    }
   }
 }

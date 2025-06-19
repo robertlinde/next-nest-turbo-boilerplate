@@ -8,7 +8,7 @@ export const register = async ({language, ...registerData}: RegisterParams): Pro
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
-      'Accept-Language': language,
+      'Accept-Language': language ?? 'en',
     },
     body: JSON.stringify(registerData),
   });

@@ -8,7 +8,7 @@ export const loginCredentials = async ({language, ...loginCredentialsData}: Logi
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
-      'Accept-Language': language,
+      'Accept-Language': language ?? 'en',
     },
     body: JSON.stringify(loginCredentialsData),
   });
