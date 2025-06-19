@@ -3,7 +3,7 @@ import {Injectable, UnauthorizedException, ForbiddenException} from '@nestjs/com
 import {ConfigService} from '@nestjs/config';
 import {JwtService} from '@nestjs/jwt';
 import {Cron} from '@nestjs/schedule';
-import {AcceptedLanguages} from 'nestjs-backend/src/email/types/accepted-languages.enum';
+import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {ConfigKey} from '../config/config-key.enum';
 import {CryptoService} from '../crypto/crypto.service';
 import {EmailService} from '../email/email.service';
