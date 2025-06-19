@@ -61,6 +61,7 @@ Your app should now be running with both frontend and backend services in develo
 - **Zustand**
 - **React Hook Form** + **Joi**
 - **React Query**
+- **next-intl** (i18n)
 
 ➡️ More in [apps/nextjs-frontend/README.md](./apps/nextjs-frontend/README.md)
 
