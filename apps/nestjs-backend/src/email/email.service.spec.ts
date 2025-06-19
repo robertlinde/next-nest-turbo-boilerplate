@@ -4,6 +4,7 @@ import {MailerService} from '@nestjs-modules/mailer';
 import {mock, MockProxy} from 'jest-mock-extended';
 import {ConfigKey} from '../config/config-key.enum';
 import {EmailService} from './email.service';
+import {AcceptedLanguages} from './types/accepted-languages.enum';
 
 describe('EmailService', () => {
   let service: EmailService;
@@ -36,12 +37,12 @@ describe('EmailService', () => {
       const confirmationLink = 'http://example.com/confirm';
       const username = 'testuser';
 
-      await service.sendConfirmEmail(username, email, confirmationLink);
+      await service.sendConfirmEmail(AcceptedLanguages.EN, username, email, confirmationLink);
 
       expect(mailerService.sendMail).toHaveBeenCalledWith({
         to: email,
-        subject: 'Welcome to Our Service',
-        template: 'confirm-user',
+        subject: 'Please confirm your email address',
+        template: `confirm-user_${AcceptedLanguages.EN}`,
         context: {username, confirmationLink},
       });
     });
@@ -58,12 +59,12 @@ describe('EmailService', () => {
       const username = 'testuser';
       const passwordResetLink = 'http://example.com/reset';
 
-      await service.sendRequestPasswordResetEmail(email, username, passwordResetLink);
+      await service.sendRequestPasswordResetEmail(AcceptedLanguages.EN, email, username, passwordResetLink);
 
       expect(mailerService.sendMail).toHaveBeenCalledWith({
         to: email,
-        subject: 'Password Reset Request',
-        template: 'request-password-reset',
+        subject: 'Reset Your Password',
+        template: `request-password-reset_${AcceptedLanguages.EN}`,
         context: {
           username,
           passwordResetLink,
@@ -82,12 +83,12 @@ describe('EmailService', () => {
       const email = 'test@example.com';
       const code = '123456';
 
-      await service.sendTwoFactorAuthCodeEmail(email, code);
+      await service.sendTwoFactorAuthCodeEmail(AcceptedLanguages.EN, email, code);
 
       expect(mailerService.sendMail).toHaveBeenCalledWith({
         to: email,
         subject: 'Your 2FA Code',
-        template: 'two-factor-auth-code',
+        template: `two-factor-auth-code_${AcceptedLanguages.EN}`,
         context: {code},
       });
     });

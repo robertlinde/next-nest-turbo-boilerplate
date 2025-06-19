@@ -1,6 +1,7 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import {mock} from 'jest-mock-extended';
 import {ActiveUser} from '../auth/types/active-user.type';
+import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {ConfirmUserParamDto} from './dto/confirm-user.param.dto';
 import {CreateUserBodyDto} from './dto/create-user.body.dto';
 import {MeDto} from './dto/me.dto';
@@ -74,13 +75,18 @@ describe('UsersController', () => {
 
       usersService.createUser.mockResolvedValue(mockUserEntity);
 
-      const result = await controller.createUser(mockCreateUserDto);
+      const result = await controller.createUser(mockCreateUserDto, AcceptedLanguages.EN);
 
       expect(result).toBeInstanceOf(UserDto);
       expect(result.id).toBe('1');
       expect(result.email).toBe('test@example.com');
       expect(result.username).toBe('tester');
-      expect(usersService.createUser).toHaveBeenCalledWith('test@example.com', 'password123', 'tester');
+      expect(usersService.createUser).toHaveBeenCalledWith(
+        'test@example.com',
+        'password123',
+        'tester',
+        AcceptedLanguages.EN,
+      );
     });
   });
 
@@ -122,9 +128,9 @@ describe('UsersController', () => {
 
       usersService.requestPasswordReset.mockResolvedValue(undefined);
 
-      await controller.requestPasswordReset(mockResetPasswordRequest);
+      await controller.requestPasswordReset(mockResetPasswordRequest, AcceptedLanguages.EN);
 
-      expect(usersService.requestPasswordReset).toHaveBeenCalledWith('test@example.com');
+      expect(usersService.requestPasswordReset).toHaveBeenCalledWith('test@example.com', AcceptedLanguages.EN);
     });
   });
 

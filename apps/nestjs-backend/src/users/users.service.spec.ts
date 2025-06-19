@@ -7,6 +7,7 @@ import {ConfigKey} from '../config/config-key.enum';
 import {CryptoService} from '../crypto/crypto.service';
 import {EmailService} from '../email/email.service';
 import {oneDay, oneHour, oneMinute} from '../utils/time.util';
+import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {User} from './entities/user.entity';
 import {UserStatus} from './types/user-status.enum';
 import {UsersService} from './users.service';
@@ -61,7 +62,7 @@ describe('UsersService', () => {
         user.id = '1';
       });
 
-      const user = await service.createUser('test@example.com', 'password123', 'tester');
+      const user = await service.createUser('test@example.com', 'password123', 'tester', AcceptedLanguages.EN);
 
       expect(user).toHaveProperty('confirmationCode');
       expect(user.email).toBe('test@example.com');
@@ -69,6 +70,7 @@ describe('UsersService', () => {
       expect(em.persistAndFlush).toHaveBeenCalled();
       expect(cryptoService.hash).toHaveBeenCalledWith('password123');
       expect(emailService.sendConfirmEmail).toHaveBeenCalledWith(
+        AcceptedLanguages.EN,
         'tester',
         'test@example.com',
         expect.stringContaining('/confirm?token='),
@@ -80,7 +82,9 @@ describe('UsersService', () => {
         new ConflictException('duplicate key value violates unique constraint "users_email_key"'),
       );
 
-      await expect(service.createUser('test@example.com', 'password123', 'tester')).rejects.toThrow(ConflictException);
+      await expect(
+        service.createUser('test@example.com', 'password123', 'tester', AcceptedLanguages.EN),
+      ).rejects.toThrow(ConflictException);
 
       expect(em.persistAndFlush).toHaveBeenCalled();
     });
@@ -260,12 +264,13 @@ describe('UsersService', () => {
 
       em.findOne.mockResolvedValue(mockUser);
 
-      await service.requestPasswordReset('test@example.com');
+      await service.requestPasswordReset('test@example.com', AcceptedLanguages.EN);
 
       expect(mockUser.passwordResetToken).toBeDefined();
       expect(mockUser.passwordResetTokenCreatedAt).toBeDefined();
       expect(em.persistAndFlush).toHaveBeenCalledWith(mockUser);
       expect(emailService.sendRequestPasswordResetEmail).toHaveBeenCalledWith(
+        AcceptedLanguages.EN,
         'test@example.com',
         'tester',
         expect.stringContaining('/reset-password?token='),
@@ -275,7 +280,7 @@ describe('UsersService', () => {
     it('should not throw if user is not found', async (): Promise<void> => {
       em.findOne.mockRejectedValue(new NotFoundException());
 
-      await service.requestPasswordReset('nonexistent@example.com');
+      await service.requestPasswordReset('nonexistent@example.com', AcceptedLanguages.EN);
 
       expect(emailService.sendRequestPasswordResetEmail).not.toHaveBeenCalled();
       expect(em.persistAndFlush).not.toHaveBeenCalled();

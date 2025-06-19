@@ -1,8 +1,8 @@
 import {Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post} from '@nestjs/common';
 import {ApiResponse, ApiTags, ApiOperation} from '@nestjs/swagger';
 import {Throttle} from '@nestjs/throttler';
-import {ValidateHeader} from 'src/common/decorators/validate-header/validate-header.decorator';
-import {AcceptedLanguages} from 'src/email/types/accepted-languages.enum';
+import {ValidateHeader} from '../common/decorators/validate-header/validate-header.decorator';
+import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {Public} from '../auth/decorators/public.decorator';
 import {User} from '../auth/decorators/user.decorator';
 import type {ActiveUser} from '../auth/types/active-user.type';
