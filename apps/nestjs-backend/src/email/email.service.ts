@@ -1,4 +1,4 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
+import {Injectable, NotAcceptableException} from '@nestjs/common';
 import {MailerService} from '@nestjs-modules/mailer';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -77,7 +77,7 @@ export class EmailService {
 
   private validateLanguage(language: string): void {
     if (!ALLOWED_LANGUAGES.includes(language)) {
-      throw new BadRequestException(
+      throw new NotAcceptableException(
         `Language ${language} is not supported. Allowed languages are: ${ALLOWED_LANGUAGES.join(', ')}`,
       );
     }
