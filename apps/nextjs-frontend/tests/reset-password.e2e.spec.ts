@@ -20,7 +20,7 @@ test.describe('Reset password', () => {
     await expect(page.getByText('Please check your inbox.')).toBeVisible();
 
     const resetPasswordEmail = await getMaildevEmail(user.email, {
-      subject: 'Password Reset Request',
+      subject: 'Reset Your Password',
     });
 
     const dom = new JSDOM(resetPasswordEmail.html);

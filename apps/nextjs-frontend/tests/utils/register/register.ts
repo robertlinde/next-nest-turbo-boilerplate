@@ -71,7 +71,7 @@ export const register = async (
 
   if (!expectCredentialsError) {
     // Wait for successful registration message
-    await expect(page.getByText('Registration successful!')).toBeVisible();
+    await expect(page.getByText('Registration Successful!')).toBeVisible();
 
     if (!skipEmailRegistrationConfirm) {
       await verifyEmail(page, userData.email);
