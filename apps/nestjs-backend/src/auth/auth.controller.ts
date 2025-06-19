@@ -5,6 +5,8 @@ import {Throttle} from '@nestjs/throttler';
 import type {Response, Request} from 'express';
 import {ConfigKey} from '../config/config-key.enum';
 import {oneMinute, oneWeek} from '../utils/time.util';
+import {ValidateHeader} from '../common/decorators/validate-header/validate-header.decorator';
+import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {AuthService} from './auth.service';
 import {Public} from './decorators/public.decorator';
 import {LoginCredentialsBodyDto} from './dto/login-credentials.body.dto';
@@ -42,8 +44,23 @@ export class AuthController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Invalid credentials.',
   })
-  async login(@Body() loginDto: LoginCredentialsBodyDto, @Res({passthrough: true}) response: Response): Promise<void> {
-    const twoFactorAuthHashedId = await this.authService.validateUserCredentials(loginDto.email, loginDto.password);
+  @HttpCode(HttpStatus.OK)
+  async login(
+    @Body() loginDto: LoginCredentialsBodyDto,
+    @Res({passthrough: true}) response: Response,
+    @ValidateHeader({
+      headerName: 'Accept-Language',
+      options: {
+        expectedValue: AcceptedLanguages,
+      },
+    })
+    language: AcceptedLanguages,
+  ): Promise<void> {
+    const twoFactorAuthHashedId = await this.authService.validateUserCredentials(
+      loginDto.email,
+      loginDto.password,
+      language,
+    );
 
     response.cookie(TWO_FACTOR_AUTH_COOKIE_KEY, twoFactorAuthHashedId, {
       httpOnly: true,
@@ -68,6 +85,7 @@ export class AuthController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Invalid 2FA code.',
   })
+  @HttpCode(HttpStatus.OK)
   async login2fa(
     @Body() body: LoginTwoFactorAuthBodyDto,
     @Req() req: Request,
@@ -110,6 +128,7 @@ export class AuthController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Invalid refresh token.',
   })
+  @HttpCode(HttpStatus.OK)
   async refresh(@Req() req: Request, @Res({passthrough: true}) response: Response): Promise<void> {
     const refreshToken = req.cookies[REFRESH_TOKEN_COOKIE_KEY] as string;
     const {accessToken, refreshToken: newRefreshToken} = await this.authService.refreshTokens(refreshToken);

@@ -1,15 +1,34 @@
 import {Injectable} from '@nestjs/common';
 import {MailerService} from '@nestjs-modules/mailer';
+import {AcceptedLanguages} from './types/accepted-languages.enum';
 
 @Injectable()
 export class EmailService {
   constructor(private readonly mailerService: MailerService) {}
 
-  async sendConfirmEmail(username: string, email: string, confirmationLink: string): Promise<void> {
+  async sendConfirmEmail(
+    language: AcceptedLanguages,
+    username: string,
+    email: string,
+    confirmationLink: string,
+  ): Promise<void> {
+    let subject = '';
+    switch (language) {
+      case AcceptedLanguages.DE: {
+        subject = 'Bitte bestätigen Sie Ihre E-Mail-Adresse';
+        break;
+      }
+
+      case AcceptedLanguages.EN: {
+        subject = 'Please confirm your email address';
+        break;
+      }
+    }
+
     await this.mailerService.sendMail({
       to: email,
-      subject: 'Welcome to Our Service',
-      template: 'confirm-user',
+      subject,
+      template: `confirm-user_${language}`,
       context: {
         username,
         confirmationLink,
@@ -17,11 +36,29 @@ export class EmailService {
     });
   }
 
-  async sendRequestPasswordResetEmail(email: string, username: string, passwordResetLink: string): Promise<void> {
+  async sendRequestPasswordResetEmail(
+    language: AcceptedLanguages,
+    email: string,
+    username: string,
+    passwordResetLink: string,
+  ): Promise<void> {
+    let subject = '';
+    switch (language) {
+      case AcceptedLanguages.DE: {
+        subject = 'Passwort zurücksetzen';
+        break;
+      }
+
+      case AcceptedLanguages.EN: {
+        subject = 'Reset Your Password';
+        break;
+      }
+    }
+
     await this.mailerService.sendMail({
       to: email,
-      subject: 'Password Reset Request',
-      template: 'request-password-reset',
+      subject,
+      template: `request-password-reset_${language}`,
       context: {
         username,
         passwordResetLink,
@@ -29,11 +66,24 @@ export class EmailService {
     });
   }
 
-  async sendTwoFactorAuthCodeEmail(email: string, code: string): Promise<void> {
+  async sendTwoFactorAuthCodeEmail(language: AcceptedLanguages, email: string, code: string): Promise<void> {
+    let subject = '';
+    switch (language) {
+      case AcceptedLanguages.DE: {
+        subject = 'Ihr 2FA Code';
+        break;
+      }
+
+      case AcceptedLanguages.EN: {
+        subject = 'Your 2FA Code';
+        break;
+      }
+    }
+
     await this.mailerService.sendMail({
       to: email,
-      subject: 'Your 2FA Code',
-      template: 'two-factor-auth-code',
+      subject,
+      template: `two-factor-auth-code_${language}`,
       context: {
         code,
       },

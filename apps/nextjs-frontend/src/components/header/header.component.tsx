@@ -1,17 +1,19 @@
 'use client';
 
 import {useMemo, useRef, type JSX} from 'react';
-import Link from 'next/link';
-import {useRouter} from 'next/navigation';
 import {Button} from 'primereact/button';
 import {Menu} from 'primereact/menu';
 import {Menubar} from 'primereact/menubar';
 import {type MenuItem} from 'primereact/menuitem';
+import {useTranslations} from 'next-intl';
 import {useUserStore} from '@/store/user/user.store';
 import {useAuthApi} from '@/hooks/use-auth-api/use-auth-api.hook.tsx';
+import {Link, useRouter} from '@/i18n/navigation.ts';
 
 export function Header(): JSX.Element {
   const user = useUserStore((s) => s.user);
+
+  const t = useTranslations('Component-Header');
 
   const endMenuRef = useRef<Menu>(null);
 
@@ -24,17 +26,17 @@ export function Header(): JSX.Element {
   const endMenuItems: MenuItem[] = useMemo(
     () => [
       {
-        label: `Hey, ${user?.username ?? 'User'}`,
+        label: `${t('greeting', {username: user?.username ?? t('user')})}`,
         items: [
           {
-            label: 'Profile',
+            label: t('profile-button-label'),
             icon: 'pi pi-cog',
             command(): void {
               router.push('/profile');
             },
           },
           {
-            label: 'Logout',
+            label: t('logout-button-label'),
             icon: 'pi pi-sign-out',
             command: async (): Promise<void> =>
               logout({
@@ -46,7 +48,7 @@ export function Header(): JSX.Element {
         ],
       },
     ],
-    [logout, router, user?.username],
+    [logout, router, user?.username, t],
   );
 
   const signedInItem: JSX.Element = (
@@ -72,10 +74,10 @@ export function Header(): JSX.Element {
   const notSignedInItem: JSX.Element = (
     <div className="flex gap-2">
       <Link href="/login">
-        <Button outlined label="Login" size="small" data-testid="header-login-button" />
+        <Button outlined label={t('login-button-label')} size="small" data-testid="header-login-button" />
       </Link>
       <Link href="/register">
-        <Button label="Register" size="small" />
+        <Button label={t('register-button-label')} size="small" />
       </Link>
     </div>
   );

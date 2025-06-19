@@ -1,5 +1,9 @@
-import Link from 'next/link';
-import {type JSX, useMemo} from 'react';
+'use server';
+
+import {getTranslations} from 'next-intl/server';
+import {type JSX} from 'react';
+import {LocaleSelect} from './components/LocaleSelect/locale-select.component';
+import {Link} from '@/i18n/navigation.ts';
 
 type FooterItem = {
   label: string;
@@ -11,27 +15,26 @@ type FooterItemsGroup = {
   items: FooterItem[];
 };
 
-export function Footer(): JSX.Element {
-  const footerItemsGroups: FooterItemsGroup[] = useMemo(
-    () => [
-      {
-        label: 'Company',
-        items: [
-          {label: 'About Us', href: '/about'},
-          {label: 'Contact', href: '/contact'},
-        ],
-      },
-      {
-        label: 'Support',
-        items: [
-          {label: 'Imprint', href: '/imprint'},
-          {label: 'Privacy Policy', href: '/privacy'},
-          {label: 'Terms of Service', href: '/terms'},
-        ],
-      },
-    ],
-    [],
-  );
+export async function Footer(): Promise<JSX.Element> {
+  const t = await getTranslations('Component-Footer');
+
+  const footerItemsGroups: FooterItemsGroup[] = [
+    {
+      label: t('group-company'),
+      items: [
+        {label: t('about-us-link'), href: '/about'},
+        {label: t('contact-link'), href: '/contact'},
+      ],
+    },
+    {
+      label: t('group-legal'),
+      items: [
+        {label: t('imprint-link'), href: '/imprint'},
+        {label: t('privacy-policy-link'), href: '/privacy'},
+        {label: t('terms-of-service-link'), href: '/terms'},
+      ],
+    },
+  ];
 
   return (
     <footer className="px-2 md:px-4 py-4 bg-gray-200 text-gray-700 max-w-full">
@@ -57,7 +60,14 @@ export function Footer(): JSX.Element {
             ))}
           </ul>
         </nav>
-        <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} My Company. All rights reserved.</p>
+        <div className="flex flex-col items-center gap-4 w-full">
+          <div className="flex justify-end w-full">
+            <LocaleSelect />
+          </div>
+          <p className="text-sm text-gray-400">
+            &copy; {new Date().getFullYear()} {t('copyright-notice')}
+          </p>
+        </div>
       </div>
     </footer>
   );

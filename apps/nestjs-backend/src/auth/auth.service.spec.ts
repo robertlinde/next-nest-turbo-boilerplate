@@ -10,6 +10,7 @@ import {EmailService} from '../email/email.service';
 import {User} from '../users/entities/user.entity';
 import {UserStatus} from '../users/types/user-status.enum';
 import {UsersService} from '../users/users.service';
+import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {AuthService} from './auth.service';
 import {RevokedRefreshToken} from './entities/revoked-refresh-token.entity';
 import {TwoFactorAuth} from './entities/two-factor-auth.entity';
@@ -83,22 +84,26 @@ describe('AuthService', () => {
         twoFactorAuth.id = 'test-2fa-id';
       });
 
-      const result = await service.validateUserCredentials('test@example.com', 'password123');
+      const result = await service.validateUserCredentials('test@example.com', 'password123', AcceptedLanguages.EN);
 
       expect(result).toEqual('hashed-value');
       expect(usersService.getUserByEmail).toHaveBeenCalledWith('test@example.com');
       expect(cryptoService.compare).toHaveBeenCalledWith('password123', 'hashed-password');
       expect(em.persistAndFlush).toHaveBeenCalled();
-      expect(emailService.sendTwoFactorAuthCodeEmail).toHaveBeenCalledWith('test@example.com', '123456');
+      expect(emailService.sendTwoFactorAuthCodeEmail).toHaveBeenCalledWith(
+        AcceptedLanguages.EN,
+        'test@example.com',
+        '123456',
+      );
       expect(cryptoService.hash).toHaveBeenCalledWith('test-2fa-id');
     });
 
     it('should throw UnauthorizedException if user is not found', async (): Promise<void> => {
       usersService.getUserByEmail.mockRejectedValue(new Error('User not found'));
 
-      await expect(service.validateUserCredentials('nonexistent@example.com', 'password123')).rejects.toThrow(
-        UnauthorizedException,
-      );
+      await expect(
+        service.validateUserCredentials('nonexistent@example.com', 'password123', AcceptedLanguages.EN),
+      ).rejects.toThrow(UnauthorizedException);
     });
 
     it('should throw UnauthorizedException if user status is CONFIRMATION_PENDING', async (): Promise<void> => {
@@ -112,9 +117,9 @@ describe('AuthService', () => {
 
       usersService.getUserByEmail.mockResolvedValue(mockUser);
 
-      await expect(service.validateUserCredentials('test@example.com', 'password123')).rejects.toThrow(
-        UnauthorizedException,
-      );
+      await expect(
+        service.validateUserCredentials('test@example.com', 'password123', AcceptedLanguages.EN),
+      ).rejects.toThrow(UnauthorizedException);
       expect(usersService.getUserByEmail).toHaveBeenCalledWith('test@example.com');
     });
 
@@ -129,9 +134,9 @@ describe('AuthService', () => {
 
       usersService.getUserByEmail.mockResolvedValue(mockUser);
 
-      await expect(service.validateUserCredentials('test@example.com', 'password123')).rejects.toThrow(
-        UnauthorizedException,
-      );
+      await expect(
+        service.validateUserCredentials('test@example.com', 'password123', AcceptedLanguages.EN),
+      ).rejects.toThrow(UnauthorizedException);
       expect(usersService.getUserByEmail).toHaveBeenCalledWith('test@example.com');
     });
 
@@ -147,9 +152,9 @@ describe('AuthService', () => {
       usersService.getUserByEmail.mockResolvedValue(mockUser);
       cryptoService.compare.mockResolvedValue(false);
 
-      await expect(service.validateUserCredentials('test@example.com', 'wrong-password')).rejects.toThrow(
-        UnauthorizedException,
-      );
+      await expect(
+        service.validateUserCredentials('test@example.com', 'wrong-password', AcceptedLanguages.EN),
+      ).rejects.toThrow(UnauthorizedException);
       expect(usersService.getUserByEmail).toHaveBeenCalledWith('test@example.com');
       expect(cryptoService.compare).toHaveBeenCalledWith('wrong-password', 'hashed-password');
     });

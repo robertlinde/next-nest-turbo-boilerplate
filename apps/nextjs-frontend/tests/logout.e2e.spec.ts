@@ -13,9 +13,9 @@ test.describe('Logout', () => {
 
     await page.getByTestId('header-user-menu-button').click();
 
-    await expect(page.getByText(`Hey, ${user.username}`)).toBeVisible();
+    await expect(page.getByText(`Hello, ${user.username}`)).toBeVisible();
 
-    await page.getByText('Logout').click();
+    await page.getByText('Log Out').click();
 
     // Assert that we are redirected to the login page
     await expect(page).toHaveURL(/\/login/);
@@ -26,7 +26,6 @@ test.describe('Logout', () => {
     // Wait for any redirects to complete before navigating to profile
     await page.waitForLoadState('networkidle');
 
-    // Use a more robust navigation approach
     await page.goto('/profile', {waitUntil: 'networkidle'});
 
     // Wait for redirect to login page
@@ -45,7 +44,7 @@ test.describe('Logout', () => {
 
     await page.getByTestId('header-user-menu-button').click();
 
-    await expect(page.getByText(`Hey, ${user.username}`)).toBeVisible();
+    await expect(page.getByText(`Hello, ${user.username}`)).toBeVisible();
 
     await page.getByText('Profile').click();
 
@@ -70,6 +69,6 @@ test.describe('Logout', () => {
     await page.waitForURL(/\/login/, {timeout: 10_000});
 
     await expect(page).toHaveURL(/\/login/);
-    await expect(page.getByText('Error loading profile')).toBeVisible();
+    await expect(page.getByText('Error Loading Profile')).toBeVisible();
   });
 });

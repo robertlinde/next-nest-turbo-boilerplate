@@ -5,6 +5,7 @@ import {mock, mockDeep, DeepMockProxy} from 'jest-mock-extended';
 import {ConfigKey} from '../config/config-key.enum';
 import {User} from '../users/entities/user.entity';
 import {oneMinute, oneWeek} from '../utils/time.util';
+import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {AuthController} from './auth.controller';
 import {AuthService} from './auth.service';
 import {LoginCredentialsBodyDto} from './dto/login-credentials.body.dto';
@@ -73,9 +74,13 @@ describe('AuthController', () => {
 
       authService.validateUserCredentials.mockResolvedValue(twoFactorAuthHashedId);
 
-      await controller.login(loginDto, response);
+      await controller.login(loginDto, response, AcceptedLanguages.EN);
 
-      expect(authService.validateUserCredentials).toHaveBeenCalledWith('test@example.com', 'password123');
+      expect(authService.validateUserCredentials).toHaveBeenCalledWith(
+        'test@example.com',
+        'password123',
+        AcceptedLanguages.EN,
+      );
       expect(response.cookie).toHaveBeenCalledWith('two_factor_auth', twoFactorAuthHashedId, {
         httpOnly: true,
         secure: false,
@@ -202,7 +207,7 @@ describe('AuthController', () => {
 
       authService.validateUserCredentials.mockResolvedValue(twoFactorAuthHashedId);
 
-      await productionController.login(loginDto, response);
+      await productionController.login(loginDto, response, AcceptedLanguages.EN);
 
       expect(response.cookie).toHaveBeenCalledWith('two_factor_auth', twoFactorAuthHashedId, {
         httpOnly: true,

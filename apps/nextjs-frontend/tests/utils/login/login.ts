@@ -78,7 +78,7 @@ export const login = async (
 
   // Wait for either 2FA prompt or error message
   try {
-    await expect(page.getByText('Please enter your 2FA code')).toBeVisible({timeout: 5000});
+    await expect(page.getByRole('heading', {name: 'Two-Factor Authentication'})).toBeVisible({timeout: 10_000});
   } catch (error) {
     // If 2FA prompt doesn't appear, check if we're already logged in or have an error
     const currentUrl = page.url();
@@ -96,7 +96,7 @@ export const login = async (
     await handle2Fa(page, twoFaCode);
 
     if (!expectInvalid2Fa && !skipSuccessAssertion) {
-      await expect(page.getByText('Login successful')).toBeVisible();
+      await expect(page.getByText('Login Successful')).toBeVisible();
     }
   }
 };

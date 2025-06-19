@@ -3,6 +3,7 @@ import {Injectable, UnauthorizedException, ForbiddenException} from '@nestjs/com
 import {ConfigService} from '@nestjs/config';
 import {JwtService} from '@nestjs/jwt';
 import {Cron} from '@nestjs/schedule';
+import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {ConfigKey} from '../config/config-key.enum';
 import {CryptoService} from '../crypto/crypto.service';
 import {EmailService} from '../email/email.service';
@@ -59,7 +60,7 @@ export class AuthService {
     }
   }
 
-  async validateUserCredentials(email: string, password: string): Promise<string> {
+  async validateUserCredentials(email: string, password: string, language: AcceptedLanguages): Promise<string> {
     let user: User | undefined;
 
     try {
@@ -89,7 +90,7 @@ export class AuthService {
 
     await this.em.persistAndFlush(twoFactorAuth);
 
-    await this.emailService.sendTwoFactorAuthCodeEmail(user.email, twoFactorAuth.code);
+    await this.emailService.sendTwoFactorAuthCodeEmail(language, user.email, twoFactorAuth.code);
 
     const twoFactorAuthCode = await this.cryptoService.hash(twoFactorAuth.id);
 

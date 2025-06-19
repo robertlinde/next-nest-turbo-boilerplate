@@ -4,6 +4,7 @@ import {GoneException, Injectable, NotFoundException} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {Cron} from '@nestjs/schedule';
 import {v4 as uuidv4} from 'uuid';
+import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {ConfigKey} from '../config/config-key.enum';
 import {CryptoService} from '../crypto/crypto.service';
 import {EmailService} from '../email/email.service';
@@ -65,7 +66,7 @@ export class UsersService {
     return user;
   }
 
-  async createUser(email: string, password: string, username: string): Promise<User> {
+  async createUser(email: string, password: string, username: string, language: AcceptedLanguages): Promise<User> {
     // Base64url encode the confirmation code -> this will prevent problems with special characters in the URL, e.g. + and /
     const confirmationCode = Buffer.from(await this.cryptoService.hash(uuidv4())).toString('base64url');
     const hashedPassword = await this.cryptoService.hash(password);
@@ -78,7 +79,7 @@ export class UsersService {
     });
 
     const confirmationLink = `${this.configService.get<string>(ConfigKey.FRONTEND_HOST)}/confirm?token=${userEntity.confirmationCode}`;
-    await this.emailService.sendConfirmEmail(username, email, confirmationLink);
+    await this.emailService.sendConfirmEmail(language, username, email, confirmationLink);
 
     await this.em.persistAndFlush(userEntity);
 
@@ -114,7 +115,7 @@ export class UsersService {
     await this.em.removeAndFlush(user);
   }
 
-  async requestPasswordReset(email: string): Promise<void> {
+  async requestPasswordReset(email: string, language: AcceptedLanguages): Promise<void> {
     let user: User | undefined;
 
     try {
@@ -128,7 +129,7 @@ export class UsersService {
     user.passwordResetTokenCreatedAt = new Date(Date.now());
 
     const resetLink = `${this.configService.get<string>(ConfigKey.FRONTEND_HOST)}/reset-password?token=${resetToken}`;
-    await this.emailService.sendRequestPasswordResetEmail(email, user.username, resetLink);
+    await this.emailService.sendRequestPasswordResetEmail(language, email, user.username, resetLink);
 
     await this.em.persistAndFlush(user);
   }
