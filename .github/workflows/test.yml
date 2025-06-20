@@ -4,9 +4,12 @@ on:
   pull_request:
 
 jobs:
-  test:
-    name: Run Tests
+  # -------- Unit Tests --------
+  unit-tests:
+    name: Unit Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -19,5 +22,160 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Tests
-        run: npm run test
+      - name: Run Unit Tests
+        run: npm run test:unit
+
+  # -------- Unit Test Coverage --------
+  unit-test-cov:
+    name: Unit Test Coverage
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Unit Test Coverage
+        run: npm run test:unit:cov
+
+  # -------- E2E Tests --------
+  e2e-tests:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      actions: write
+
+    # Add PostgreSQL and MailDev services
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: postgres_db
+          POSTGRES_USER: postgres_user
+          POSTGRES_PASSWORD: postgres_password
+          TZ: UTC
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      maildev:
+        image: maildev/maildev
+        ports:
+          - 1025:1025 # SMTP port
+          - 1080:1080 # Web interface port
+        options: >-
+          --health-cmd "wget --no-verbose --tries=1 --spider http://localhost:1080 || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      CI: true
+      # Environment variables for the backend
+      NODE_ENV: development
+      PORT: 4000
+      ENABLE_SWAGGER: false
+      FRONTEND_HOST: http://localhost:3000
+      POSTGRES_TIMEZONE: UTC
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_PORT: 5432
+      POSTGRES_HOST: localhost
+      POSTGRES_USER: postgres_user
+      POSTGRES_DB_NAME: postgres_db
+      POSTGRES_DEBUG_MODE: false
+      JWT_ACCESS_SECRET: abcdefghijklmnopqrstuvwxyz
+      JWT_REFRESH_SECRET: zyxwvutsrqponmlkjihgfedcba
+      # Mail configuration (using MailDev)
+      MAIL_HOST: localhost
+      MAIL_PORT: 1025
+      # Environment variables for the frontend
+      NEXT_PUBLIC_NODE_ENV: development
+      NEXT_PUBLIC_BACKEND_URL: http://localhost:4000
+      NEXT_PUBLIC_MAILDEV_API_URL: http://localhost:1080
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Build backend only
+        run: |
+          echo "🏗️  Building backend application..."
+          cd apps/nestjs-backend
+          npm run build
+          echo "✅ Backend build completed!"
+
+      - name: Wait for services to be ready
+        run: |
+          echo "🗃️  Waiting for PostgreSQL to be ready..."
+          until pg_isready -h localhost -p 5432 -U postgres_user; do
+            echo "⏳ PostgreSQL not ready yet, retrying..."
+            sleep 2
+          done
+          echo "✅ PostgreSQL is ready!"
+
+          echo "📧 Waiting for MailDev to be ready..."
+          until curl -f http://localhost:1080 > /dev/null 2>&1; do
+            echo "⏳ MailDev not ready yet, retrying..."
+            sleep 2
+          done
+          echo "✅ MailDev is ready!"
+
+      - name: Create and run database migrations
+        run: |
+          echo "🏗️  Creating database migrations..."
+          cd apps/nestjs-backend
+          npm run migration:create
+          echo "🚀 Applying database migrations..."
+          npm run migration:up
+          echo "✅ Database migrations completed!"
+
+      - name: Start backend server
+        run: |
+          echo "🚀 Starting backend server..."
+          cd apps/nestjs-backend
+          npm run start:prod &
+          cd ../..
+          # Wait for backend to be ready
+          echo "⏳ Waiting for backend health check..."
+          timeout 60 bash -c 'until curl -f http://localhost:4000/api/health; do echo "🔄 Backend starting..."; sleep 2; done'
+          echo "✅ Backend server is ready!"
+
+      - name: Run E2E tests
+        run: |
+          echo "🧪 Running E2E tests..."
+          npm run test:e2e
+          echo "✅ E2E tests completed!"
+
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: apps/nextjs-frontend/playwright-report/
+          retention-days: 30
