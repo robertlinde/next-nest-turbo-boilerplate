@@ -8,6 +8,8 @@ jobs:
   commitlint:
     name: Commitlint
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,7 +33,8 @@ jobs:
   lint-pr-title:
     name: Lint PR Title
     runs-on: ubuntu-latest
-
+    permissions:
+      pull-requests: read
     steps:
       - name: Lint PR Title
         uses: amannn/action-semantic-pull-request@v5
