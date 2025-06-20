@@ -2,7 +2,7 @@ version: '3'
 
 services:
   postgres:
-    image: postgres
+    image: postgres:16.9-bullseye
     restart: always
     ports:
       - '${POSTGRES_PORT}:5432'
@@ -13,7 +13,7 @@ services:
       TZ: '${POSTGRES_TIMEZONE}'
 
   maildev:
-    image: maildev/maildev
+    image: maildev/maildev:2.2.1
     restart: always
     ports:
       - '${MAILDEV_WEB_PORT}:1080' # Web interface
