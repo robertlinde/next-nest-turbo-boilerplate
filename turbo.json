@@ -26,11 +26,11 @@
       "cache": false,
       "persistent": true
     },
-    "test": {
-      "dependsOn": ["^test"]
+    "test:unit": {
+      "dependsOn": ["^test:unit"]
     },
-    "test:cov": {
-      "dependsOn": ["^test:cov"]
+    "test:unit:cov": {
+      "dependsOn": ["^test:unit:cov"]
     },
     "test:e2e": {
       "dependsOn": ["^test:e2e"]
