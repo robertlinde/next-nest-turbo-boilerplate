@@ -1,11 +1,12 @@
-name: Commitlint
+name: Git
 
 on:
   pull_request:
 
 jobs:
+  # -------- Commitlint --------
   commitlint:
-    name: Run Commitlint
+    name: Commitlint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -25,3 +26,27 @@ jobs:
         run: |
           echo "Checking commits in PR..."
           npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+  # -------- Lint PR Title --------
+  lint-pr-title:
+    name: Lint PR Title
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Lint PR Title
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            build
+            chore
+            ci
+            docs
+            feat
+            fix
+            perf
+            refactor
+            revert
+            style
+            test

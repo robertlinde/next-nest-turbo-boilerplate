@@ -1,11 +1,50 @@
-name: Test E2E
+name: Test
 
 on:
   pull_request:
 
 jobs:
-  e2e:
-    name: Run E2E Tests
+  # -------- Unit Tests --------
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Unit Tests
+        run: npm run test:unit
+
+  # -------- Unit Test Coverage --------
+  unit-test-cov:
+    name: Unit Test Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Unit Test Coverage
+        run: npm run test:unit:cov
+
+  # -------- E2E Tests --------
+  e2e-tests:
+    name: E2E Tests
     runs-on: ubuntu-latest
     timeout-minutes: 60
 

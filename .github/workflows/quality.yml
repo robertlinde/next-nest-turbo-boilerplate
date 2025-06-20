@@ -1,11 +1,12 @@
-name: Build
+name: Quality
 
 on:
   pull_request:
 
 jobs:
-  build:
-    name: Run Build
+  # -------- Lint --------
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -19,5 +20,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Build
-        run: npm run build
+      - name: Run Lint
+        run: npm run lint
