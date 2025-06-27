@@ -7,10 +7,12 @@
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "lint": {
+      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
     "lint:fix": {
+      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
@@ -19,6 +21,7 @@
       "persistent": true
     },
     "start:dev": {
+      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
@@ -27,16 +30,16 @@
       "persistent": true
     },
     "test:unit": {
-      "dependsOn": ["^test:unit"]
+      "dependsOn": ["^build", "^test:unit"]
     },
     "test:unit:cov": {
-      "dependsOn": ["^test:unit:cov"]
+      "dependsOn": ["^build", "^test:unit:cov"]
     },
     "test:e2e": {
-      "dependsOn": ["^test:e2e"]
+      "dependsOn": ["^build", "^test:e2e"]
     },
     "docker:build": {
-      "dependsOn": ["^docker:build"]
+      "dependsOn": ["^build", "^docker:build"]
     },
     "docker:start:dev": {
       "dependsOn": ["^docker:start:dev"],
