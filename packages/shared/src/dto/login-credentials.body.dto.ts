@@ -16,3 +16,5 @@ export class LoginCredentialsBodyDto {
   })
   password!: string;
 }
+
+export type LoginCredentialsBody = LoginCredentialsBodyDto;

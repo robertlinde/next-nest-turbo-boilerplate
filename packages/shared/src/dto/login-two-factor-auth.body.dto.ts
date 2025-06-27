@@ -10,3 +10,5 @@ export class LoginTwoFactorAuthBodyDto {
   })
   code!: string;
 }
+
+export type LoginTwoFactorAuthBody = LoginTwoFactorAuthBodyDto;

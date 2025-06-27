@@ -3,14 +3,13 @@ import {ConfigService} from '@nestjs/config';
 import {ApiResponse, ApiTags, ApiOperation} from '@nestjs/swagger';
 import {Throttle} from '@nestjs/throttler';
 import type {Response, Request} from 'express';
+import {LoginCredentialsBodyDto, LoginTwoFactorAuthBodyDto} from '@next-nest-turbo-auth-boilerplate/shared';
 import {ConfigKey} from '../config/config-key.enum';
 import {oneMinute, oneWeek} from '../utils/time.util';
 import {ValidateHeader} from '../common/decorators/validate-header/validate-header.decorator';
 import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {AuthService} from './auth.service';
 import {Public} from './decorators/public.decorator';
-import {LoginCredentialsBodyDto} from './dto/login-credentials.body.dto';
-import {LoginTwoFactorAuthBodyDto} from './dto/login-two-factor-auth.body.dto';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ACCESS_TOKEN_COOKIE_KEY = 'access_token';

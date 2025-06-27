@@ -1,5 +1,6 @@
+import {type LoginCredentialsBody} from '@next-nest-turbo-auth-boilerplate/shared';
+
 export type LoginCredentialsParams = {
-  email: string;
-  password: string;
+  loginCredentialsData: LoginCredentialsBody;
   language: string;
 };
