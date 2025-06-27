@@ -1,17 +1,11 @@
-import {ApiProperty} from '@nestjs/swagger';
-import {UserStatus} from './../types/user-status.enum';
+import {type UserStatus} from "../types/user-status.enum";
 
 export class UserDto {
   id: string;
-
   createdAt: Date;
-
   updatedAt: Date;
-
   email: string;
-
   username: string;
-
   status: UserStatus;
 
   constructor({
