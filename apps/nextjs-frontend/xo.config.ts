@@ -2,7 +2,7 @@ import {type FlatXoConfig} from 'xo';
 
 const xoConfig: FlatXoConfig = [
   {
-    ignores: ['node_modules', 'postcss.config.mjs', 'commitlint.config.js'],
+    ignores: ['node_modules', 'postcss.config.mjs'],
   },
   {
     react: true,

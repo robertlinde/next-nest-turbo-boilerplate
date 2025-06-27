@@ -2,7 +2,9 @@
   "name": "@next-nest-turbo-auth-boilerplate/shared",
   "scripts": {
     "dev": "tsc --watch",
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "xo",
+    "lint:fix": "xo --fix"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -14,6 +16,7 @@
     }
   },
   "devDependencies": {
-    "typescript": "latest"
+    "typescript": "latest",
+    "xo": "1.1.1"
   }
 }
