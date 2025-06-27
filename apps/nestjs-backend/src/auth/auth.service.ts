@@ -3,12 +3,12 @@ import {Injectable, UnauthorizedException, ForbiddenException} from '@nestjs/com
 import {ConfigService} from '@nestjs/config';
 import {JwtService} from '@nestjs/jwt';
 import {Cron} from '@nestjs/schedule';
+import {UserStatus} from '@next-nest-turbo-auth-boilerplate/shared';
 import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {ConfigKey} from '../config/config-key.enum';
 import {CryptoService} from '../crypto/crypto.service';
 import {EmailService} from '../email/email.service';
 import {User} from '../users/entities/user.entity';
-import {UserStatus} from '../users/types/user-status.enum';
 import {UsersService} from '../users/users.service';
 import {oneDay, oneMinute} from '../utils/time.util';
 import {RevokedRefreshToken} from './entities/revoked-refresh-token.entity';

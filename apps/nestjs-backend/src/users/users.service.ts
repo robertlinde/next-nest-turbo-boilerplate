@@ -4,13 +4,13 @@ import {GoneException, Injectable, NotFoundException} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {Cron} from '@nestjs/schedule';
 import {v4 as uuidv4} from 'uuid';
+import {UserStatus} from '@next-nest-turbo-auth-boilerplate/shared';
 import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {ConfigKey} from '../config/config-key.enum';
 import {CryptoService} from '../crypto/crypto.service';
 import {EmailService} from '../email/email.service';
 import {oneDay, oneHour} from '../utils/time.util';
 import {User} from './entities/user.entity';
-import {UserStatus} from './types/user-status.enum';
 
 @Injectable()
 export class UsersService {

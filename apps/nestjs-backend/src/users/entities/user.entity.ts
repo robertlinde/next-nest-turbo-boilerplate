@@ -1,7 +1,7 @@
 import {Cascade, Entity, Enum, OneToMany, Property, types, Unique} from '@mikro-orm/core';
+import {UserStatus} from '@next-nest-turbo-auth-boilerplate/shared';
 import {TwoFactorAuth} from '../../auth/entities/two-factor-auth.entity';
 import {BaseEntity} from '../../common/entities/base-entity.entity';
-import {UserStatus} from '../types/user-status.enum';
 
 @Entity()
 export class User extends BaseEntity {
