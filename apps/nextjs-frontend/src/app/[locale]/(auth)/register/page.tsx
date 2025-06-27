@@ -31,7 +31,7 @@ export default function Register(): JSX.Element {
 
   const onSubmit: SubmitHandler<RegisterFormFields> = async (data) => {
     await registerFunction({
-      params: {...data, language: locale},
+      params: {createUserData: data, language: locale},
       onSuccess() {
         reset();
         setDidRegisterSuccessfully(true);
