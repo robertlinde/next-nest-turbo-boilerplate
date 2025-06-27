@@ -10,7 +10,6 @@ import type {ActiveUser} from '../auth/types/active-user.type';
 import {oneHour, oneMinute} from '../utils/time.util';
 import {ConfirmUserParamDto} from './dto/confirm-user.param.dto';
 import {CreateUserBodyDto} from './dto/create-user.body.dto';
-import {MeDto} from './dto/me.dto';
 import {ResetPasswordConfirmBodyDto} from './dto/reset-password-confirm.body.dto';
 import {ResetPasswordRequestBodyDto} from './dto/reset-password-request.body.dto';
 import {UpdateUserBodyDto} from './dto/update-user.body.dto';
@@ -29,12 +28,12 @@ export class UsersController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Successfully retrieved user details.',
-    type: MeDto,
+    type: UserDto,
   })
-  async getMe(@User() user: ActiveUser): Promise<MeDto> {
+  async getMe(@User() user: ActiveUser): Promise<UserDto> {
     const {userId} = user;
     const userEntity = await this.usersService.getUserById(userId);
-    return new MeDto(userEntity);
+    return new UserDto(userEntity);
   }
 
   @Post()

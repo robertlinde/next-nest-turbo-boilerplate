@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {type User} from './types/user.type';
+import {type UserDto} from '@next-nest-turbo-auth-boilerplate/shared';
 import {type UserStoreState} from './types/user-store.state.type';
 import {type LoadUserReturnType} from './types/load-user.return.type';
 import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
@@ -33,7 +33,7 @@ export const useUserStore = create<UserStoreState>((set) => ({
         return {success: false, error: new ApiError('Failed to load user', response)};
       }
 
-      const userResponse: User = (await response.json()) as User;
+      const userResponse: UserDto = (await response.json()) as UserDto;
       set({user: userResponse, loading: false, error: false});
       return {success: true};
     } catch (error) {

@@ -1,4 +1,4 @@
-import {type UserStatus} from "../types/user-status.enum";
+import {type UserStatus} from '../types/user-status.enum';
 
 export class UserDto {
   id: string;
