@@ -41,7 +41,13 @@ export default function ResetPassword(): JSX.Element {
     }
 
     await resetPassword({
-      params: {...data, token, language: locale},
+      params: {
+        resetPasswordData: {
+          token,
+          password: data.password,
+        },
+        language: locale,
+      },
       onSuccess() {
         reset();
         setDidResetPasswordSuccessfully(true);
