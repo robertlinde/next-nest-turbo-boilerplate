@@ -1,5 +1,6 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import {mock} from 'jest-mock-extended';
+import {UserDto} from '@next-nest-turbo-auth-boilerplate/shared';
 import {ActiveUser} from '../auth/types/active-user.type';
 import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {ConfirmUserParamDto} from './dto/confirm-user.param.dto';
@@ -8,7 +9,6 @@ import {MeDto} from './dto/me.dto';
 import {ResetPasswordConfirmBodyDto} from './dto/reset-password-confirm.body.dto';
 import {ResetPasswordRequestBodyDto} from './dto/reset-password-request.body.dto';
 import {UpdateUserBodyDto} from './dto/update-user.body.dto';
-import {UserDto} from './dto/user.dto';
 import {User} from './entities/user.entity';
 import {UsersController} from './users.controller';
 import {UsersService} from './users.service';

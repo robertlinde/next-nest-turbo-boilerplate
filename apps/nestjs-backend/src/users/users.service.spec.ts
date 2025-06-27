@@ -3,13 +3,13 @@ import {ConflictException, GoneException, NotFoundException} from '@nestjs/commo
 import {ConfigService} from '@nestjs/config';
 import {Test, TestingModule} from '@nestjs/testing';
 import {mock, MockProxy} from 'jest-mock-extended';
+import {UserStatus} from '@next-nest-turbo-auth-boilerplate/shared';
 import {ConfigKey} from '../config/config-key.enum';
 import {CryptoService} from '../crypto/crypto.service';
 import {EmailService} from '../email/email.service';
 import {oneDay, oneHour, oneMinute} from '../utils/time.util';
 import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {User} from './entities/user.entity';
-import {UserStatus} from './types/user-status.enum';
 import {UsersService} from './users.service';
 
 describe('UsersService', () => {
