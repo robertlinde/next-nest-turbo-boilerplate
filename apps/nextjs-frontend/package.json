@@ -14,6 +14,7 @@
     "docker:start:dev": "docker run -p 3000:3000 --env-file .env nextjs-frontend"
   },
   "dependencies": {
+    "@next-nest-turbo-auth-boilerplate/shared": "*",
     "@hookform/resolvers": "5.1.1",
     "@tailwindcss/postcss": "4.1.11",
     "@tanstack/react-query": "5.81.5",

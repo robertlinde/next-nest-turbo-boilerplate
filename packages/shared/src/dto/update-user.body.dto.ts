@@ -34,3 +34,5 @@ export class UpdateUserBodyDto {
   })
   username?: string;
 }
+
+export type UpdateUserBody = UpdateUserBodyDto;

@@ -28,3 +28,5 @@ export class CreateUserBodyDto {
   })
   username!: string;
 }
+
+export type CreateUserBody = CreateUserBodyDto;

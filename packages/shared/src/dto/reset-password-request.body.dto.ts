@@ -9,3 +9,5 @@ export class ResetPasswordRequestBodyDto {
   })
   email!: string;
 }
+
+export type ResetPasswordRequestBody = ResetPasswordRequestBodyDto;

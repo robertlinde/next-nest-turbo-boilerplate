@@ -1,5 +1,6 @@
+import {type ResetPasswordConfirmBody} from '@next-nest-turbo-auth-boilerplate/shared';
+
 export type ResetPasswordParams = {
-  token: string;
-  password: string;
+  resetPasswordData: ResetPasswordConfirmBody;
   language: string;
 };

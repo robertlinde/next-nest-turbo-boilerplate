@@ -17,3 +17,5 @@ export class ResetPasswordConfirmBodyDto {
   })
   password!: string;
 }
+
+export type ResetPasswordConfirmBody = ResetPasswordConfirmBodyDto;

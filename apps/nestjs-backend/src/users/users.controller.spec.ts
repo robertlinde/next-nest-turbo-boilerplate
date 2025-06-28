@@ -1,14 +1,15 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import {mock} from 'jest-mock-extended';
+import {
+  CreateUserBodyDto,
+  ResetPasswordConfirmBodyDto,
+  UpdateUserBodyDto,
+  UserDto,
+} from '@next-nest-turbo-auth-boilerplate/shared';
+import {ResetPasswordRequestBodyDto} from '@next-nest-turbo-auth-boilerplate/shared/src/dto/reset-password-request.body.dto';
 import {ActiveUser} from '../auth/types/active-user.type';
 import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {ConfirmUserParamDto} from './dto/confirm-user.param.dto';
-import {CreateUserBodyDto} from './dto/create-user.body.dto';
-import {MeDto} from './dto/me.dto';
-import {ResetPasswordConfirmBodyDto} from './dto/reset-password-confirm.body.dto';
-import {ResetPasswordRequestBodyDto} from './dto/reset-password-request.body.dto';
-import {UpdateUserBodyDto} from './dto/update-user.body.dto';
-import {UserDto} from './dto/user.dto';
 import {User} from './entities/user.entity';
 import {UsersController} from './users.controller';
 import {UsersService} from './users.service';
@@ -57,7 +58,7 @@ describe('UsersController', () => {
 
       const result = await controller.getMe(mockActiveUser);
 
-      expect(result).toBeInstanceOf(MeDto);
+      expect(result).toBeInstanceOf(UserDto);
       expect(result.id).toBe('1');
       expect(result.email).toBe('test@example.com');
       expect(result.username).toBe('tester');

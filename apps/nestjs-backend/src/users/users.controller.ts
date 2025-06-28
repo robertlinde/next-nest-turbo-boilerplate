@@ -1,6 +1,13 @@
 import {Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post} from '@nestjs/common';
 import {ApiResponse, ApiTags, ApiOperation} from '@nestjs/swagger';
 import {Throttle} from '@nestjs/throttler';
+import {
+  CreateUserBodyDto,
+  ResetPasswordConfirmBodyDto,
+  UserDto,
+  ResetPasswordRequestBodyDto,
+  UpdateUserBodyDto,
+} from '@next-nest-turbo-auth-boilerplate/shared';
 import {ValidateHeader} from '../common/decorators/validate-header/validate-header.decorator';
 import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {Public} from '../auth/decorators/public.decorator';
@@ -8,12 +15,6 @@ import {User} from '../auth/decorators/user.decorator';
 import type {ActiveUser} from '../auth/types/active-user.type';
 import {oneHour, oneMinute} from '../utils/time.util';
 import {ConfirmUserParamDto} from './dto/confirm-user.param.dto';
-import {CreateUserBodyDto} from './dto/create-user.body.dto';
-import {MeDto} from './dto/me.dto';
-import {ResetPasswordConfirmBodyDto} from './dto/reset-password-confirm.body.dto';
-import {ResetPasswordRequestBodyDto} from './dto/reset-password-request.body.dto';
-import {UpdateUserBodyDto} from './dto/update-user.body.dto';
-import {UserDto} from './dto/user.dto';
 import {UsersService} from './users.service';
 
 @ApiTags('users')
@@ -29,12 +30,12 @@ export class UsersController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Successfully retrieved user details.',
-    type: MeDto,
+    type: UserDto,
   })
-  async getMe(@User() user: ActiveUser): Promise<MeDto> {
+  async getMe(@User() user: ActiveUser): Promise<UserDto> {
     const {userId} = user;
     const userEntity = await this.usersService.getUserById(userId);
-    return new MeDto(userEntity);
+    return new UserDto(userEntity);
   }
 
   @Post()

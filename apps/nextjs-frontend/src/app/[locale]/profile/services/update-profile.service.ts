@@ -1,7 +1,7 @@
-import {type UpdateProfileParams} from './types/update-profile.params';
+import {type UpdateUserBody} from '@next-nest-turbo-auth-boilerplate/shared';
 import {apiRequestHandler} from '@/utils/api/api-request-handler.ts';
 
-export const updateProfile = async (data: UpdateProfileParams): Promise<void> => {
+export const updateProfile = async (data: UpdateUserBody): Promise<void> => {
   // eslint-disable-next-line n/prefer-global/process
   await apiRequestHandler(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`, {
     method: 'PATCH',

@@ -2,14 +2,13 @@ import {ConfigService} from '@nestjs/config';
 import {Test, TestingModule} from '@nestjs/testing';
 import {Request, Response} from 'express';
 import {mock, mockDeep, DeepMockProxy} from 'jest-mock-extended';
+import {LoginCredentialsBodyDto, LoginTwoFactorAuthBodyDto} from '@next-nest-turbo-auth-boilerplate/shared';
 import {ConfigKey} from '../config/config-key.enum';
 import {User} from '../users/entities/user.entity';
 import {oneMinute, oneWeek} from '../utils/time.util';
 import {AcceptedLanguages} from '../email/types/accepted-languages.enum';
 import {AuthController} from './auth.controller';
 import {AuthService} from './auth.service';
-import {LoginCredentialsBodyDto} from './dto/login-credentials.body.dto';
-import {LoginTwoFactorAuthBodyDto} from './dto/login-two-factor-auth.body.dto';
 
 describe('AuthController', () => {
   let controller: AuthController;

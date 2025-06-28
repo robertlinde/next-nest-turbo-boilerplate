@@ -30,7 +30,7 @@ export default function ForgotPassword(): JSX.Element {
 
   const onSubmit: SubmitHandler<ForgotPasswordFormFields> = async (data) => {
     await forgotPassword({
-      params: {...data, language: locale},
+      params: {forgotPasswordData: data, language: locale},
       onSuccess() {
         reset();
         setDidSendPasswordReset(true);

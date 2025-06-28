@@ -1,6 +1,6 @@
+import {type CreateUserBody} from '@next-nest-turbo-auth-boilerplate/shared';
+
 export type RegisterParams = {
-  email: string;
-  username: string;
-  password: string;
+  createUserData: CreateUserBody;
   language: string;
 };

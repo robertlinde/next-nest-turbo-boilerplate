@@ -1,5 +1,6 @@
 {
   "apps/nestjs-backend/**/*.{ts,tsx,js,jsx}": "npm --workspace nestjs-backend run lint:fix",
   "apps/nextjs-frontend/**/*.{ts,tsx,js,jsx}": "npm --workspace nextjs-frontend run lint:fix",
+  "packages/shared/**/*.{ts,tsx,js,jsx}": "npm --workspace @next-nest-turbo-auth-boilerplate/shared run lint:fix",
   "*.{json,md,css,html,ts,tsx,js,jsx}": ["npm run format"]
 }

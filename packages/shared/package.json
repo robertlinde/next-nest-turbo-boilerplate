@@ -1,0 +1,28 @@
+{
+  "name": "@next-nest-turbo-auth-boilerplate/shared",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "lint": "xo",
+    "lint:fix": "xo --fix"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@nestjs/swagger": "11.2.0",
+    "class-transformer": "0.5.1",
+    "class-validator": "0.14.2"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "xo": "1.1.1"
+  }
+}
