@@ -123,11 +123,10 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Build backend only
+      - name: Build backend and dependencies
         run: |
-          echo "🏗️  Building backend application..."
-          cd apps/nestjs-backend
-          npm run build
+          echo "🏗️  Building backend application and its dependencies..."
+          npm run build --filter=nestjs-backend...
           echo "✅ Backend build completed!"
 
       - name: Wait for services to be ready
