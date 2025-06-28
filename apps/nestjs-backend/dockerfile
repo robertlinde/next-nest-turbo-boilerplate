@@ -6,18 +6,25 @@ WORKDIR /app
 # Install turbo globally
 RUN npm install -g turbo
 
-# Copy package files first for better caching
+# Copy root package files and turbo config
 COPY package.json package-lock.json turbo.json ./
-COPY apps/nestjs-backend/package.json ./apps/nestjs-backend/
 
-# Install dependencies (only what's needed)
+# Copy all package.json files for better dependency resolution
+COPY apps/nestjs-backend/package.json ./apps/nestjs-backend/
+COPY packages/shared/package.json ./packages/shared/
+
+# Install all dependencies
 RUN npm ci
 
-# Now copy application code
+# Copy the shared package source code
+COPY packages/shared/ ./packages/shared/
+
+# Copy the nestjs-backend source code
 COPY apps/nestjs-backend/ ./apps/nestjs-backend/
 
-# Build only the web app with all its dependencies
-RUN turbo run build --filter=nestjs-backend
+# Build the shared package first, then the nestjs-backend
+# Turbo will handle the dependency order automatically
+RUN turbo run build --filter=nestjs-backend...
 
 # Stage 2: Production image
 FROM node:24.3.0-alpine AS runner
@@ -31,6 +38,9 @@ COPY --from=builder /app/apps/nestjs-backend/package.json ./
 
 # Copy the built application from builder stage
 COPY --from=builder /app/apps/nestjs-backend/dist ./dist
+
+# Copy built shared package if needed at runtime
+COPY --from=builder /app/packages/shared/dist ./node_modules/@next-nest-turbo-auth-boilerplate/shared/dist
 
 # Only copy dependencies needed for production
 RUN npm install --production
