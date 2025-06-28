@@ -76,6 +76,15 @@ Your app should now be running with both frontend and backend services in develo
 
 ➡️ More in [apps/nestjs-backend/README.md](./apps/nestjs-backend/README.md)
 
+### 📦 Shared (`packages/shared`)
+
+- **TypeScript**
+- **class-validator**
+- Shared types & DTOs between frontend and backend
+- Type-safe API contracts
+
+➡️ More in [packages/shared/README.md](./packages/shared/README.md)
+
 ---
 
 ## 3. 🤝 Contributing
