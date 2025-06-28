@@ -2,7 +2,7 @@
   "name": "@next-nest-turbo-auth-boilerplate/shared",
   "version": "0.0.1",
   "scripts": {
-    "dev": "tsc --watch",
+    "start:dev": "tsc --watch",
     "build": "tsc",
     "lint": "xo",
     "lint:fix": "xo --fix"
