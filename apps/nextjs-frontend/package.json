@@ -33,7 +33,7 @@
     "zustand": "5.0.6"
   },
   "devDependencies": {
-    "@playwright/test": "1.53.1",
+    "@playwright/test": "1.53.2",
     "@types/jsdom": "21.1.7",
     "@types/node": "22.15.34",
     "@types/react": "19.1.8",
