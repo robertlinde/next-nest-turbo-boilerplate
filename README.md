@@ -23,7 +23,15 @@ Install root-level dependencies (workspace-based):
 
 This will install dependencies for all apps using Turborepo's workspace management.
 
-### 3. Setup Environment Variables
+### 3. Build Shared Package
+
+Build the shared package that contains common types and DTOs:
+
+- `npm run build`
+
+This ensures the shared package is compiled and available for the frontend and backend applications.
+
+### 4. Setup Environment Variables
 
 Each app has its own .env.example. Copy and configure them:
 
@@ -32,7 +40,7 @@ Each app has its own .env.example. Copy and configure them:
 
 Then fill in the required environment variables based on your setup (e.g., database credentials, JWT secrets, email service configs).
 
-### 4. Start the Backend
+### 5. Start the Backend
 
 Start the database container and apply migrations:
 
@@ -41,13 +49,13 @@ Start the database container and apply migrations:
 - `npm run migration:create`
 - `npm run migration:up`
 
-### 5. Start dev mode
+### 6. Start dev mode
 
 At the root of your project, run:
 
-- `npm run dev`
+- `npm run dev` (or `npm run start:dev`)
 
-Your app should now be running with both frontend and backend services in development mode.
+This will automatically build the shared package (if needed) and start both frontend and backend services in development mode.
 
 ---
 
