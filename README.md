@@ -15,7 +15,7 @@ Use this repo as a GitHub template (recommended), or clone it directly:
 - `git clone https://github.com/robertlinde/next-nest-turbo-auth-boilerplate.git`
 - `cd next-nest-turbo-auth-boilerplate`
 
-### 2. Build shared package
+### 2. Build Shared Package
 
 Build the shared package so it can be installed as dependency for the apps:
 
