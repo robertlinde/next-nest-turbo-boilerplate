@@ -29,7 +29,7 @@
     "turbo": "2.5.4"
   },
   "engines": {
-    "node": "24.3.0",
+    "node": "24.4.0",
     "npm": "11.4.2"
   },
   "packageManager": "npm@11.4.2"
