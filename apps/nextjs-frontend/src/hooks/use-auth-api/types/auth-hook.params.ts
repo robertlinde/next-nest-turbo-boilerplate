@@ -9,5 +9,5 @@ type BaseAuthHookParams = {
 export type AuthHookParams<T = undefined> = T extends undefined
   ? BaseAuthHookParams
   : BaseAuthHookParams & {
-    params: T;
-  };
+      params: T;
+    };
