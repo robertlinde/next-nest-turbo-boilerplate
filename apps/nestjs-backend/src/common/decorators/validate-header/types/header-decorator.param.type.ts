@@ -2,9 +2,9 @@
 export type HeaderDecoratorParam =
   | string
   | {
-    headerName: string;
-    options?: HeaderValidationOptions;
-  };
+      headerName: string;
+      options?: HeaderValidationOptions;
+    };
 
 // Configuration interface for header validation
 type HeaderValidationOptions = {
