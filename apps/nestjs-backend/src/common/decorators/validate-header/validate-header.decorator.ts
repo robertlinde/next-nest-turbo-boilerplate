@@ -2,6 +2,36 @@ import {createParamDecorator, ExecutionContext, NotAcceptableException} from '@n
 import {Request} from 'express';
 import {HeaderDecoratorParam} from './types/header-decorator.param.type';
 
+/**
+ * A NestJS parameter decorator that validates HTTP request headers with flexible validation options.
+ *
+ * This decorator extracts and validates HTTP headers from incoming requests, supporting various
+ * validation strategies including exact matching, pattern matching, enum validation, and array validation.
+ * It throws a `NotAcceptableException` if validation fails.
+ *
+ * @param param - Either a header name string or a configuration object with validation options
+ * @returns The validated header value as string or string array
+ * @throws {NotAcceptableException} When header is missing or validation fails
+ *
+ * @example
+ * // Basic header extraction without validation
+ * @Get('/example')
+ * getExample(@ValidateHeader('Authorization') authHeader: string) {
+ *   return { auth: authHeader };
+ * }
+ *
+ * @example
+ * // Header validation with expected string value
+ * @Post('/api/data')
+ * postData(
+ *   @ValidateHeader({
+ *     headerName: 'Content-Type',
+ *     options: { expectedValue: 'application/json' }
+ *   }) contentType: string
+ * ) {
+ *   return { received: contentType };
+ * }
+ */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const ValidateHeader = createParamDecorator(
   (param: HeaderDecoratorParam, ctx: ExecutionContext): string | string[] => {
@@ -16,7 +46,7 @@ export const ValidateHeader = createParamDecorator(
     const headerValue = request.headers[headerName.toLowerCase()];
 
     // Check if header exists
-    if (!headerValue || (!allowEmpty && headerValue === '')) {
+    if (headerValue === undefined || headerValue === null || (!allowEmpty && headerValue === '')) {
       const message = missingMessage ?? `Missing required header: ${headerName}`;
       throw new NotAcceptableException(message);
     }

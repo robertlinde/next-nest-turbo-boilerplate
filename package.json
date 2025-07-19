@@ -1,5 +1,5 @@
 {
-  "name": "auth-monorepo",
+  "name": "next-nest-turbo-auth-boilerplate",
   "version": "0.1.0",
   "workspaces": [
     "apps/*",
