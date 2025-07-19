@@ -3,12 +3,12 @@ import type {Config} from 'jest';
 const config: Config = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: 'src',
-  testRegex: String.raw`(.*(controller|service|guard|interceptor|pipe|middleware|filter))\.spec\.ts$`,
+  testRegex: String.raw`(.*(controller|service|guard|interceptor|pipe|middleware|filter|decorator))\.spec\.ts$`,
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest', // eslint-disable-line @typescript-eslint/naming-convention
   },
   collectCoverageFrom: [
-    '**/*.(controller|service|guard|interceptor|pipe|middleware|filter).ts', // Coverage for relevant files
+    '**/*.(controller|service|guard|interceptor|pipe|middleware|filter|decorator).ts', // Coverage for relevant files
     '!**/node_modules/**',
     '!**/dist/**',
   ],
