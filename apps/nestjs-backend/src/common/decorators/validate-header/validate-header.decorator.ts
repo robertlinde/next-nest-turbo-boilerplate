@@ -2,6 +2,104 @@ import {createParamDecorator, ExecutionContext, NotAcceptableException} from '@n
 import {Request} from 'express';
 import {HeaderDecoratorParam} from './types/header-decorator.param.type';
 
+/**
+ * A NestJS parameter decorator that validates HTTP request headers with flexible validation options.
+ *
+ * This decorator extracts and validates HTTP headers from incoming requests, supporting various
+ * validation strategies including exact matching, pattern matching, enum validation, and array validation.
+ * It throws a `NotAcceptableException` if validation fails.
+ *
+ * @param param - Either a header name string or a configuration object with validation options
+ * @returns The validated header value as string or string array
+ * @throws {NotAcceptableException} When header is missing or validation fails
+ *
+ * @example
+ * // Basic header extraction without validation
+ * @Get('/example')
+ * getExample(@ValidateHeader('Authorization') authHeader: string) {
+ *   return { auth: authHeader };
+ * }
+ *
+ * @example
+ * // Header validation with expected string value
+ * @Post('/api/data')
+ * postData(
+ *   @ValidateHeader({
+ *     headerName: 'Content-Type',
+ *     options: { expectedValue: 'application/json' }
+ *   }) contentType: string
+ * ) {
+ *   return { received: contentType };
+ * }
+ *
+ * @example
+ * // Header validation with multiple accepted values
+ * @Get('/localized')
+ * getLocalized(
+ *   @ValidateHeader({
+ *     headerName: 'Accept-Language',
+ *     options: { expectedValue: ['en', 'de', 'fr'] }
+ *   }) language: string
+ * ) {
+ *   return { language };
+ * }
+ *
+ * @example
+ * // Header validation with enum
+ * @Post('/users')
+ * createUser(
+ *   @Body() userData: CreateUserDto,
+ *   @ValidateHeader({
+ *     headerName: 'Accept-Language',
+ *     options: { expectedValue: AcceptedLanguages }
+ *   }) language: AcceptedLanguages
+ * ) {
+ *   return this.usersService.create(userData, language);
+ * }
+ *
+ * @example
+ * // Header validation with RegExp pattern
+ * @Get('/secure')
+ * getSecure(
+ *   @ValidateHeader({
+ *     headerName: 'Authorization',
+ *     options: {
+ *       expectedValue: /^Bearer .+$/,
+ *       missingMessage: 'Authorization header is required',
+ *       invalidValueMessage: 'Authorization must be a Bearer token'
+ *     }
+ *   }) authHeader: string
+ * ) {
+ *   return { token: authHeader };
+ * }
+ *
+ * @example
+ * // Case-sensitive header validation
+ * @Post('/strict')
+ * postStrict(
+ *   @ValidateHeader({
+ *     headerName: 'X-Custom-Header',
+ *     options: {
+ *       expectedValue: 'ExactValue',
+ *       caseSensitive: true
+ *     }
+ *   }) customHeader: string
+ * ) {
+ *   return { custom: customHeader };
+ * }
+ *
+ * @example
+ * // Allow empty header values
+ * @Get('/optional')
+ * getOptional(
+ *   @ValidateHeader({
+ *     headerName: 'X-Optional-Header',
+ *     options: { allowEmpty: true }
+ *   }) optionalHeader: string
+ * ) {
+ *   return { optional: optionalHeader || 'default' };
+ * }
+ */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const ValidateHeader = createParamDecorator(
   (param: HeaderDecoratorParam, ctx: ExecutionContext): string | string[] => {
@@ -41,7 +139,14 @@ export const ValidateHeader = createParamDecorator(
 );
 
 /**
- * Validates header value against expected value(s)
+ * Validates header value against expected value(s) using various validation strategies.
+ *
+ * @param headerValue - The actual header value(s) from the request
+ * @param expectedValue - Expected value(s) in various formats (string, array, RegExp, enum)
+ * @param caseSensitive - Whether comparison should be case-sensitive
+ * @returns True if validation passes, false otherwise
+ *
+ * @internal
  */
 function validateHeaderValue(
   headerValue: string | string[],
@@ -77,7 +182,12 @@ function validateHeaderValue(
 }
 
 /**
- * Formats expected value for error messages
+ * Formats expected value for error messages in a human-readable format.
+ *
+ * @param expectedValue - Expected value(s) in various formats
+ * @returns Formatted string representation for error messages
+ *
+ * @internal
  */
 function formatExpectedValue(expectedValue: string | string[] | RegExp | Record<string, string | number>): string {
   if (expectedValue instanceof RegExp) {
