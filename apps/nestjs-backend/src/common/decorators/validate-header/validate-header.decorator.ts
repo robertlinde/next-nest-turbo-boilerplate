@@ -114,7 +114,7 @@ export const ValidateHeader = createParamDecorator(
     const headerValue = request.headers[headerName.toLowerCase()];
 
     // Check if header exists
-    if (!headerValue || (!allowEmpty && headerValue === '')) {
+    if (headerValue === undefined || headerValue === null || (!allowEmpty && headerValue === '')) {
       const message = missingMessage ?? `Missing required header: ${headerName}`;
       throw new NotAcceptableException(message);
     }
