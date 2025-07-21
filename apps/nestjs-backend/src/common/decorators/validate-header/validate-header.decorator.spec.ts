@@ -1,18 +1,23 @@
-import {Controller, Get} from '@nestjs/common';
+import {Controller, Get, type INestApplication} from '@nestjs/common';
 import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
 import {ValidateHeader} from './validate-header.decorator';
+
+// Helper function to safely cast the HTTP server for supertest
+function getServerForTest(app: INestApplication): Parameters<typeof request>[0] {
+  return app.getHttpServer() as unknown as Parameters<typeof request>[0];
+}
 
 // Test controller to test the decorator in context
 @Controller('test')
 class TestController {
   @Get('basic')
-  basicHeaderTest(@ValidateHeader('authorization') authHeader: string) {
+  basicHeaderTest(@ValidateHeader('authorization') authHeader: string): {auth: string} {
     return {auth: authHeader};
   }
 
   @Get('case-insensitive')
-  caseInsensitiveTest(@ValidateHeader('Content-Type') contentType: string) {
+  caseInsensitiveTest(@ValidateHeader('Content-Type') contentType: string): {contentType: string} {
     return {contentType};
   }
 
@@ -23,7 +28,7 @@ class TestController {
       options: {expectedValue: 'application/json'},
     })
     contentType: string,
-  ) {
+  ): {contentType: string} {
     return {contentType};
   }
 
@@ -34,7 +39,7 @@ class TestController {
       options: {expectedValue: 'v1', caseSensitive: true},
     })
     version: string,
-  ) {
+  ): {version: string} {
     return {version};
   }
 
@@ -45,7 +50,7 @@ class TestController {
       options: {expectedValue: ['application/json', 'text/html']},
     })
     accept: string,
-  ) {
+  ): {accept: string} {
     return {accept};
   }
 
@@ -56,7 +61,7 @@ class TestController {
       options: {expectedValue: /^Mozilla\/.*$/},
     })
     userAgent: string,
-  ) {
+  ): {userAgent: string} {
     return {userAgent};
   }
 
@@ -64,10 +69,10 @@ class TestController {
   enumValidationTest(
     @ValidateHeader({
       headerName: 'x-http-method',
-      options: {expectedValue: {GET: 'GET', POST: 'POST', PUT: 'PUT'}},
+      options: {expectedValue: {get: 'GET', post: 'POST', put: 'PUT'}},
     })
     method: string,
-  ) {
+  ): {method: string} {
     return {method};
   }
 
@@ -78,7 +83,7 @@ class TestController {
       options: {allowEmpty: true},
     })
     optional: string,
-  ) {
+  ): {optional: string} {
     return {optional};
   }
 
@@ -93,13 +98,13 @@ class TestController {
       },
     })
     required: string,
-  ) {
+  ): {required: string} {
     return {required};
   }
 }
 
 describe('ValidateHeader Decorator', () => {
-  let app: any;
+  let app: INestApplication;
   let testingModule: TestingModule;
 
   beforeEach(async () => {
@@ -117,7 +122,7 @@ describe('ValidateHeader Decorator', () => {
 
   describe('Basic header extraction', () => {
     it('should extract header value when header exists', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/basic')
         .set('authorization', 'Bearer token123')
         .expect(200);
@@ -126,7 +131,7 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should extract header value case-insensitively', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/case-insensitive')
         .set('content-type', 'application/json')
         .expect(200);
@@ -135,13 +140,13 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should throw NotAcceptableException when header is missing', async () => {
-      await request(app.getHttpServer())
+      await request(getServerForTest(app))
         .get('/test/basic')
         .expect(406);
     });
 
     it('should throw NotAcceptableException when header is empty by default', async () => {
-      await request(app.getHttpServer())
+      await request(getServerForTest(app))
         .get('/test/basic')
         .set('authorization', '')
         .expect(406);
@@ -150,7 +155,7 @@ describe('ValidateHeader Decorator', () => {
 
   describe('String value validation', () => {
     it('should validate exact string match (case-insensitive by default)', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/with-validation')
         .set('content-type', 'APPLICATION/JSON')
         .expect(200);
@@ -159,7 +164,7 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should validate exact string match (case-sensitive)', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/case-sensitive')
         .set('x-api-version', 'v1')
         .expect(200);
@@ -168,14 +173,14 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should throw when case-sensitive validation fails', async () => {
-      await request(app.getHttpServer())
+      await request(getServerForTest(app))
         .get('/test/case-sensitive')
         .set('x-api-version', 'V1')
         .expect(406);
     });
 
     it('should throw when string validation fails', async () => {
-      await request(app.getHttpServer())
+      await request(getServerForTest(app))
         .get('/test/with-validation')
         .set('content-type', 'text/plain')
         .expect(406);
@@ -184,7 +189,7 @@ describe('ValidateHeader Decorator', () => {
 
   describe('Array value validation', () => {
     it('should validate against array of expected values', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/array-validation')
         .set('accept', 'application/json')
         .expect(200);
@@ -193,7 +198,7 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should validate second option from array', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/array-validation')
         .set('accept', 'text/html')
         .expect(200);
@@ -202,7 +207,7 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should throw when array validation fails', async () => {
-      await request(app.getHttpServer())
+      await request(getServerForTest(app))
         .get('/test/array-validation')
         .set('accept', 'application/xml')
         .expect(406);
@@ -211,7 +216,7 @@ describe('ValidateHeader Decorator', () => {
 
   describe('RegExp validation', () => {
     it('should validate using regular expression', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/regex-validation')
         .set('user-agent', 'Mozilla/5.0 (compatible; MyBot/1.0)')
         .expect(200);
@@ -220,7 +225,7 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should throw when regex validation fails', async () => {
-      await request(app.getHttpServer())
+      await request(getServerForTest(app))
         .get('/test/regex-validation')
         .set('user-agent', 'Chrome/90.0')
         .expect(406);
@@ -229,7 +234,7 @@ describe('ValidateHeader Decorator', () => {
 
   describe('Enum validation', () => {
     it('should validate against enum values', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/enum-validation')
         .set('x-http-method', 'POST')
         .expect(200);
@@ -238,7 +243,7 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should validate enum case-insensitively by default', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/enum-validation')
         .set('x-http-method', 'get')
         .expect(200);
@@ -247,7 +252,7 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should throw when enum validation fails', async () => {
-      await request(app.getHttpServer())
+      await request(getServerForTest(app))
         .get('/test/enum-validation')
         .set('x-http-method', 'DELETE')
         .expect(406);
@@ -256,7 +261,7 @@ describe('ValidateHeader Decorator', () => {
 
   describe('Empty value handling', () => {
     it('should allow empty values when allowEmpty is true', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/allow-empty')
         .set('x-optional', '')
         .expect(200);
@@ -265,7 +270,7 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should still require header to be present even with allowEmpty', async () => {
-      await request(app.getHttpServer())
+      await request(getServerForTest(app))
         .get('/test/allow-empty')
         .expect(406);
     });
@@ -273,7 +278,7 @@ describe('ValidateHeader Decorator', () => {
 
   describe('Custom error messages', () => {
     it('should use custom missing message', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/custom-messages')
         .expect(406);
 
@@ -283,7 +288,7 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should use custom invalid value message', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/custom-messages')
         .set('x-required', 'wrong-value')
         .expect(406);
@@ -292,7 +297,7 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should pass when validation succeeds', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/custom-messages')
         .set('x-required', 'expected-value')
         .expect(200);
@@ -307,7 +312,7 @@ describe('ValidateHeader Decorator', () => {
       @Controller('edge-test')
       class EdgeTestController {
         @Get('special-header')
-        specialHeaderTest(@ValidateHeader('X-Custom-Header-123') header: string) {
+        specialHeaderTest(@ValidateHeader('X-Custom-Header-123') header: string): {header: string} {
           return {header};
         }
       }
@@ -319,7 +324,7 @@ describe('ValidateHeader Decorator', () => {
       const edgeApp = edgeTestingModule.createNestApplication();
       await edgeApp.init();
 
-      const response = await request(edgeApp.getHttpServer())
+      const response = await request(getServerForTest(edgeApp))
         .get('/edge-test/special-header')
         .set('x-custom-header-123', 'test-value')
         .expect(200);

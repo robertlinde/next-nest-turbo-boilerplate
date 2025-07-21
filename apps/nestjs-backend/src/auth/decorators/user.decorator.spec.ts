@@ -1,30 +1,41 @@
-import {Controller, Get} from '@nestjs/common';
+import {Controller, Get, type INestApplication} from '@nestjs/common';
 import {Test, TestingModule} from '@nestjs/testing';
+import {type Request, type Response, type NextFunction} from 'express';
 import * as request from 'supertest';
 import {ActiveUser} from '../types/active-user.type';
 import {User} from './user.decorator';
+
+// Extend Express Request to include user property for testing
+type AuthenticatedRequest = Request & {
+  user?: ActiveUser;
+};
+
+// Helper function to safely cast the HTTP server for supertest
+function getServerForTest(app: INestApplication): Parameters<typeof request>[0] {
+  return app.getHttpServer() as unknown as Parameters<typeof request>[0];
+}
 
 // Test controller to test the decorator in context
 @Controller('test')
 class TestController {
   @Get('user')
-  getUserTest(@User() user: ActiveUser) {
+  getUserTest(@User() user: ActiveUser): {user: ActiveUser} {
     return {user};
   }
 
   @Get('user-id')
-  getUserIdTest(@User('userId') userId: string) {
+  getUserIdTest(@User('userId') userId: string): {userId: string} {
     return {userId};
   }
 
   @Get('user-partial')
-  getUserPartialTest(@User('userId') userId: string, @User() fullUser: ActiveUser) {
+  getUserPartialTest(@User('userId') userId: string, @User() fullUser: ActiveUser): {userId: string; fullUser: ActiveUser} {
     return {userId, fullUser};
   }
 }
 
 describe('User Decorator', () => {
-  let app: any;
+  let app: INestApplication;
   let testingModule: TestingModule;
 
   beforeEach(async () => {
@@ -35,7 +46,7 @@ describe('User Decorator', () => {
     app = testingModule.createNestApplication();
 
     // Mock authentication middleware that sets user in request
-    app.use((req: any, res: any, next: any) => {
+    app.use((req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
       req.user = {
         userId: 'test-user-123',
       };
@@ -51,7 +62,7 @@ describe('User Decorator', () => {
 
   describe('User decorator functionality', () => {
     it('should extract full user object when no parameter specified', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/user')
         .expect(200);
 
@@ -63,7 +74,7 @@ describe('User Decorator', () => {
     });
 
     it('should extract specific user property when parameter specified', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/user-id')
         .expect(200);
 
@@ -73,7 +84,7 @@ describe('User Decorator', () => {
     });
 
     it('should work with multiple decorator instances', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(getServerForTest(app))
         .get('/test/user-partial')
         .expect(200);
 
@@ -96,7 +107,7 @@ describe('User Decorator', () => {
       const noUserApp = noUserTestingModule.createNestApplication();
       await noUserApp.init();
 
-      const response = await request(noUserApp.getHttpServer())
+      const response = await request(getServerForTest(noUserApp))
         .get('/test/user')
         .expect(200);
 
@@ -116,14 +127,14 @@ describe('User Decorator', () => {
       const partialUserApp = partialUserTestingModule.createNestApplication();
 
       // Mock middleware with incomplete user
-      partialUserApp.use((req: any, res: any, next: any) => {
-        req.user = {}; // Empty user object
+      partialUserApp.use((req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
+        req.user = {} as ActiveUser; // Empty user object for testing missing properties
         next();
       });
 
       await partialUserApp.init();
 
-      const response = await request(partialUserApp.getHttpServer())
+      const response = await request(getServerForTest(partialUserApp))
         .get('/test/user-id')
         .expect(200);
 

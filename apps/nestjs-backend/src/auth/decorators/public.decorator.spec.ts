@@ -13,29 +13,29 @@ describe('Public Decorator', () => {
       // Test class using the decorator
       @Public()
       class TestClass {
-        testMethod() {
+        testMethod(): string {
           return 'test';
         }
       }
 
-      const metadata = reflector.get(IS_PUBLIC_KEY, TestClass);
+      const metadata = reflector.get<boolean>(IS_PUBLIC_KEY, TestClass);
       expect(metadata).toBe(true);
     });
 
     it('should work on methods', () => {
       class TestClass {
         @Public()
-        testMethod() {
+        testMethod(): string {
           return 'test';
         }
 
-        normalMethod() {
+        normalMethod(): string {
           return 'normal';
         }
       }
 
-      const publicMetadata = reflector.get(IS_PUBLIC_KEY, TestClass.prototype.testMethod);
-      const normalMetadata = reflector.get(IS_PUBLIC_KEY, TestClass.prototype.normalMethod);
+      const publicMetadata = reflector.get<boolean>(IS_PUBLIC_KEY, TestClass.prototype.testMethod);
+      const normalMetadata = reflector.get<boolean>(IS_PUBLIC_KEY, TestClass.prototype.normalMethod);
 
       expect(publicMetadata).toBe(true);
       expect(normalMetadata).toBeUndefined();
