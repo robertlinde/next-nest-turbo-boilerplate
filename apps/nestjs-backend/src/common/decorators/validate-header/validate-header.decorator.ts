@@ -72,8 +72,9 @@ export const ValidateHeader = createParamDecorator(
 
 /**
  * Validates header value against expected value(s)
+ * @internal - exported for testing
  */
-function validateHeaderValue(
+export function validateHeaderValue(
   headerValue: string | string[],
   expectedValue: string | string[] | RegExp | Record<string, string | number>,
   caseSensitive: boolean,
@@ -108,8 +109,9 @@ function validateHeaderValue(
 
 /**
  * Formats expected value for error messages
+ * @internal - exported for testing
  */
-function formatExpectedValue(expectedValue: string | string[] | RegExp | Record<string, string | number>): string {
+export function formatExpectedValue(expectedValue: string | string[] | RegExp | Record<string, string | number>): string {
   if (expectedValue instanceof RegExp) {
     return expectedValue.toString();
   }
