@@ -1,15 +1,15 @@
 import {Reflector} from '@nestjs/core';
 import {Public, IS_PUBLIC_KEY} from './public.decorator';
 
-describe('Public Decorator', () => {
+describe('Public Decorator', (): void => {
   let reflector: Reflector;
 
-  beforeEach(() => {
+  beforeEach((): void => {
     reflector = new Reflector();
   });
 
-  describe('metadata setting', () => {
-    it('should set isPublic metadata to true', () => {
+  describe('metadata setting', (): void => {
+    it('should set isPublic metadata to true', (): void => {
       @Public()
       class TestController {}
 
@@ -18,14 +18,14 @@ describe('Public Decorator', () => {
       expect(isPublic).toBe(true);
     });
 
-    it('should set isPublic metadata on method handlers', () => {
+    it('should set isPublic metadata on method handlers', (): void => {
       class TestController {
         @Public()
-        publicMethod() {
+        publicMethod(): string {
           return 'public';
         }
 
-        privateMethod() {
+        privateMethod(): string {
           return 'private';
         }
       }
@@ -37,22 +37,22 @@ describe('Public Decorator', () => {
       expect(isPrivateMethod).toBeUndefined();
     });
 
-    it('should return a CustomDecorator', () => {
+    it('should return a CustomDecorator', (): void => {
       const decorator = Public();
 
       expect(typeof decorator).toBe('function');
       expect(decorator.name).toBe('decoratorFactory');
     });
 
-    it('should work with multiple decorators', () => {
+    it('should work with multiple decorators', (): void => {
       class TestController {
         @Public()
-        method1() {
+        method1(): string {
           return 'method1';
         }
 
         @Public()
-        method2() {
+        method2(): string {
           return 'method2';
         }
       }
@@ -65,18 +65,18 @@ describe('Public Decorator', () => {
     });
   });
 
-  describe('IS_PUBLIC_KEY constant', () => {
-    it('should export the correct metadata key', () => {
+  describe('IS_PUBLIC_KEY constant', (): void => {
+    it('should export the correct metadata key', (): void => {
       expect(IS_PUBLIC_KEY).toBe('isPublic');
     });
 
-    it('should be used consistently', () => {
+    it('should be used consistently', (): void => {
       @Public()
       class TestClass {}
 
-      const metadata = Reflect.getMetadata(IS_PUBLIC_KEY, TestClass) as boolean;
+      const isPublic = reflector.get<boolean>(IS_PUBLIC_KEY, TestClass);
 
-      expect(metadata).toBe(true);
+      expect(isPublic).toBe(true);
     });
   });
 });

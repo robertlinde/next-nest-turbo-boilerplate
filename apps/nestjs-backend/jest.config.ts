@@ -8,8 +8,7 @@ const config: Config = {
     '^.+\\.(t|j)s$': 'ts-jest', // eslint-disable-line @typescript-eslint/naming-convention
   },
   collectCoverageFrom: [
-    '**/*.(controller|service|guard|interceptor|pipe|middleware|filter).ts', // Coverage for relevant files (excluding decorators from strict coverage)
-    '**/*.decorator.ts', // Include decorators in coverage report but with different thresholds
+    '**/*.(controller|service|guard|interceptor|pipe|middleware|filter|decorator).ts', // Coverage for relevant files including decorators
     '!**/node_modules/**',
     '!**/dist/**',
   ],
@@ -17,7 +16,14 @@ const config: Config = {
   testEnvironment: 'node',
   coverageThreshold: {
     global: {
-      branches: 65, // Adjusted to match current coverage level
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80,
+    },
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    '**/*': {
+      branches: 80,
       functions: 80,
       lines: 80,
       statements: 80,

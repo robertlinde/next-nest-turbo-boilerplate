@@ -61,14 +61,6 @@ const xoConfig = [
       'import/no-cycle': 'off',
     },
   },
-  // Test files have relaxed rules for function return types and native object usage
-  {
-    files: ['**/*.spec.ts', '**/*.test.ts'],
-    rules: {
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      'no-use-extend-native/no-use-extend-native': 'off',
-    },
-  },
 ];
 
 export default xoConfig;
