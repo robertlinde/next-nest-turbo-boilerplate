@@ -7,40 +7,40 @@ import {HeaderDecoratorParam} from './types/header-decorator.param.type';
 const getValidateHeaderDecoratorFactory =
   (): ((param: HeaderDecoratorParam, ctx: ExecutionContext) => string | string[]) =>
   // Access the factory function by emulating the createParamDecorator behavior
-    (param: HeaderDecoratorParam, ctx: ExecutionContext): string | string[] => {
-      const request: Request = ctx.switchToHttp().getRequest();
+  (param: HeaderDecoratorParam, ctx: ExecutionContext): string | string[] => {
+    const request: Request = ctx.switchToHttp().getRequest();
 
-      // Handle both string and object parameters
-      const headerName = typeof param === 'string' ? param : param.headerName;
-      const options = typeof param === 'string' ? {} : (param.options ?? {});
+    // Handle both string and object parameters
+    const headerName = typeof param === 'string' ? param : param.headerName;
+    const options = typeof param === 'string' ? {} : (param.options ?? {});
 
-      const {expectedValue, caseSensitive = false, missingMessage, invalidValueMessage, allowEmpty = false} = options;
+    const {expectedValue, caseSensitive = false, missingMessage, invalidValueMessage, allowEmpty = false} = options;
 
-      const headerValue = request.headers[headerName.toLowerCase()];
+    const headerValue = request.headers[headerName.toLowerCase()];
 
-      // Check if header exists
-      if (headerValue === undefined || headerValue === null || (!allowEmpty && headerValue === '')) {
-        const message = missingMessage ?? `Missing required header: ${headerName}`;
-        throw new NotAcceptableException(message);
-      }
+    // Check if header exists
+    if (headerValue === undefined || headerValue === null || (!allowEmpty && headerValue === '')) {
+      const message = missingMessage ?? `Missing required header: ${headerName}`;
+      throw new NotAcceptableException(message);
+    }
 
-      // If no expected value specified, return the header value
-      if (expectedValue === undefined) {
-        return headerValue;
-      }
+    // If no expected value specified, return the header value
+    if (expectedValue === undefined) {
+      return headerValue;
+    }
 
-      // Validate header value using the validation function
-      const isValid = validateHeaderValue(headerValue, expectedValue, caseSensitive);
+    // Validate header value using the validation function
+    const isValid = validateHeaderValue(headerValue, expectedValue, caseSensitive);
 
-      if (!isValid) {
-        const message =
+    if (!isValid) {
+      const message =
         invalidValueMessage ??
         `Invalid value for header '${headerName}'. Expected: ${formatExpectedValue(expectedValue)}`;
-        throw new NotAcceptableException(message);
-      }
+      throw new NotAcceptableException(message);
+    }
 
-      return headerValue;
-    };
+    return headerValue;
+  };
 
 // Helper functions from the original decorator
 function validateHeaderValue(
