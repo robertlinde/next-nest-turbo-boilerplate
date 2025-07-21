@@ -140,16 +140,11 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should throw NotAcceptableException when header is missing', async () => {
-      await request(getServerForTest(app))
-        .get('/test/basic')
-        .expect(406);
+      await request(getServerForTest(app)).get('/test/basic').expect(406);
     });
 
     it('should throw NotAcceptableException when header is empty by default', async () => {
-      await request(getServerForTest(app))
-        .get('/test/basic')
-        .set('authorization', '')
-        .expect(406);
+      await request(getServerForTest(app)).get('/test/basic').set('authorization', '').expect(406);
     });
   });
 
@@ -173,17 +168,11 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should throw when case-sensitive validation fails', async () => {
-      await request(getServerForTest(app))
-        .get('/test/case-sensitive')
-        .set('x-api-version', 'V1')
-        .expect(406);
+      await request(getServerForTest(app)).get('/test/case-sensitive').set('x-api-version', 'V1').expect(406);
     });
 
     it('should throw when string validation fails', async () => {
-      await request(getServerForTest(app))
-        .get('/test/with-validation')
-        .set('content-type', 'text/plain')
-        .expect(406);
+      await request(getServerForTest(app)).get('/test/with-validation').set('content-type', 'text/plain').expect(406);
     });
   });
 
@@ -207,10 +196,7 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should throw when array validation fails', async () => {
-      await request(getServerForTest(app))
-        .get('/test/array-validation')
-        .set('accept', 'application/xml')
-        .expect(406);
+      await request(getServerForTest(app)).get('/test/array-validation').set('accept', 'application/xml').expect(406);
     });
   });
 
@@ -225,10 +211,7 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should throw when regex validation fails', async () => {
-      await request(getServerForTest(app))
-        .get('/test/regex-validation')
-        .set('user-agent', 'Chrome/90.0')
-        .expect(406);
+      await request(getServerForTest(app)).get('/test/regex-validation').set('user-agent', 'Chrome/90.0').expect(406);
     });
   });
 
@@ -252,35 +235,25 @@ describe('ValidateHeader Decorator', () => {
     });
 
     it('should throw when enum validation fails', async () => {
-      await request(getServerForTest(app))
-        .get('/test/enum-validation')
-        .set('x-http-method', 'DELETE')
-        .expect(406);
+      await request(getServerForTest(app)).get('/test/enum-validation').set('x-http-method', 'DELETE').expect(406);
     });
   });
 
   describe('Empty value handling', () => {
     it('should allow empty values when allowEmpty is true', async () => {
-      const response = await request(getServerForTest(app))
-        .get('/test/allow-empty')
-        .set('x-optional', '')
-        .expect(200);
+      const response = await request(getServerForTest(app)).get('/test/allow-empty').set('x-optional', '').expect(200);
 
       expect(response.body).toEqual({optional: ''});
     });
 
     it('should still require header to be present even with allowEmpty', async () => {
-      await request(getServerForTest(app))
-        .get('/test/allow-empty')
-        .expect(406);
+      await request(getServerForTest(app)).get('/test/allow-empty').expect(406);
     });
   });
 
   describe('Custom error messages', () => {
     it('should use custom missing message', async () => {
-      const response = await request(getServerForTest(app))
-        .get('/test/custom-messages')
-        .expect(406);
+      const response = await request(getServerForTest(app)).get('/test/custom-messages').expect(406);
 
       // Note: We can't easily test the exact error message in integration tests
       // but we can verify the status code is correct
