@@ -29,7 +29,10 @@ class TestController {
   }
 
   @Get('user-partial')
-  getUserPartialTest(@User('userId') userId: string, @User() fullUser: ActiveUser): {userId: string; fullUser: ActiveUser} {
+  getUserPartialTest(
+    @User('userId') userId: string,
+    @User() fullUser: ActiveUser,
+  ): {userId: string; fullUser: ActiveUser} {
     return {userId, fullUser};
   }
 }
@@ -62,9 +65,7 @@ describe('User Decorator', () => {
 
   describe('User decorator functionality', () => {
     it('should extract full user object when no parameter specified', async () => {
-      const response = await request(getServerForTest(app))
-        .get('/test/user')
-        .expect(200);
+      const response = await request(getServerForTest(app)).get('/test/user').expect(200);
 
       expect(response.body).toEqual({
         user: {
@@ -74,9 +75,7 @@ describe('User Decorator', () => {
     });
 
     it('should extract specific user property when parameter specified', async () => {
-      const response = await request(getServerForTest(app))
-        .get('/test/user-id')
-        .expect(200);
+      const response = await request(getServerForTest(app)).get('/test/user-id').expect(200);
 
       expect(response.body).toEqual({
         userId: 'test-user-123',
@@ -84,9 +83,7 @@ describe('User Decorator', () => {
     });
 
     it('should work with multiple decorator instances', async () => {
-      const response = await request(getServerForTest(app))
-        .get('/test/user-partial')
-        .expect(200);
+      const response = await request(getServerForTest(app)).get('/test/user-partial').expect(200);
 
       expect(response.body).toEqual({
         userId: 'test-user-123',
@@ -107,9 +104,7 @@ describe('User Decorator', () => {
       const noUserApp = noUserTestingModule.createNestApplication();
       await noUserApp.init();
 
-      const response = await request(getServerForTest(noUserApp))
-        .get('/test/user')
-        .expect(200);
+      const response = await request(getServerForTest(noUserApp)).get('/test/user').expect(200);
 
       expect(response.body).toEqual({
         user: undefined,
@@ -128,15 +123,14 @@ describe('User Decorator', () => {
 
       // Mock middleware with incomplete user
       partialUserApp.use((req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
-        req.user = {} as ActiveUser; // Empty user object for testing missing properties
+        const incompleteUser: Partial<ActiveUser> = {};
+        req.user = incompleteUser as ActiveUser; // Incomplete user object for testing missing properties
         next();
       });
 
       await partialUserApp.init();
 
-      const response = await request(getServerForTest(partialUserApp))
-        .get('/test/user-id')
-        .expect(200);
+      const response = await request(getServerForTest(partialUserApp)).get('/test/user-id').expect(200);
 
       expect(response.body).toEqual({
         userId: undefined,
