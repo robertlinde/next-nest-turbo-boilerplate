@@ -6,11 +6,11 @@ import {User} from './user.decorator';
 const getUserDecoratorFactory =
   (): ((data: keyof ActiveUser | undefined, ctx: ExecutionContext) => ActiveUser | string | undefined) =>
   // Access the internal factory function by emulating the createParamDecorator behavior
-  (data: keyof ActiveUser | undefined, ctx: ExecutionContext): ActiveUser | string | undefined => {
-    const request = ctx.switchToHttp().getRequest<{user: ActiveUser}>();
-    const {user} = request;
-    return data ? user?.[data] : user;
-  };
+    (data: keyof ActiveUser | undefined, ctx: ExecutionContext): ActiveUser | string | undefined => {
+      const request = ctx.switchToHttp().getRequest<{user: ActiveUser}>();
+      const {user} = request;
+      return data ? user?.[data] : user;
+    };
 
 describe('User Decorator', (): void => {
   describe('Decorator Structure', (): void => {
@@ -47,11 +47,13 @@ describe('User Decorator', (): void => {
         user: mockUser,
       };
 
-      mockExecutionContext = {
-        switchToHttp: (): {getRequest: () => {user: ActiveUser}} => ({
-          getRequest: (): {user: ActiveUser} => mockRequest,
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      const mockExecutionContextLocal: ExecutionContext = {
+        switchToHttp: () => ({
+          getRequest: () => mockRequest,
         }),
-      } as const;
+      } as ExecutionContext;
+      mockExecutionContext = mockExecutionContextLocal;
 
       decoratorFactory = getUserDecoratorFactory();
     });
