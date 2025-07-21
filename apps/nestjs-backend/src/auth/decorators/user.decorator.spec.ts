@@ -1,8 +1,8 @@
 import {Controller, Get} from '@nestjs/common';
 import {Test, TestingModule} from '@nestjs/testing';
 import * as request from 'supertest';
-import {User} from './user.decorator';
 import {ActiveUser} from '../types/active-user.type';
+import {User} from './user.decorator';
 
 // Test controller to test the decorator in context
 @Controller('test')

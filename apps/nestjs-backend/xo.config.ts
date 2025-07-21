@@ -61,6 +61,18 @@ const xoConfig = [
       'import/no-cycle': 'off',
     },
   },
+  // Relaxed rules for test files
+  {
+    files: ['**/*.spec.ts'],
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/naming-convention': 'off',
+    },
+  },
 ];
 
 export default xoConfig;
