@@ -23,6 +23,6 @@
   },
   "devDependencies": {
     "typescript": "latest",
-    "xo": "1.2.1"
+    "xo": "1.2.2"
   }
 }
