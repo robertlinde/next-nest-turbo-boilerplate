@@ -14,9 +14,11 @@ export function ZodErrorProvider({children}: ZodErrorProviderProps): JSX.Element
   const locale = useLocale();
 
   useEffect(() => {
-    // Set the global Zod error map
+    // Set the global Zod error map using z.config() in v4
     const errorMap = createZodErrorMap(t);
-    z.setErrorMap(errorMap);
+    z.config({
+      customError: errorMap,
+    });
   }, [t, locale]);
 
   return children as JSX.Element;
