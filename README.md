@@ -74,7 +74,7 @@ Your app should now be running with both frontend and backend services in develo
 - **Next.js** (App Router)
 - **TypeScript**
 - **Tailwind CSS** + **PrimeReact**
-- **React Hook Form** + **Joi**
+- **React Hook Form** + **Zod**
 - **React Query**
 - **next-intl** (i18n)
 
