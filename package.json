@@ -23,14 +23,14 @@
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
     "husky": "9.1.7",
-    "lint-staged": "16.1.2",
+    "lint-staged": "16.2.4",
     "prettier": "3.6.2",
     "ts-node": "10.9.2",
-    "turbo": "2.5.5"
+    "turbo": "2.5.8"
   },
   "engines": {
-    "node": "24.4.1",
-    "npm": "11.4.2"
+    "node": "24.10.0",
+    "npm": "11.6.2"
   },
-  "packageManager": "npm@11.4.2"
+  "packageManager": "npm@11.6.2"
 }
