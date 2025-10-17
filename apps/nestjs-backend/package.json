@@ -48,7 +48,7 @@
     "express": "5.1.0",
     "handlebars": "4.7.8",
     "helmet": "8.1.0",
-    "ioredis": "^5.8.1",
+    "ioredis": "5.8.1",
     "joi": "18.0.1",
     "nodemailer": "7.0.9",
     "reflect-metadata": "0.2.2",
