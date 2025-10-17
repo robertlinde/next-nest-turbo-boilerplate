@@ -1,5 +1,5 @@
 {
-  "name": "next-nest-turbo-auth-boilerplate",
+  "name": "next-nest-turbo-boilerplate",
   "version": "0.1.0",
   "workspaces": [
     "apps/*",

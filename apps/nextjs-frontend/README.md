@@ -1,12 +1,11 @@
-# 🔐 Next.js Auth Boilerplate
+# � Next.js Frontend Boilerplate
 
-A modern, fully-typed, and scalable authentication boilerplate built with:
+A modern, fully-typed, and scalable frontend boilerplate built with:
 
 - Next.js (App Router)
 - TypeScript
 - PrimeReact
 - Tailwind CSS
-- Zustand
 - React Hook Form
 - Joi
 - React Query
@@ -15,18 +14,6 @@ A modern, fully-typed, and scalable authentication boilerplate built with:
 ---
 
 ## 🚀 Features
-
-✅ Prebuilt Auth Pages:
-
-- Login
-- Register
-- Forgot Password
-- Reset Password
-- Confirm Email
-
-✅ Profile Page
-
-✅ State-managed auth user using **Zustand**
 
 ✅ API integration layer using **React Query**
 

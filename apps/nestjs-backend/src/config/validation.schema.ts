@@ -17,9 +17,6 @@ const validationSchemaMap: Record<ConfigKey, Joi.Schema> = {
   [ConfigKey.POSTGRES_HOST]: Joi.string().required(),
   [ConfigKey.POSTGRES_DEBUG_MODE]: Joi.boolean().optional().default(false),
 
-  [ConfigKey.JWT_ACCESS_SECRET]: Joi.string().required(),
-  [ConfigKey.JWT_REFRESH_SECRET]: Joi.string().required(),
-
   [ConfigKey.MAILDEV_WEB_PORT]: Joi.number().min(0).max(65_535).default(1080).when(ConfigKey.NODE_ENV, {
     is: 'development',
     then: Joi.optional(),

@@ -7,9 +7,7 @@ import {
   HealthIndicatorResult,
   HealthCheckResult,
 } from '@nestjs/terminus';
-import {Public} from '../auth/decorators/public.decorator';
 
-@Public()
 @ApiTags('health')
 @Controller('health')
 export class HealthController {

@@ -22,14 +22,7 @@
     "not-finite": "The value must be a finite number.",
     "custom-error": "The input provided is invalid. Please review and correct it."
   },
-  "Component-Header": {
-    "login-button-label": "Log In",
-    "register-button-label": "Register",
-    "logout-button-label": "Log Out",
-    "profile-button-label": "Profile",
-    "greeting": "Hello, {username}",
-    "user": "User"
-  },
+  "Component-Header": {},
   "Component-Footer": {
     "group-company": "Company",
     "group-legal": "Legal",
@@ -38,119 +31,13 @@
     "imprint-link": "Imprint",
     "privacy-policy-link": "Privacy Policy",
     "terms-of-service-link": "Terms of Service",
-    "copyright-notice": "Next.js - NestJS - Turbo - Auth Boilerplate. All rights reserved."
+    "copyright-notice": "Next.js - NestJS - Turbo Boilerplate. All rights reserved."
   },
   "Component-Footer-LocaleSelect": {
     "de": "German",
     "en": "English"
   },
   "Page-Home": {
-    "title": "Welcome to Next.js - NestJS - Turbo - Auth Boilerplate"
-  },
-  "Page-Profile": {
-    "greeting": "Hello, {username}!",
-    "user": "User",
-    "loading": "Loading...",
-    "email-input-label": "Email",
-    "username-input-label": "Username",
-    "password-input-label": "Password",
-    "submit-update-button-label": "Update Profile",
-    "loading-update-button-label": "Saving...",
-    "delete-account-button-label": "Delete Account",
-    "logout-button-label": "Log Out",
-    "delete-profile-confirm-dialog-header": "Delete Profile",
-    "delete-profile-confirm-dialog-message": "Are you sure you want to delete your profile?",
-    "delete-profile-confirm-dialog-cancel-button-label": "Cancel",
-    "delete-profile-confirm-dialog-confirm-button-label": "Delete",
-    "update-profile-confirm-dialog-header": "Update Profile",
-    "update-profile-confirm-dialog-message": "Are you sure you want to update your profile?",
-    "update-profile-confirm-dialog-cancel-button-label": "Cancel",
-    "update-profile-confirm-dialog-confirm-button-label": "Update",
-    "update-profile-no-changes-toast-summary": "No Changes",
-    "update-profile-no-changes-toast-detail": "No changes were made to your profile.",
-    "loading-profile-error-toast-summary": "Error Loading Profile",
-    "loading-profile-error-toast-detail": "An error occurred while loading your profile. Please try again later.",
-    "update-error-409": "Email or username already exists. Please choose a different one.",
-    "update-error-500": "An unexpected error occurred while updating your profile. Please try again later.",
-    "update-error-default": "An unknown error occurred while updating your profile. Please try again later.",
-    "delete-profile-success-toast-summary": "Profile Deleted",
-    "delete-profile-success-toast-detail": "Your profile has been successfully deleted.",
-    "update-profile-success-toast-summary": "Profile Updated",
-    "update-profile-success-toast-detail": "Your profile has been successfully updated.",
-    "delete-profile-error-toast-summary": "Error Deleting Profile",
-    "delete-profile-error-default-toast-detail": "An error occurred while deleting your profile. Please try again later."
-  },
-  "Component-Login-Credentials": {
-    "title": "Welcome back!",
-    "email-input-label": "Email",
-    "password-input-label": "Password",
-    "submit-button-label": "Log In",
-    "submit-button-loading-label": "Logging in...",
-    "forgot-password-question": "Forgot your password?",
-    "forgot-password-link-label": "Reset it here",
-    "register-question": "Don't have an account?",
-    "register-link-label": "Register here",
-    "error-401-403": "Invalid email or password. Please try again.",
-    "error-500": "An unexpected error occurred while logging in. Please try again later.",
-    "error-default": "An unknown error occurred while logging in. Please try again later."
-  },
-  "Component-Login-2FA": {
-    "title": "Two-Factor Authentication",
-    "description": "We have sent a two-factor authentication code to your email address. Please enter the code below to continue.",
-    "code-input-label": "Code",
-    "submit-button-label": "Verify Code",
-    "submit-button-loading-label": "Verifying...",
-    "error-401-403": "Invalid 2FA code. Please try again.",
-    "error-500": "An unexpected error occurred while verifying your 2FA code. Please try again later.",
-    "error-default": "An unknown error occurred while verifying your 2FA code. Please try again later.",
-    "login-success-toast-summary": "Login Successful"
-  },
-  "Page-Forgot-Password": {
-    "title": "Reset Your Password",
-    "email-input-label": "Email",
-    "submit-button-label": "Reset Password",
-    "submit-button-loading-label": "Loading...",
-    "error-401-403": "Invalid email address. Please try again.",
-    "error-500": "An unexpected error occurred while resetting your password. Please try again later.",
-    "error-default": "An unknown error occurred while resetting your password. Please try again later.",
-    "success-header": "Password Reset Successful",
-    "success-message": "A password reset link has been sent to your email address. Please check your inbox."
-  },
-  "Page-Reset-Password": {
-    "title": "Set New Password",
-    "password-input-label": "New Password",
-    "submit-button-label": "Set New Password",
-    "submit-button-loading-label": "Setting new password...",
-    "error-no-token": "Token is expired or cannot be found. Please request the password reset again.",
-    "error-410": "Token has expired. Please request the password reset again.",
-    "error-404": "Token not found. Please request the password reset again.",
-    "error-500": "An unexpected error occurred while setting your new password. Please try again later.",
-    "error-default": "An unknown error occurred while setting your new password. Please try again later.",
-    "success-header": "Password Set Successfully",
-    "success-message": "Your password has been successfully set. You can now log in with your new password.",
-    "success-login-link": "Log in here"
-  },
-  "Page-Register": {
-    "title": "Welcome",
-    "email-input-label": "Email",
-    "email-input-info": "Your email address will not be publicly visible.",
-    "username-input-label": "Username",
-    "username-input-info": "Your username will be publicly visible.",
-    "password-input-label": "Password",
-    "submit-button-label": "Register",
-    "submit-button-loading-label": "Registering...",
-    "login-question": "Already have an account?",
-    "login-link": "Log in here",
-    "error-409": "Email or username already exists. Please choose a different one.",
-    "error-500": "An unexpected error occurred while registering. Please try again later.",
-    "error-default": "An unknown error occurred while registering. Please try again later.",
-    "success-header": "Registration Successful!",
-    "success-message": "You have successfully registered. Please check your email to verify your account."
-  },
-  "Page-Confirm": {
-    "status-confirming": "Your account is being confirmed...",
-    "status-confirmed": "Your account has been successfully confirmed.",
-    "status-confirmed-login-link": "You can now log in here",
-    "status-error": "An error occurred while confirming your account. Please try again later."
+    "title": "Welcome to Next.js - NestJS - Turbo Boilerplate"
   }
 }

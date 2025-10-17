@@ -37,7 +37,7 @@ The Config Module serves as a centralized and type-safe configuration layer for 
 The module dynamically alters requirements based on the `NODE_ENV`:
 
 - In `development`, services like email can function with mock values.
-- In `production`, all security-sensitive values (e.g., JWT secrets, mail credentials) are strictly enforced.
+- In `production`, all security-sensitive values (e.g., email credentials) are strictly enforced.
 
 ---
 
@@ -47,7 +47,6 @@ While no internal knowledge is required to use the module, configuration is logi
 
 - **App**: environment, port, frontend host
 - **Database**: host, user, password, port, timezone, debug mode
-- **JWT**: access and refresh token secrets
 - **Email**: SMTP connection info
 
 ---

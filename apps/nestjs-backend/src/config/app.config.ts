@@ -14,9 +14,6 @@ const appConfig = (): Record<ConfigKey, unknown> => ({
   [ConfigKey.POSTGRES_USER]: process.env.POSTGRES_USER,
   [ConfigKey.POSTGRES_DEBUG_MODE]: Boolean(process.env.POSTGRES_DEBUG_MODE === 'true'),
 
-  [ConfigKey.JWT_ACCESS_SECRET]: process.env.JWT_ACCESS_SECRET,
-  [ConfigKey.JWT_REFRESH_SECRET]: process.env.JWT_REFRESH_SECRET,
-
   [ConfigKey.MAILDEV_WEB_PORT]: Number(process.env.MAILDEV_WEB_PORT),
   [ConfigKey.MAIL_HOST]: process.env.MAIL_HOST,
   [ConfigKey.MAIL_PORT]: Number(process.env.MAIL_PORT),
