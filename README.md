@@ -1,4 +1,12 @@
-# 🔐 Fullstack Auth Turborepo
+# 🚀 Fullstack Turborepo
+
+This monorepo provides a modern fullstack boilerplate using **Next.js** for the frontend and **NestJS** for the backend — organized and managed with **Turborepo**.
+
+It's designed for scalability, type safety, and developer experience — ideal as a base for full-featured applications.tack Turborepo
+
+This monorepo provides a modern fullstack boilerplate using **Next.js** for the frontend and **NestJS** for the backend — organized and managed with **Turborepo**.
+
+It's designed for scalability, type safety, and developer experience — ideal as a base for full-featured applications.Fullstack Auth Turborepo
 
 This monorepo provides a modern fullstack authentication boilerplate using **Next.js** for the frontend and **NestJS** for the backend — organized and managed with **Turborepo**.
 
@@ -12,8 +20,8 @@ It’s designed for scalability, type safety, and developer experience — ideal
 
 Use this repo as a GitHub template (recommended), or clone it directly:
 
-- `git clone https://github.com/robertlinde/next-nest-turbo-auth-boilerplate.git`
-- `cd next-nest-turbo-auth-boilerplate`
+- `git clone https://github.com/robertlinde/next-nest-turbo-boilerplate.git`
+- `cd next-nest-turbo-boilerplate`
 
 ### 2. Build Shared Package
 
@@ -38,7 +46,7 @@ Each app has its own .env.example. Copy and configure them:
 - `cp apps/nextjs-frontend/.env.example apps/nextjs-frontend/.env`
 - `cp apps/nestjs-backend/.env.example apps/nestjs-backend/.env`
 
-Then fill in the required environment variables based on your setup (e.g., database credentials, JWT secrets, email service configs).
+Then fill in the required environment variables based on your setup (e.g., database credentials, email service configs).
 
 ### 5. Start the Backend
 
@@ -66,7 +74,6 @@ Your app should now be running with both frontend and backend services in develo
 - **Next.js** (App Router)
 - **TypeScript**
 - **Tailwind CSS** + **PrimeReact**
-- **Zustand**
 - **React Hook Form** + **Joi**
 - **React Query**
 - **next-intl** (i18n)
@@ -77,7 +84,6 @@ Your app should now be running with both frontend and backend services in develo
 
 - **NestJS**
 - **TypeScript**
-- **JWT Auth**
 - **MikroORM** + **PostgreSQL**
 - **Templated email service**
 - **class-validator**
