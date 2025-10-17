@@ -14,6 +14,10 @@ const appConfig = (): Record<ConfigKey, unknown> => ({
   [ConfigKey.POSTGRES_USER]: process.env.POSTGRES_USER,
   [ConfigKey.POSTGRES_DEBUG_MODE]: Boolean(process.env.POSTGRES_DEBUG_MODE === 'true'),
 
+  [ConfigKey.REDIS_HOST]: process.env.REDIS_HOST,
+  [ConfigKey.REDIS_PORT]: Number(process.env.REDIS_PORT),
+  [ConfigKey.REDIS_PASSWORD]: process.env.REDIS_PASSWORD,
+
   [ConfigKey.MAILDEV_WEB_PORT]: Number(process.env.MAILDEV_WEB_PORT),
   [ConfigKey.MAIL_HOST]: process.env.MAIL_HOST,
   [ConfigKey.MAIL_PORT]: Number(process.env.MAIL_PORT),

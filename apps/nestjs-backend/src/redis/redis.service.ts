@@ -1,6 +1,7 @@
-import {Injectable, OnModuleInit, OnModuleDestroy, InternalServerErrorException} from '@nestjs/common';
+import {Injectable, OnModuleInit, OnModuleDestroy} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import Redis, {RedisOptions} from 'ioredis';
+import {ConfigKey} from 'src/config/config-key.enum';
 
 @Injectable()
 export class RedisService implements OnModuleInit, OnModuleDestroy {
@@ -11,10 +12,14 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
 
   onModuleInit(): void {
     const redisConfig: RedisOptions = {
-      host: this.configService.get<string>('REDIS_HOST', 'localhost'),
-      port: this.configService.get<number>('REDIS_PORT', 6379),
-      password: this.configService.get<string>('REDIS_PASSWORD'),
+      host: this.configService.get(ConfigKey.REDIS_HOST),
+      port: this.configService.get<number>(ConfigKey.REDIS_PORT),
+      password: this.configService.get<string>(ConfigKey.REDIS_PASSWORD),
     };
+
+    if (!redisConfig.host || !redisConfig.port) {
+      throw new Error('Redis configuration is incomplete');
+    }
 
     this.publisher = new Redis(redisConfig);
     this.subscriber = new Redis(redisConfig);
@@ -23,7 +28,7 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   async publish<T>(channel: string, message: T): Promise<void> {
     const serialized = JSON.stringify(message);
     if (!this.publisher) {
-      throw new InternalServerErrorException('Redis publisher is not initialized');
+      throw new Error('Redis publisher is not initialized');
     }
 
     await this.publisher.publish(channel, serialized);
@@ -31,7 +36,7 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
 
   async subscribe<T>(channel: string, callback: (message: T) => void): Promise<void> {
     if (!this.subscriber) {
-      throw new InternalServerErrorException('Redis subscriber is not initialized');
+      throw new Error('Redis subscriber is not initialized');
     }
 
     await this.subscriber.subscribe(channel);
@@ -50,7 +55,7 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
 
   async unsubscribe(channel: string): Promise<void> {
     if (!this.subscriber) {
-      throw new InternalServerErrorException('Redis subscriber is not initialized');
+      throw new Error('Redis subscriber is not initialized');
     }
 
     await this.subscriber.unsubscribe(channel);
