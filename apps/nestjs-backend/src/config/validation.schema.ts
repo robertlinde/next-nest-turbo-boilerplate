@@ -17,6 +17,10 @@ const validationSchemaMap: Record<ConfigKey, Joi.Schema> = {
   [ConfigKey.POSTGRES_HOST]: Joi.string().required(),
   [ConfigKey.POSTGRES_DEBUG_MODE]: Joi.boolean().optional().default(false),
 
+  [ConfigKey.REDIS_HOST]: Joi.string().default('localhost'),
+  [ConfigKey.REDIS_PORT]: Joi.number().min(0).max(65_535).default(6379),
+  [ConfigKey.REDIS_PASSWORD]: Joi.string().optional().allow('', null),
+
   [ConfigKey.MAILDEV_WEB_PORT]: Joi.number().min(0).max(65_535).default(1080).when(ConfigKey.NODE_ENV, {
     is: 'development',
     then: Joi.optional(),

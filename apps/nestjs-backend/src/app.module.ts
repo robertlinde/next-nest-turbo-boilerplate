@@ -10,6 +10,7 @@ import appConfig from './config/app.config';
 import validationSchema from './config/validation.schema';
 import {EmailModule} from './email/email.module';
 import {HealthModule} from './health/health.module';
+import {RedisModule} from './redis/redis.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import {HealthModule} from './health/health.module';
     CommonModule,
     EmailModule,
     HealthModule,
+    RedisModule,
   ],
   providers: [
     {
