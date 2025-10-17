@@ -1,134 +1,88 @@
 import {type useTranslations} from 'next-intl';
-import {z} from 'zod';
+import {type z} from 'zod';
 
-export const createZodErrorMap = (t: ReturnType<typeof useTranslations>): z.ZodErrorMap => {
+export const createZodErrorMap = (t: ReturnType<typeof useTranslations>): z.core.$ZodErrorMap => {
   // eslint-disable-next-line complexity
-  const errorMap: z.ZodErrorMap = (issue, ctx) => {
+  const errorMap: z.core.$ZodErrorMap = (issue) => {
     switch (issue.code) {
-      case z.ZodIssueCode.invalid_type: {
+      case 'invalid_type': {
         if (issue.received === 'undefined' || issue.received === 'null') {
-          return {message: t('required')};
+          return t('required');
         }
 
-        return {
-          message: t('invalid-type', {
-            expected: issue.expected,
-            received: issue.received,
-          }),
-        };
+        return t('invalid-type', {
+          expected: String(issue.expected),
+          received: String(issue.received),
+        });
       }
 
-      case z.ZodIssueCode.invalid_string: {
-        if (issue.validation === 'email') {
-          return {message: t('invalid-email')};
+      case 'invalid_format': {
+        // Handles email, url, and other string validations in v4
+        if (issue.format === 'email') {
+          return t('invalid-email');
         }
 
-        if (issue.validation === 'url') {
-          return {message: t('invalid-url')};
+        if (issue.format === 'url') {
+          return t('invalid-url');
         }
 
-        return {message: t('invalid-string')};
+        return t('invalid-format');
       }
 
-      case z.ZodIssueCode.too_small: {
+      case 'too_small': {
         if (issue.type === 'string') {
-          return {
-            message: t('too-small', {minimum: String(issue.minimum)}),
-          };
+          return t('too-small', {minimum: String(issue.minimum)});
         }
 
         if (issue.type === 'number') {
-          return {
-            message: t('number-too-small', {minimum: Number(issue.minimum)}),
-          };
+          return t('number-too-small', {minimum: Number(issue.minimum)});
         }
 
-        break;
+        return undefined;
       }
 
-      case z.ZodIssueCode.too_big: {
+      case 'too_big': {
         if (issue.type === 'string') {
-          return {
-            message: t('too-big', {maximum: String(issue.maximum)}),
-          };
+          return t('too-big', {maximum: String(issue.maximum)});
         }
 
         if (issue.type === 'number') {
-          return {
-            message: t('number-too-big', {maximum: Number(issue.maximum)}),
-          };
+          return t('number-too-big', {maximum: Number(issue.maximum)});
         }
 
-        break;
+        return undefined;
       }
 
-      case z.ZodIssueCode.invalid_literal: {
-        return {message: t('invalid-literal', {expected: String(issue.expected)})};
+      case 'invalid_value': {
+        // Handles literal values, enums, etc. in v4
+        return t('invalid-value');
       }
 
-      case z.ZodIssueCode.unrecognized_keys: {
-        return {
-          message: t('unrecognized-keys', {
-            keys: issue.keys.join(', '),
-          }),
-        };
+      case 'unrecognized_keys': {
+        return t('unrecognized-keys', {
+          keys: issue.keys.join(', '),
+        });
       }
 
-      case z.ZodIssueCode.invalid_union: {
-        return {message: t('invalid-union')};
+      case 'invalid_union': {
+        return t('invalid-union');
       }
 
-      case z.ZodIssueCode.invalid_union_discriminator: {
-        return {
-          message: t('invalid-union-discriminator', {
-            options: issue.options?.join(', '),
-          }),
-        };
+      case 'not_multiple_of': {
+        return t('not-multiple-of', {
+          multipleOf: Number(issue.multipleOf),
+        });
       }
 
-      case z.ZodIssueCode.invalid_enum_value: {
-        return {
-          message: t('invalid-enum', {
-            options: issue.options?.join(', '),
-          }),
-        };
+      case 'custom': {
+        return issue.message ?? t('custom-error');
       }
 
-      case z.ZodIssueCode.invalid_arguments: {
-        return {message: t('invalid-arguments')};
-      }
-
-      case z.ZodIssueCode.invalid_return_type: {
-        return {message: t('invalid-return-type')};
-      }
-
-      case z.ZodIssueCode.invalid_date: {
-        return {message: t('invalid-date')};
-      }
-
-      case z.ZodIssueCode.invalid_intersection_types: {
-        return {message: t('invalid-intersection-types')};
-      }
-
-      case z.ZodIssueCode.not_multiple_of: {
-        return {
-          message: t('not-multiple-of', {
-            multipleOf: Number(issue.multipleOf),
-          }),
-        };
-      }
-
-      case z.ZodIssueCode.not_finite: {
-        return {message: t('not-finite')};
-      }
-
-      case z.ZodIssueCode.custom: {
-        return {message: issue.message ?? t('custom-error')};
+      case 'invalid_key':
+      case 'invalid_element': {
+        return undefined;
       }
     }
-
-    // Fallback to default error
-    return {message: ctx.defaultError};
   };
 
   return errorMap;
