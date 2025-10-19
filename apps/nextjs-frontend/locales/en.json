@@ -32,5 +32,11 @@
   },
   "Page-Home": {
     "title": "Welcome to Next.js - NestJS - Turbo Boilerplate"
+  },
+  "Component-ConfirmDialog": {
+    "header": "Confirm",
+    "message": "Are you sure you want to proceed?",
+    "acceptLabel": "Yes",
+    "rejectLabel": "No"
   }
 }
