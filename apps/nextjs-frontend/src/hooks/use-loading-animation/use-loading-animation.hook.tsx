@@ -1,4 +1,4 @@
-import {useCallback, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
 export type LoadingAnimationOptions = {
   /**
@@ -67,7 +67,7 @@ export const useLoadingAnimation = (options: LoadingAnimationOptions = {}): UseL
     }
 
     // Set new timeout if provided
-    if (timeout && timeout > 0) {
+    if (typeof timeout === 'number' && timeout > 0 && Number.isFinite(timeout)) {
       timeoutRef.current = setTimeout(() => {
         setIsLoading(false);
         timeoutRef.current = undefined;
@@ -92,6 +92,17 @@ export const useLoadingAnimation = (options: LoadingAnimationOptions = {}): UseL
       startLoading();
     }
   }, [isLoading, startLoading, stopLoading]);
+
+  // Cleanup timeout on unmount
+  useEffect(
+    (): (() => void) => () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = undefined;
+      }
+    },
+    [],
+  );
 
   return {
     isLoading,
