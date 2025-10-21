@@ -14,6 +14,7 @@ import {Header} from '@/components/header/header.component.tsx';
 import {Footer} from '@/components/footer/footer.component';
 import {routing} from '@/i18n/routing.ts';
 import {ZodErrorProvider} from '@/providers/zod-error/zod-error.provider';
+import {LoadingAnimation} from '@/components/loading-animation/loading-animation.component';
 
 export const metadata: Metadata = {
   title: 'Next.js Frontend',
@@ -41,6 +42,7 @@ export default async function Layout({
             <ToastProvider>
               <ConfirmDialog />
               <ReactQueryProvider>
+                <LoadingAnimation />
                 <Header />
                 <div className="mx-auto my-6 flex w-full max-w-7xl flex-col px-2 md:my-8 md:px-4 lg:my-12 min-h-screen">
                   {children}
