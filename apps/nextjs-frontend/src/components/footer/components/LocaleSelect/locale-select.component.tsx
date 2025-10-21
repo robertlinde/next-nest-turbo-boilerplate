@@ -9,7 +9,7 @@ import {usePathname, useRouter} from '@/i18n/navigation.ts';
 import {routing} from '@/i18n/routing.ts';
 
 export function LocaleSelect(): JSX.Element {
-  const t = useTranslations('Component-Footer-LocaleSelect');
+  const t = useTranslations('components.footer.localeSelect');
 
   const locale = useLocale();
 
@@ -22,7 +22,7 @@ export function LocaleSelect(): JSX.Element {
   const params = useParams();
 
   const localeOptions: SelectItemOptionsType = routing.locales.map((locale) => ({
-    label: t(locale),
+    label: t(`languages.${locale}`),
     value: locale,
   }));
 

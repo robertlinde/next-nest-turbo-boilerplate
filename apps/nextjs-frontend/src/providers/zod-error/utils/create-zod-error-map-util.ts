@@ -10,7 +10,7 @@ export const createZodErrorMap = (t: ReturnType<typeof useTranslations>): z.core
           return t('required');
         }
 
-        return t('invalid-type', {
+        return t('invalidType', {
           expected: String(issue.expected),
           received: String(issue.received),
         });
@@ -19,23 +19,23 @@ export const createZodErrorMap = (t: ReturnType<typeof useTranslations>): z.core
       case 'invalid_format': {
         // Handles email, url, and other string validations in v4
         if (issue.format === 'email') {
-          return t('invalid-email');
+          return t('invalidEmail');
         }
 
         if (issue.format === 'url') {
-          return t('invalid-url');
+          return t('invalidUrl');
         }
 
-        return t('invalid-format');
+        return t('invalidFormat');
       }
 
       case 'too_small': {
         if (issue.type === 'string') {
-          return t('too-small', {minimum: String(issue.minimum)});
+          return t('tooShort', {minimum: String(issue.minimum)});
         }
 
         if (issue.type === 'number') {
-          return t('number-too-small', {minimum: Number(issue.minimum)});
+          return t('numberTooSmall', {minimum: Number(issue.minimum)});
         }
 
         return undefined;
@@ -43,11 +43,11 @@ export const createZodErrorMap = (t: ReturnType<typeof useTranslations>): z.core
 
       case 'too_big': {
         if (issue.type === 'string') {
-          return t('too-big', {maximum: String(issue.maximum)});
+          return t('tooLong', {maximum: String(issue.maximum)});
         }
 
         if (issue.type === 'number') {
-          return t('number-too-big', {maximum: Number(issue.maximum)});
+          return t('numberTooLarge', {maximum: Number(issue.maximum)});
         }
 
         return undefined;
@@ -55,27 +55,27 @@ export const createZodErrorMap = (t: ReturnType<typeof useTranslations>): z.core
 
       case 'invalid_value': {
         // Handles literal values, enums, etc. in v4
-        return t('invalid-value');
+        return t('invalidValue');
       }
 
       case 'unrecognized_keys': {
-        return t('unrecognized-keys', {
+        return t('unrecognizedKeys', {
           keys: issue.keys.join(', '),
         });
       }
 
       case 'invalid_union': {
-        return t('invalid-union');
+        return t('invalidUnion');
       }
 
       case 'not_multiple_of': {
-        return t('not-multiple-of', {
+        return t('notMultipleOf', {
           multipleOf: Number(issue.multipleOf),
         });
       }
 
       case 'custom': {
-        return issue.message ?? t('custom-error');
+        return issue.message ?? t('customError');
       }
 
       case 'invalid_key':

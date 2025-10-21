@@ -1,36 +1,54 @@
 {
   "validation": {
     "required": "Bitte füllen Sie dieses Feld aus.",
-    "invalid-email": "Die eingegebene E-Mail-Adresse ist ungültig. Bitte überprüfen Sie Ihre Eingabe.",
-    "invalid-url": "Die eingegebene URL ist ungültig. Bitte geben Sie eine korrekte Webadresse ein.",
-    "invalid-format": "Die Eingabe entspricht nicht dem erwarteten Format.",
-    "invalid-type": "Es wurde ein ungültiger Typ übermittelt. Erwartet: {expected}, erhalten: {received}.",
-    "invalid-value": "Der eingegebene Wert ist ungültig.",
-    "too-small": "Die Eingabe ist zu kurz. Sie muss mindestens {minimum} Zeichen lang sein.",
-    "too-big": "Die Eingabe ist zu lang. Sie darf höchstens {maximum} Zeichen umfassen.",
-    "number-too-small": "Der Wert ist zu klein. Er muss mindestens {minimum} betragen.",
-    "number-too-big": "Der Wert ist zu groß. Er darf höchstens {maximum} betragen.",
-    "unrecognized-keys": "Folgende Eingabefelder sind nicht erlaubt: {keys}.",
-    "invalid-union": "Die Eingabe entspricht keiner der erlaubten Optionen.",
-    "not-multiple-of": "Der Wert muss ein Vielfaches von {multipleOf} sein.",
-    "custom-error": "Die Eingabe ist ungültig. Bitte überprüfen Sie Ihre Angaben."
+    "invalidEmail": "Die eingegebene E-Mail-Adresse ist ungültig. Bitte überprüfen Sie Ihre Eingabe.",
+    "invalidUrl": "Die eingegebene URL ist ungültig. Bitte geben Sie eine korrekte Webadresse ein.",
+    "invalidFormat": "Die Eingabe entspricht nicht dem erwarteten Format.",
+    "invalidType": "Es wurde ein ungültiger Typ übermittelt. Erwartet: {expected}, erhalten: {received}.",
+    "invalidValue": "Der eingegebene Wert ist ungültig.",
+    "tooShort": "Die Eingabe ist zu kurz. Sie muss mindestens {minimum} Zeichen lang sein.",
+    "tooLong": "Die Eingabe ist zu lang. Sie darf höchstens {maximum} Zeichen umfassen.",
+    "numberTooSmall": "Der Wert ist zu klein. Er muss mindestens {minimum} betragen.",
+    "numberTooLarge": "Der Wert ist zu groß. Er darf höchstens {maximum} betragen.",
+    "unrecognizedKeys": "Folgende Eingabefelder sind nicht erlaubt: {keys}.",
+    "invalidUnion": "Die Eingabe entspricht keiner der erlaubten Optionen.",
+    "notMultipleOf": "Der Wert muss ein Vielfaches von {multipleOf} sein.",
+    "customError": "Die Eingabe ist ungültig. Bitte überprüfen Sie Ihre Angaben."
   },
-  "Component-Header": {},
-  "Component-Footer": {
-    "group-company": "Unternehmen",
-    "group-legal": "Rechtliches",
-    "about-us-link": "Über uns",
-    "contact-link": "Kontakt",
-    "imprint-link": "Impressum",
-    "privacy-policy-link": "Datenschutz",
-    "terms-of-service-link": "Nutzungsbedingungen",
-    "copyright-notice": "Next.js - NestJS - Turbo Boilerplate. Alle Rechte vorbehalten."
+  "components": {
+    "header": {},
+    "footer": {
+      "groups": {
+        "company": "Unternehmen",
+        "legal": "Rechtliches"
+      },
+      "links": {
+        "aboutUs": "Über uns",
+        "contact": "Kontakt",
+        "imprint": "Impressum",
+        "privacyPolicy": "Datenschutz",
+        "termsOfService": "Nutzungsbedingungen"
+      },
+      "copyrightNotice": "Next.js - NestJS - Turbo Boilerplate. Alle Rechte vorbehalten.",
+      "localeSelect": {
+        "languages": {
+          "de": "Deutsch",
+          "en": "Englisch"
+        }
+      }
+    },
+    "confirmDialog": {
+      "header": "Bestätigen",
+      "message": "Sind Sie sicher, dass Sie fortfahren möchten?",
+      "buttons": {
+        "accept": "Ja",
+        "reject": "Nein"
+      }
+    }
   },
-  "Component-Footer-LocaleSelect": {
-    "de": "Deutsch",
-    "en": "Englisch"
-  },
-  "Page-Home": {
-    "title": "Willkommen bei Next.js - NestJS - Turbo Boilerplate"
+  "pages": {
+    "home": {
+      "title": "Willkommen bei Next.js - NestJS - Turbo Boilerplate"
+    }
   }
 }

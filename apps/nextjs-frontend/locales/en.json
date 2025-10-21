@@ -1,36 +1,54 @@
 {
   "validation": {
     "required": "This field cannot be left empty. Please provide a value.",
-    "invalid-email": "The email address entered is not valid. Please check and try again.",
-    "invalid-url": "The URL entered is not valid. Please enter a correct web address.",
-    "invalid-format": "The input format is not valid. Please enter a valid value.",
-    "invalid-type": "Invalid input type. Expected {expected}, but received {received}.",
-    "invalid-value": "The value entered is not valid.",
-    "too-small": "The input is too short. It must be at least {minimum} characters long.",
-    "too-big": "The input is too long. It must not exceed {maximum} characters.",
-    "number-too-small": "The value is too small. It must be at least {minimum}.",
-    "number-too-big": "The value is too large. It must not exceed {maximum}.",
-    "unrecognized-keys": "The following fields are not recognized: {keys}.",
-    "invalid-union": "The input does not match any of the allowed formats.",
-    "not-multiple-of": "The value must be a multiple of {multipleOf}.",
-    "custom-error": "The input provided is invalid. Please review and correct it."
+    "invalidEmail": "The email address entered is not valid. Please check and try again.",
+    "invalidUrl": "The URL entered is not valid. Please enter a correct web address.",
+    "invalidFormat": "The input format is not valid. Please enter a valid value.",
+    "invalidType": "Invalid input type. Expected {expected}, but received {received}.",
+    "invalidValue": "The value entered is not valid.",
+    "tooShort": "The input is too short. It must be at least {minimum} characters long.",
+    "tooLong": "The input is too long. It must not exceed {maximum} characters.",
+    "numberTooSmall": "The value is too small. It must be at least {minimum}.",
+    "numberTooLarge": "The value is too large. It must not exceed {maximum}.",
+    "unrecognizedKeys": "The following fields are not recognized: {keys}.",
+    "invalidUnion": "The input does not match any of the allowed formats.",
+    "notMultipleOf": "The value must be a multiple of {multipleOf}.",
+    "customError": "The input provided is invalid. Please review and correct it."
   },
-  "Component-Header": {},
-  "Component-Footer": {
-    "group-company": "Company",
-    "group-legal": "Legal",
-    "about-us-link": "About Us",
-    "contact-link": "Contact",
-    "imprint-link": "Imprint",
-    "privacy-policy-link": "Privacy Policy",
-    "terms-of-service-link": "Terms of Service",
-    "copyright-notice": "Next.js - NestJS - Turbo Boilerplate. All rights reserved."
+  "components": {
+    "header": {},
+    "footer": {
+      "groups": {
+        "company": "Company",
+        "legal": "Legal"
+      },
+      "links": {
+        "aboutUs": "About Us",
+        "contact": "Contact",
+        "imprint": "Imprint",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfService": "Terms of Service"
+      },
+      "copyrightNotice": "Next.js - NestJS - Turbo Boilerplate. All rights reserved.",
+      "localeSelect": {
+        "languages": {
+          "de": "German",
+          "en": "English"
+        }
+      }
+    },
+    "confirmDialog": {
+      "header": "Confirm",
+      "message": "Are you sure you want to proceed?",
+      "buttons": {
+        "accept": "Yes",
+        "reject": "No"
+      }
+    }
   },
-  "Component-Footer-LocaleSelect": {
-    "de": "German",
-    "en": "English"
-  },
-  "Page-Home": {
-    "title": "Welcome to Next.js - NestJS - Turbo Boilerplate"
+  "pages": {
+    "home": {
+      "title": "Welcome to Next.js - NestJS - Turbo Boilerplate"
+    }
   }
 }

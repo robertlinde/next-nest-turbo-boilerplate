@@ -1,12 +1,17 @@
+'use client';
+
+import {useTranslations} from 'next-intl';
 import {confirmDialog, type ConfirmDialogOptions, type ConfirmDialogReturn} from 'primereact/confirmdialog';
 
 export const useConfirmDialog = (): {confirmDialog: (props: Partial<ConfirmDialogOptions>) => ConfirmDialogReturn} => {
+  const t = useTranslations('components.confirmDialog');
+
   const defaultOptions: ConfirmDialogOptions = {
-    header: 'Confirm',
-    message: 'Are you sure you want to proceed?',
+    header: t('header'),
+    message: t('message'),
     icon: 'pi pi-exclamation-triangle',
-    acceptLabel: 'Yes',
-    rejectLabel: 'No',
+    acceptLabel: t('buttons.accept'),
+    rejectLabel: t('buttons.reject'),
     acceptClassName: 'p-button-success',
     rejectClassName: 'p-button-danger',
     defaultFocus: 'accept',
