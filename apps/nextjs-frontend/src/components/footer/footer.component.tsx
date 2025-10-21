@@ -16,22 +16,22 @@ type FooterItemsGroup = {
 };
 
 export async function Footer(): Promise<JSX.Element> {
-  const t = await getTranslations('Component-Footer');
+  const t = await getTranslations('components.footer');
 
   const footerItemsGroups: FooterItemsGroup[] = [
     {
-      label: t('group-company'),
+      label: t('groups.company'),
       items: [
-        {label: t('about-us-link'), href: '/about'},
-        {label: t('contact-link'), href: '/contact'},
+        {label: t('links.aboutUs'), href: '/about'},
+        {label: t('links.contact'), href: '/contact'},
       ],
     },
     {
-      label: t('group-legal'),
+      label: t('groups.legal'),
       items: [
-        {label: t('imprint-link'), href: '/imprint'},
-        {label: t('privacy-policy-link'), href: '/privacy'},
-        {label: t('terms-of-service-link'), href: '/terms'},
+        {label: t('links.imprint'), href: '/imprint'},
+        {label: t('links.privacyPolicy'), href: '/privacy'},
+        {label: t('links.termsOfService'), href: '/terms'},
       ],
     },
   ];
@@ -65,7 +65,7 @@ export async function Footer(): Promise<JSX.Element> {
             <LocaleSelect />
           </div>
           <p className="text-sm text-gray-400">
-            &copy; {new Date().getFullYear()} {t('copyright-notice')}
+            &copy; {new Date().getFullYear()} {t('copyrightNotice')}
           </p>
         </div>
       </div>
