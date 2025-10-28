@@ -21,7 +21,7 @@
     "@tanstack/react-query-devtools": "5.90.2",
     "dotenv": "17.2.3",
     "jsdom": "27.0.1",
-    "next": "16.0.0",
+    "next": "16.0.1",
     "next-intl": "4.4.0",
     "primeicons": "7.0.0",
     "primereact": "10.9.7",
@@ -35,7 +35,7 @@
   "devDependencies": {
     "@playwright/test": "1.56.1",
     "@types/jsdom": "27.0.0",
-    "@types/node": "24.9.1",
+    "@types/node": "24.9.2",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "eslint": "9.38.0",
