@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@mikro-orm/cli": "6.6.1",
-    "@nestjs/cli": "11.0.13",
+    "@nestjs/cli": "11.0.14",
     "@nestjs/schematics": "11.0.9",
     "@nestjs/testing": "11.1.9",
     "@types/cookie-parser": "1.4.10",
