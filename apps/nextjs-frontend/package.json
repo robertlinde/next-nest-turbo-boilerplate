@@ -21,7 +21,7 @@
     "@tanstack/react-query-devtools": "5.91.1",
     "dotenv": "17.2.3",
     "jsdom": "27.3.0",
-    "next": "16.0.7",
+    "next": "16.0.8",
     "next-intl": "4.5.8",
     "primeicons": "7.0.0",
     "primereact": "10.9.7",
