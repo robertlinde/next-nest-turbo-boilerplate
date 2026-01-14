@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM node:24.12.0-alpine AS builder
+FROM node:24.13.0-alpine AS builder
 
 WORKDIR /app
 
@@ -27,7 +27,7 @@ COPY apps/nextjs-frontend/ ./apps/nextjs-frontend/
 RUN turbo run build --filter=nextjs-frontend...
 
 # Stage 2: Production image
-FROM node:24.12.0-alpine AS runner
+FROM node:24.13.0-alpine AS runner
 
 WORKDIR /app
 
