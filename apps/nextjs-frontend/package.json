@@ -20,7 +20,7 @@
     "@tanstack/react-query": "5.90.20",
     "@tanstack/react-query-devtools": "5.91.3",
     "dotenv": "17.2.3",
-    "jsdom": "27.4.0",
+    "jsdom": "28.0.0",
     "next": "16.1.6",
     "next-intl": "4.8.2",
     "primeicons": "7.0.0",
