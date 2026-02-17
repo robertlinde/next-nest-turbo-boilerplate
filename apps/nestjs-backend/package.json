@@ -37,7 +37,7 @@
     "@nestjs/platform-express": "11.1.14",
     "@nestjs/schedule": "6.1.1",
     "@nestjs/swagger": "11.2.6",
-    "@nestjs/terminus": "11.0.0",
+    "@nestjs/terminus": "11.1.0",
     "@nestjs/throttler": "6.5.0",
     "@next-nest-turbo-auth-boilerplate/shared": "*",
     "axios": "1.13.5",
