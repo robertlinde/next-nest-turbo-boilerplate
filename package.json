@@ -20,13 +20,13 @@
     "docker:run:local": "turbo run docker:run:local"
   },
   "devDependencies": {
-    "@commitlint/cli": "20.4.2",
-    "@commitlint/config-conventional": "20.4.2",
+    "@commitlint/cli": "20.4.3",
+    "@commitlint/config-conventional": "20.4.3",
     "husky": "9.1.7",
-    "lint-staged": "16.2.7",
+    "lint-staged": "16.3.2",
     "prettier": "3.8.1",
     "ts-node": "10.9.2",
-    "turbo": "2.8.11"
+    "turbo": "2.8.14"
   },
   "engines": {
     "node": "24.14.0",
