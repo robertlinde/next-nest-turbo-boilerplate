@@ -24,7 +24,7 @@
     "@commitlint/config-conventional": "20.5.0",
     "husky": "9.1.7",
     "lint-staged": "16.4.0",
-    "prettier": "3.8.1",
+    "prettier": "3.8.2",
     "ts-node": "10.9.2",
     "turbo": "2.9.5"
   },
