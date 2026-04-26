@@ -39,7 +39,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "eslint": "10.2.1",
-    "postcss": "8.5.10",
+    "postcss": "8.5.11",
     "tailwindcss": "4.2.4",
     "typescript": "5.9.3",
     "xo": "1.2.3"
