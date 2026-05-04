@@ -49,7 +49,7 @@
     "handlebars": "4.7.9",
     "helmet": "8.1.0",
     "ioredis": "5.10.1",
-    "joi": "18.1.2",
+    "joi": "18.2.1",
     "nodemailer": "8.0.7",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2",
