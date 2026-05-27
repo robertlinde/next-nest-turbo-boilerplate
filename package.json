@@ -30,7 +30,7 @@
   },
   "engines": {
     "node": "24.16.0",
-    "npm": "11.15.0"
+    "npm": "11.16.0"
   },
-  "packageManager": "npm@11.15.0"
+  "packageManager": "npm@11.16.0"
 }
