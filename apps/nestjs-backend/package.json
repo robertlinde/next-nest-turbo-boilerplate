@@ -50,7 +50,7 @@
     "helmet": "8.2.0",
     "ioredis": "5.11.1",
     "joi": "18.2.1",
-    "nodemailer": "8.0.10",
+    "nodemailer": "8.0.11",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2",
     "uuid": "13.0.2"
@@ -64,8 +64,8 @@
     "@types/express": "5.0.6",
     "@types/hapi__joi": "17.1.15",
     "@types/jest": "30.0.0",
-    "@types/node": "24.13.1",
-    "eslint": "10.4.1",
+    "@types/node": "24.13.2",
+    "eslint": "10.5.0",
     "jest": "30.4.2",
     "jest-mock-extended": "4.0.1",
     "source-map-support": "0.5.21",
@@ -75,5 +75,5 @@
     "typescript": "5.9.3",
     "xo": "1.2.3"
   },
-  "packageManager": "npm@11.16.0"
+  "packageManager": "npm@11.17.0"
 }
