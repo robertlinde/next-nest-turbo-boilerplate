@@ -24,10 +24,10 @@
     "docker:start:dev": "docker run -p 4000:4000 --env-file .env -e POSTGRES_HOST=host.docker.internal -e MAIL_HOST=host.docker.internal nestjs-backend"
   },
   "dependencies": {
-    "@mikro-orm/core": "6.6.14",
-    "@mikro-orm/migrations": "6.6.14",
+    "@mikro-orm/core": "6.6.15",
+    "@mikro-orm/migrations": "6.6.15",
     "@mikro-orm/nestjs": "6.1.2",
-    "@mikro-orm/postgresql": "6.6.14",
+    "@mikro-orm/postgresql": "6.6.15",
     "@nestjs-modules/mailer": "2.3.6",
     "@nestjs/axios": "4.0.1",
     "@nestjs/common": "11.1.27",
@@ -49,14 +49,14 @@
     "handlebars": "4.7.9",
     "helmet": "8.2.0",
     "ioredis": "5.11.1",
-    "joi": "18.2.1",
+    "joi": "18.2.2",
     "nodemailer": "8.0.11",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2",
     "uuid": "13.0.2"
   },
   "devDependencies": {
-    "@mikro-orm/cli": "6.6.14",
+    "@mikro-orm/cli": "6.6.15",
     "@nestjs/cli": "11.0.23",
     "@nestjs/schematics": "11.1.0",
     "@nestjs/testing": "11.1.27",
