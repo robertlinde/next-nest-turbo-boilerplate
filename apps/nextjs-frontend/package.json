@@ -27,7 +27,7 @@
     "primereact": "10.9.8",
     "react": "19.2.7",
     "react-dom": "19.2.7",
-    "react-hook-form": "7.80.0",
+    "react-hook-form": "7.81.0",
     "uuid": "13.0.2",
     "zod": "4.4.3",
     "zustand": "5.0.14"
