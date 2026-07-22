@@ -69,7 +69,7 @@
     "jest": "30.4.2",
     "jest-mock-extended": "4.0.1",
     "source-map-support": "0.5.21",
-    "ts-jest": "29.4.11",
+    "ts-jest": "29.4.12",
     "ts-loader": "9.6.2",
     "tsconfig-paths": "4.2.0",
     "typescript": "5.9.3",
