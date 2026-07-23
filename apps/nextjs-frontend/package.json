@@ -22,7 +22,7 @@
     "dotenv": "17.4.2",
     "jsdom": "28.1.0",
     "next": "16.2.11",
-    "next-intl": "4.13.3",
+    "next-intl": "4.13.4",
     "primeicons": "7.0.0",
     "primereact": "10.9.8",
     "react": "19.2.8",
