@@ -27,13 +27,13 @@
     "primereact": "10.9.8",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "react-hook-form": "7.82.0",
+    "react-hook-form": "7.83.0",
     "uuid": "13.0.2",
     "zod": "4.4.3",
     "zustand": "5.0.14"
   },
   "devDependencies": {
-    "@playwright/test": "1.61.1",
+    "@playwright/test": "1.62.0",
     "@types/jsdom": "28.0.3",
     "@types/node": "24.13.3",
     "@types/react": "19.2.17",
