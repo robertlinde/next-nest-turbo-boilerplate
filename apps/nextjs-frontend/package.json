@@ -15,34 +15,34 @@
   },
   "dependencies": {
     "@next-nest-turbo-auth-boilerplate/shared": "*",
-    "@hookform/resolvers": "5.7.1",
+    "@hookform/resolvers": "5.9.1",
     "@tailwindcss/postcss": "4.3.3",
-    "@tanstack/react-query": "5.101.4",
-    "@tanstack/react-query-devtools": "5.101.4",
+    "@tanstack/react-query": "5.102.8",
+    "@tanstack/react-query-devtools": "5.102.8",
     "dotenv": "17.4.2",
     "jsdom": "28.1.0",
-    "next": "16.3.0",
-    "next-intl": "4.13.5",
+    "next": "16.3.4",
+    "next-intl": "4.14.2",
     "primeicons": "7.0.0",
-    "primereact": "10.9.8",
+    "primereact": "10.9.9",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "react-hook-form": "7.85.0",
+    "react-hook-form": "7.87.0",
     "uuid": "13.0.2",
-    "zod": "4.4.3",
-    "zustand": "5.0.14"
+    "zod": "4.5.4",
+    "zustand": "5.0.15"
   },
   "devDependencies": {
-    "@playwright/test": "1.62.1",
+    "@playwright/test": "1.63.0",
     "@types/jsdom": "28.0.3",
     "@types/node": "24.13.3",
     "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.4",
-    "eslint": "10.8.1",
-    "postcss": "8.5.26",
+    "@types/react-dom": "19.2.7",
+    "eslint": "10.10.0",
+    "postcss": "8.5.28",
     "tailwindcss": "4.3.3",
     "typescript": "5.9.3",
     "xo": "1.2.3"
   },
-  "packageManager": "npm@11.19.0"
+  "packageManager": "npm@11.19.1"
 }
