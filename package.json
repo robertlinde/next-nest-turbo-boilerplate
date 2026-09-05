@@ -26,11 +26,11 @@
     "lint-staged": "16.4.0",
     "prettier": "3.9.6",
     "ts-node": "10.9.2",
-    "turbo": "2.10.9"
+    "turbo": "2.10.12"
   },
   "engines": {
-    "node": "24.19.0",
-    "npm": "11.19.0"
+    "node": "24.20.0",
+    "npm": "11.19.1"
   },
-  "packageManager": "npm@11.19.0"
+  "packageManager": "npm@11.19.1"
 }
