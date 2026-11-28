@@ -13,7 +13,7 @@ services:
       TZ: '${POSTGRES_TIMEZONE}'
 
   maildev:
-    image: maildev/maildev:2.2.1
+    image: maildev/maildev:3.0.0
     restart: always
     ports:
       - '${MAILDEV_WEB_PORT}:1080' # Web interface
